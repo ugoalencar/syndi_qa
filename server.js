@@ -393,7 +393,7 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    // Handler estatico - serve qa.html, css, js e qualquer outro arquivo da raiz
+    // Handler estatico - serve syndi_qa.html, css, js e qualquer outro arquivo da raiz
     // do projeto, exceto os bloqueados.
     const urlSemQuery = req.url.split('?')[0];
     let filePath = path.join(BASE_PATH, urlSemQuery === '/' ? 'syndi_qa.html' : urlSemQuery);

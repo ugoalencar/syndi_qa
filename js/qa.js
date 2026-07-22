@@ -274,7 +274,7 @@ createApp({
 
         // Da tempo do usuario ler a mensagem de sucesso antes de voltar pra tela
         // "selecione um GTIN". Os botoes ficam desabilitados nesse meio-tempo
-        // (:disabled="... || !!mensagem" no qa.html) pra nao reenviar uma pasta que
+        // (:disabled="... || !!mensagem" no syndi_qa.html) pra nao reenviar uma pasta que
         // ja foi movida.
         function fecharDepoisDeConcluir() {
             timeoutFecharDepoisDeConcluir = setTimeout(() => {
