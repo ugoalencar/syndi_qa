@@ -70,7 +70,115 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    // ROTAS_API
+    if (req.method === 'GET' && req.url === '/api/fila') {
+        try {
+            const fila = qaSyndi.listarFila(qaSyndi.AGCONFERENCIA);
+            enviarJson(res, 200, { ok: true, fila });
+        } catch (err) {
+            enviarJson(res, 500, { ok: false, error: err.message });
+        }
+        return;
+    }
+
+    if (req.method === 'GET' && req.url.startsWith('/api/gtin')) {
+        const query = new URL(req.url, 'http://localhost').searchParams;
+        const os = query.get('os') || '';
+        const gtin = query.get('gtin') || '';
+        if (!isNomeSeguro(os) || !isNomeSeguro(gtin)) {
+            enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin invalidos' });
+            return;
+        }
+        const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+        if (!pastaOsNome) {
+            enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
+            return;
+        }
+        const pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome);
+        const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(pastaOsPath, gtin, /^(\d+)/);
+        if (!pastaGtinNome) {
+            enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
+            return;
+        }
+        const imagens = qaSyndi.listarImagensGtin(path.join(pastaOsPath, pastaGtinNome));
+        enviarJson(res, 200, { ok: true, os, gtin, pastaOsNome, pastaGtinNome, imagens });
+        return;
+    }
+
+    if (req.method === 'POST' && req.url === '/api/aprovar') {
+        lerCorpo(req).then(corpo => {
+            let dados;
+            try {
+                dados = JSON.parse(corpo);
+            } catch (err) {
+                enviarJson(res, 400, { ok: false, error: 'JSON invalido' });
+                return;
+            }
+            const os = dados.os;
+            const gtin = dados.gtin;
+            if (!isNomeSeguro(os) || !isNomeSeguro(gtin)) {
+                enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin invalidos' });
+                return;
+            }
+            const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+            if (!pastaOsNome) {
+                enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
+                return;
+            }
+            const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(path.join(qaSyndi.AGCONFERENCIA, pastaOsNome), gtin, /^(\d+)/);
+            if (!pastaGtinNome) {
+                enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
+                return;
+            }
+            try {
+                const resultado = qaSyndi.aprovarGtin(qaSyndi.AGCONFERENCIA, qaSyndi.AGENVIO, pastaOsNome, pastaGtinNome);
+                enviarJson(res, 200, { ok: true, destino: resultado.destino });
+            } catch (err) {
+                enviarJson(res, 500, { ok: false, error: err.message });
+            }
+        });
+        return;
+    }
+
+    if (req.method === 'POST' && req.url === '/api/retrabalho') {
+        lerCorpo(req).then(corpo => {
+            let dados;
+            try {
+                dados = JSON.parse(corpo);
+            } catch (err) {
+                enviarJson(res, 400, { ok: false, error: 'JSON invalido' });
+                return;
+            }
+            const os = dados.os;
+            const gtin = dados.gtin;
+            const marcacoes = dados.marcacoes;
+            if (!isNomeSeguro(os) || !isNomeSeguro(gtin) || typeof marcacoes !== 'object' || !marcacoes || Object.keys(marcacoes).length === 0) {
+                enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin/marcacoes invalidos' });
+                return;
+            }
+            const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+            if (!pastaOsNome) {
+                enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
+                return;
+            }
+            const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(path.join(qaSyndi.AGCONFERENCIA, pastaOsNome), gtin, /^(\d+)/);
+            if (!pastaGtinNome) {
+                enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
+                return;
+            }
+            try {
+                const resultado = qaSyndi.retrabalharGtin(qaSyndi.AGCONFERENCIA, qaSyndi.RETRABALHO, pastaOsNome, pastaGtinNome, gtin, marcacoes);
+                enviarJson(res, 200, { ok: true, destino: resultado.destino });
+            } catch (err) {
+                enviarJson(res, 500, { ok: false, error: err.message });
+            }
+        });
+        return;
+    }
+
+    if (req.method === 'GET' && req.url === '/api/motivos') {
+        enviarJson(res, 200, { ok: true, motivos: qaSyndi.carregarMotivos(BASE_PATH) });
+        return;
+    }
 
     // Handler estatico - serve qa.html, css, js e qualquer outro arquivo da raiz
     // do projeto, exceto os bloqueados.
