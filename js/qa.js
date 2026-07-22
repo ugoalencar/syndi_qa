@@ -20,6 +20,12 @@ createApp({
         const mensagem = ref('');
         const erro = ref('');
 
+        // Guarda o id do setTimeout de fecharDepoisDeConcluir. Sem isso, trocar de
+        // GTIN dentro da janela de 2s deixa o timer do GTIN anterior orfao: ele
+        // dispara depois e zera detalhe/selecionado/mensagem do GTIN novo que o
+        // usuario ja esta revisando.
+        let timeoutFecharDepoisDeConcluir = null;
+
         async function carregarFila() {
             carregandoFila.value = true;
             erroFila.value = '';
@@ -46,6 +52,13 @@ createApp({
         }
 
         async function selecionarGtin(os, gtin) {
+            // Cancela o timer orfao de reset de selecao (fecharDepoisDeConcluir) de um
+            // GTIN anterior, se houver. Sem isso ele dispararia mais tarde e zeraria a
+            // selecao deste GTIN novo.
+            if (timeoutFecharDepoisDeConcluir) {
+                clearTimeout(timeoutFecharDepoisDeConcluir);
+                timeoutFecharDepoisDeConcluir = null;
+            }
             selecionado.value = { os, gtin };
             detalhe.value = null;
             erroDetalhe.value = '';
@@ -138,10 +151,11 @@ createApp({
         // (:disabled="... || !!mensagem" no qa.html) pra nao reenviar uma pasta que
         // ja foi movida.
         function fecharDepoisDeConcluir() {
-            setTimeout(() => {
+            timeoutFecharDepoisDeConcluir = setTimeout(() => {
                 detalhe.value = null;
                 selecionado.value = null;
                 mensagem.value = '';
+                timeoutFecharDepoisDeConcluir = null;
             }, 2000);
         }
 
