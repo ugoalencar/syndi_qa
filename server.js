@@ -16,7 +16,7 @@ process.on('unhandledRejection', (err) => {
     process.exit(1);
 });
 
-const PORT = 3000;
+const PORT = 3001;
 const BASE_PATH = __dirname;
 
 const MIME_TYPES = {
