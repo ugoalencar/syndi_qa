@@ -33,7 +33,7 @@ const MIME_TYPES = {
 
 // Arquivos que NUNCA podem sair pelo HTTP - mesmo motivo do sphoto (handler
 // estatico entrega qualquer arquivo da pasta do projeto).
-const ARQUIVOS_BLOQUEADOS = ['caminhos-locais.json', 'credencial.txt', 'credenciais.txt', 'valores.txt', '.env'];
+const ARQUIVOS_BLOQUEADOS = ['caminhos-locais.json', 'redmine-config.json', 'credencial.txt', 'credenciais.txt', 'valores.txt', '.env'];
 
 function ehArquivoBloqueado(caminho) {
     const nome = path.basename(caminho).toLowerCase();
