@@ -169,7 +169,11 @@ createApp({
                 });
                 const dados = await resp.json();
                 if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
-                mensagem.value = 'Retrabalho registrado e GTIN movido.';
+                if (dados.redmineOk === false) {
+                    mensagem.value = 'Retrabalho registrado e GTIN movido. Aviso: nao foi possivel marcar no Redmine (' + dados.redmineError + ').';
+                } else {
+                    mensagem.value = 'Retrabalho registrado e GTIN movido.';
+                }
                 await carregarFila();
                 fecharDepoisDeConcluir();
             } catch (err) {

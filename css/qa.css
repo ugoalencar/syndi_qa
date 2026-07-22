@@ -232,33 +232,10 @@
     white-space: nowrap;
 }
 
-/* Barra de acao compacta abaixo da miniatura - o btn-group padrao do Bootstrap
-   nao cabe 4 botoes legiveis em 100px de largura. */
-.qa-acoes-mini {
-    display: flex;
-    gap: 2px;
-    margin-top: 3px;
-}
-
-.qa-acao-mini {
-    flex: 1;
-    padding: 3px 0;
-    font-size: 0.62rem;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    border-radius: 3px;
-    border: 1px solid var(--border);
-    background-color: var(--bg-input);
-    color: var(--text-muted);
-    cursor: pointer;
-}
-
-.qa-acao-mini:hover { filter: brightness(1.3); }
-
-/* Lista de motivos que aparece abaixo de "marcar problema" quando a foto esta
-   marcada - cada motivo e um checkbox+label, precisa de recuo e fundo levemente
-   diferenciado pra nao parecer parte do texto do nome da miniatura. */
+/* Painel unico de motivos, compartilhado por todas as miniaturas, mostrado
+   abaixo da grade com os motivos da foto ativa - cada motivo e um
+   checkbox+label, precisa de recuo e fundo levemente diferenciado pra nao
+   parecer parte do texto do nome da miniatura. */
 .qa-motivos {
     margin-top: 4px;
     padding: 4px 6px;
@@ -275,19 +252,6 @@
     color: var(--text-muted);
     cursor: pointer;
     padding: 1px 0;
-}
-
-.qa-acao-mini.coding { border-color: var(--warning); color: var(--warning); }
-.qa-acao-mini.coding.ativa { background-color: var(--warning); color: #1a1a1a; }
-
-.qa-acao-mini.rt { border-color: #fd7e14; color: #fd7e14; }
-.qa-acao-mini.is { border-color: var(--info); color: var(--info); }
-.qa-acao-mini.ap { border-color: #9c27b0; color: #9c27b0; }
-
-.qa-acao-mini.voltar {
-    flex: none;
-    width: 100%;
-    color: var(--text-muted);
 }
 
 /* Cores de marcacao - mesma logica do .tem-coding do index (borda + glow) */
