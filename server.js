@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 const qaSyndi = require('./lib/qaSyndi');
+const redmine = require('./lib/redmine');
 
 // So loga antes de encerrar - depois de um erro nao tratado o processo fica em
 // estado indefinido, entao nao deve continuar rodando "zumbi". Mesmo padrao do
@@ -179,7 +180,7 @@ const server = http.createServer((req, res) => {
     }
 
     if (req.method === 'POST' && req.url === '/api/retrabalho') {
-        lerCorpo(req).then(corpo => {
+        lerCorpo(req).then(async corpo => {
             let dados;
             try {
                 dados = JSON.parse(corpo);
@@ -214,7 +215,20 @@ const server = http.createServer((req, res) => {
             }
             try {
                 const resultado = qaSyndi.retrabalharGtin(qaSyndi.AGCONFERENCIA, qaSyndi.RETRABALHO, pastaOsNome, pastaGtinNome, os, gtin, marcacoes);
-                enviarJson(res, 200, { ok: true, destino: resultado.destino });
+                // O move de pasta + TXT ja aconteceram e sao a fonte de verdade local -
+                // se o Redmine falhar (rede, GTIN sem ficha aberta, etc.) NAO desfaz nada,
+                // so avisa via redmineOk/redmineError. Mesmo principio do qaHub.js do sphoto
+                // ("falha aqui nao derruba o retorno, so loga/avisa").
+                let redmineOk = true;
+                let redmineError = null;
+                try {
+                    await redmine.marcarRetrabalhoFotografia(BASE_PATH, gtin);
+                } catch (err) {
+                    redmineOk = false;
+                    redmineError = err.message;
+                    console.error('Erro ao marcar Retrabalho Fotografia no Redmine para GTIN', gtin, err);
+                }
+                enviarJson(res, 200, { ok: true, destino: resultado.destino, redmineOk, redmineError });
             } catch (err) {
                 enviarJson(res, 500, { ok: false, error: err.message });
             }
