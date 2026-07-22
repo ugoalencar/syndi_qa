@@ -40,6 +40,15 @@ createApp({
         const imagemAmpliada = ref(null);
         const listaAmpliada = ref([]);
 
+        // Painel de envio pra edicao - abre no "Aprovar GTIN" com os campos inferidos
+        // da pasta (Mockup/Recorte + contagem sem _coding), editaveis antes de
+        // confirmar. Situacao das Imagens nao aparece aqui de proposito: quem grava
+        // e o robo SyncIMGSend, nunca o Syndi_qa.
+        const painelEnvio = ref(null); // { destino, motivo } aberto, null fechado
+        const preparandoEnvio = ref(false);
+        const formEnvio = reactive({ responsavel: '', qtdRecorte: '', qtdMockup: '' });
+        const opcoesResponsavel = ref({});
+
         async function carregarFila() {
             carregandoFila.value = true;
             erroFila.value = '';
@@ -65,6 +74,16 @@ createApp({
             }
         }
 
+        async function carregarOpcoesResponsavel() {
+            try {
+                const resp = await fetch(API + '/redmine-campos.json');
+                const dados = await resp.json();
+                opcoesResponsavel.value = dados.campos.cf_23.opcoes;
+            } catch (err) {
+                console.error('Erro ao carregar redmine-campos.json:', err);
+            }
+        }
+
         async function selecionarGtin(os, gtin) {
             // Cancela o timer orfao de reset de selecao (fecharDepoisDeConcluir) de um
             // GTIN anterior, se houver. Sem isso ele dispararia mais tarde e zeraria a
@@ -78,6 +97,7 @@ createApp({
             erroDetalhe.value = '';
             Object.keys(marcadas).forEach(chave => delete marcadas[chave]);
             fotoAtiva.value = null;
+            painelEnvio.value = null;
             mensagem.value = '';
             erro.value = '';
             carregandoDetalhe.value = true;
@@ -219,8 +239,31 @@ createApp({
             imagemAmpliada.value = listaAmpliada.value[(idx + delta + total) % total];
         }
 
+        async function abrirPainelEnvio() {
+            if (!selecionado.value || temMarcacao() || preparandoEnvio.value) return;
+            preparandoEnvio.value = true;
+            erro.value = '';
+            try {
+                const resp = await fetch(API + '/api/aprovar/preparar?os=' + encodeURIComponent(selecionado.value.os) + '&gtin=' + encodeURIComponent(selecionado.value.gtin));
+                const dados = await resp.json();
+                if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
+                formEnvio.responsavel = dados.campos.responsavel || '';
+                formEnvio.qtdRecorte = dados.campos.qtdRecorte || '';
+                formEnvio.qtdMockup = dados.campos.qtdMockup || '';
+                painelEnvio.value = { destino: dados.destino, motivo: dados.motivo };
+            } catch (err) {
+                erro.value = 'Erro ao preparar envio: ' + err.message;
+            } finally {
+                preparandoEnvio.value = false;
+            }
+        }
+
+        function fecharPainelEnvio() {
+            painelEnvio.value = null;
+        }
+
         async function aprovarGtin() {
-            if (!selecionado.value || temMarcacao()) return;
+            if (!selecionado.value || !painelEnvio.value || aprovando.value) return;
             aprovando.value = true;
             mensagem.value = '';
             erro.value = '';
@@ -228,11 +271,20 @@ createApp({
                 const resp = await fetch(API + '/api/aprovar', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ os: selecionado.value.os, gtin: selecionado.value.gtin })
+                    body: JSON.stringify({
+                        os: selecionado.value.os,
+                        gtin: selecionado.value.gtin,
+                        responsavel: String(formEnvio.responsavel || ''),
+                        qtdRecorte: String(formEnvio.qtdRecorte || ''),
+                        qtdMockup: String(formEnvio.qtdMockup || '')
+                    })
                 });
                 const dados = await resp.json();
                 if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
-                mensagem.value = 'GTIN aprovado e enviado para edição.';
+                fecharPainelEnvio();
+                mensagem.value = dados.redmineGravado
+                    ? 'GTIN aprovado, campos gravados no Redmine e enviado para edição.'
+                    : 'GTIN aprovado e enviado para edição (nenhum campo gravado no Redmine).';
                 await carregarFila();
                 // So limpa a selecao depois de um tempo pro usuario ver a mensagem de
                 // sucesso. Zerar selecionado/detalhe no mesmo tick que a mensagem escondia
@@ -333,6 +385,7 @@ createApp({
 
         carregarFila();
         carregarMotivosDisponiveis();
+        carregarOpcoesResponsavel();
 
         return {
             fila, carregandoFila, erroFila,
@@ -343,7 +396,8 @@ createApp({
             marcandoDestino, marcarDestinoManual, toggleCoding, toggleSubpasta,
             imagemAmpliada, listaAmpliada, ampliarImagem, navegarAmpliada,
             carregarFila, selecionarGtin, urlImagem, selecionarFoto, togglarMotivoAtivo, temMarcacao, todasMarcacoesTemMotivo,
-            aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao
+            aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao,
+            painelEnvio, preparandoEnvio, formEnvio, opcoesResponsavel, abrirPainelEnvio, fecharPainelEnvio
         };
     }
 }).mount('#qaApp');

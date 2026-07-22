@@ -142,8 +142,35 @@
                             </div>
                         </div>
 
+                        <div v-if="painelEnvio" class="qa-editadas-recebidas">
+                            <div class="qa-editadas-header"><span>Enviar para Edição</span></div>
+                            <div v-if="painelEnvio.destino === 'indefinido'" class="qa-conflito-aviso">
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                Não foi possível inferir automaticamente: {{ painelEnvio.motivo }}. Preencha os campos manualmente (ou confirme sem preencher pra não gravar nada no Redmine).
+                            </div>
+                            <div class="qa-campo-linha">
+                                <span class="qa-campo-label">Responsável Pós-Produção</span>
+                                <select class="form-select form-select-sm w-auto" v-model="formEnvio.responsavel">
+                                    <option value="">-</option>
+                                    <option v-for="(rotulo, id) in opcoesResponsavel" :key="id" :value="id">{{ rotulo }}</option>
+                                </select>
+                            </div>
+                            <div class="qa-campo-linha">
+                                <span class="qa-campo-label">Qtd Imagens Recorte</span>
+                                <input type="number" min="0" class="form-control form-control-sm" style="width:100px" v-model="formEnvio.qtdRecorte">
+                            </div>
+                            <div class="qa-campo-linha">
+                                <span class="qa-campo-label">Qtd Imagens Mockup</span>
+                                <input type="number" min="0" class="form-control form-control-sm" style="width:100px" v-model="formEnvio.qtdMockup">
+                            </div>
+                            <button type="button" class="btn btn-primary btn-sm" :disabled="aprovando || !!mensagem" @click="aprovarGtin">
+                                <i class="bi bi-cloud-upload"></i> Confirmar e Enviar
+                            </button>
+                            <button type="button" class="btn btn-outline-light btn-sm ms-2" :disabled="aprovando" @click="fecharPainelEnvio">Cancelar</button>
+                        </div>
+
                         <div class="qa-enviar-conferencia mt-3">
-                            <button type="button" class="btn btn-primary btn-sm" :disabled="temMarcacao() || aprovando || !!mensagem" @click="aprovarGtin">
+                            <button type="button" class="btn btn-primary btn-sm" :disabled="temMarcacao() || preparandoEnvio || !!painelEnvio || aprovando || !!mensagem" @click="abrirPainelEnvio">
                                 <i class="bi bi-check2-circle"></i> Aprovar GTIN
                             </button>
                             <button type="button" class="btn btn-warning btn-sm" :disabled="!todasMarcacoesTemMotivo() || enviandoRetrabalho || !!mensagem" @click="confirmarRetrabalho">
