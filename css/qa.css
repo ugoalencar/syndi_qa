@@ -296,6 +296,21 @@
 .qa-miniatura.tem-is { border-color: var(--info); box-shadow: 0 0 0 2px var(--info); }
 .qa-miniatura.tem-ap { border-color: #9c27b0; box-shadow: 0 0 0 2px #9c27b0; }
 
+.qa-miniatura.ativa { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary); cursor: pointer; }
+.qa-miniatura.marcada { border-color: var(--danger); box-shadow: 0 0 0 2px var(--danger); }
+.qa-miniatura { cursor: pointer; }
+
+.qa-motivos-painel {
+    margin: 12px 0;
+}
+
+.qa-motivos-titulo {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
 .qa-subpasta-titulo {
     font-size: 0.85rem;
     font-weight: 600;

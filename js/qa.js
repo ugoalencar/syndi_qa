@@ -14,6 +14,7 @@ createApp({
 
         const motivos = ref([]);
         const marcadas = reactive({});
+        const fotoAtiva = ref(null);
 
         const aprovando = ref(false);
         const enviandoRetrabalho = ref(false);
@@ -71,6 +72,7 @@ createApp({
             detalhe.value = null;
             erroDetalhe.value = '';
             Object.keys(marcadas).forEach(chave => delete marcadas[chave]);
+            fotoAtiva.value = null;
             mensagem.value = '';
             erro.value = '';
             carregandoDetalhe.value = true;
@@ -96,19 +98,22 @@ createApp({
                 '&nome=' + encodeURIComponent(nome);
         }
 
-        function togglarProblema(nomeFoto) {
-            if (marcadas[nomeFoto]) {
-                delete marcadas[nomeFoto];
-            } else {
-                marcadas[nomeFoto] = [];
-            }
+        // Clicar numa foto so a torna "ativa" (o painel abaixo do palco passa a mostrar
+        // o estado dela) - nao marca nada sozinho. So marcar motivo (togglarMotivoAtivo)
+        // e o que conta como "foto com problema".
+        function selecionarFoto(nomeFoto) {
+            fotoAtiva.value = nomeFoto;
         }
 
-        function togglarMotivo(nomeFoto, motivo) {
-            const lista = marcadas[nomeFoto];
-            if (!lista) return;
+        function togglarMotivoAtivo(motivo) {
+            if (!fotoAtiva.value) return;
+            if (!marcadas[fotoAtiva.value]) marcadas[fotoAtiva.value] = [];
+            const lista = marcadas[fotoAtiva.value];
             const idx = lista.indexOf(motivo);
             if (idx === -1) lista.push(motivo); else lista.splice(idx, 1);
+            // Sem motivo nenhum marcado nao conta como "problema" - remove a entrada pra
+            // nao acender o indicador na miniatura nem contar em temMarcacao/todasMarcacoesTemMotivo.
+            if (lista.length === 0) delete marcadas[fotoAtiva.value];
         }
 
         function temMarcacao() {
@@ -116,9 +121,10 @@ createApp({
         }
 
         // Retrabalho so faz sentido se toda foto marcada tiver pelo menos um motivo
-        // escolhido - marcadas[foto] comeca como array vazio (togglarProblema), e sem
-        // isso "Confirmar Retrabalho" habilitava com uma linha vazia (sem motivo
-        // nenhum) indo pro retrabalho.txt, inutil pro fotografo corrigir.
+        // escolhido. togglarMotivoAtivo ja apaga a entrada de marcadas[foto] quando o
+        // ultimo motivo e desmarcado, mas esta funcao continua existindo como cinto de
+        // seguranca - sem ela "Confirmar Retrabalho" poderia habilitar com uma linha
+        // vazia (sem motivo nenhum) indo pro retrabalho.txt, inutil pro fotografo corrigir.
         function todasMarcacoesTemMotivo() {
             const nomes = Object.keys(marcadas);
             return nomes.length > 0 && nomes.every(nome => marcadas[nome].length > 0);
@@ -226,10 +232,10 @@ createApp({
         return {
             fila, carregandoFila, erroFila,
             selecionado, detalhe, carregandoDetalhe, erroDetalhe,
-            motivos, marcadas,
+            motivos, marcadas, fotoAtiva,
             aprovando, enviandoRetrabalho, mensagem, erro,
             atualizacaoInfo, verificandoAtualizacao, resultadoAtualizacao, aplicandoAtualizacao,
-            carregarFila, selecionarGtin, urlImagem, togglarProblema, togglarMotivo, temMarcacao, todasMarcacoesTemMotivo,
+            carregarFila, selecionarGtin, urlImagem, selecionarFoto, togglarMotivoAtivo, temMarcacao, todasMarcacoesTemMotivo,
             aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao
         };
     }

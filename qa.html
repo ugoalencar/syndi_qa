@@ -81,18 +81,14 @@
                         <div class="qa-subpasta-titulo">Raiz ({{ detalhe.imagens.raiz.length }})</div>
                         <div class="qa-grid">
                             <div class="qa-miniatura-wrap" v-for="img in detalhe.imagens.raiz" :key="img.nome">
-                                <div class="qa-miniatura">
+                                <div
+                                    class="qa-miniatura"
+                                    :class="{ ativa: fotoAtiva === img.nome, marcada: !!marcadas[img.nome] }"
+                                    @click="selecionarFoto(img.nome)"
+                                >
                                     <img :src="urlImagem(img.nome)" :alt="img.nome" loading="lazy">
                                 </div>
                                 <div class="qa-miniatura-nome">{{ img.nome }}</div>
-                                <label class="qa-acoes-mini">
-                                    <input type="checkbox" :checked="!!marcadas[img.nome]" @change="togglarProblema(img.nome)"> marcar problema
-                                </label>
-                                <div v-if="marcadas[img.nome]" class="qa-motivos">
-                                    <label v-for="motivo in motivos" :key="motivo" class="qa-motivo-item">
-                                        <input type="checkbox" :checked="marcadas[img.nome].includes(motivo)" @change="togglarMotivo(img.nome, motivo)"> {{ motivo }}
-                                    </label>
-                                </div>
                             </div>
                         </div>
 
@@ -101,22 +97,27 @@
                                 <div class="qa-subpasta-titulo">{{ tag }} ({{ detalhe.imagens.subpastas[tag].length }})</div>
                                 <div class="qa-grid">
                                     <div class="qa-miniatura-wrap" v-for="img in detalhe.imagens.subpastas[tag]" :key="img.nome">
-                                        <div class="qa-miniatura">
+                                        <div
+                                            class="qa-miniatura"
+                                            :class="{ ativa: fotoAtiva === (tag + '/' + img.nome), marcada: !!marcadas[tag + '/' + img.nome] }"
+                                            @click="selecionarFoto(tag + '/' + img.nome)"
+                                        >
                                             <img :src="urlImagem(tag + '/' + img.nome)" :alt="img.nome" loading="lazy">
                                         </div>
                                         <div class="qa-miniatura-nome">{{ img.nome }}</div>
-                                        <label class="qa-acoes-mini">
-                                            <input type="checkbox" :checked="!!marcadas[tag + '/' + img.nome]" @change="togglarProblema(tag + '/' + img.nome)"> marcar problema
-                                        </label>
-                                        <div v-if="marcadas[tag + '/' + img.nome]" class="qa-motivos">
-                                            <label v-for="motivo in motivos" :key="motivo" class="qa-motivo-item">
-                                                <input type="checkbox" :checked="marcadas[tag + '/' + img.nome].includes(motivo)" @change="togglarMotivo(tag + '/' + img.nome, motivo)"> {{ motivo }}
-                                            </label>
-                                        </div>
                                     </div>
                                 </div>
                             </template>
                         </template>
+
+                        <div v-if="fotoAtiva" class="qa-motivos-painel">
+                            <div class="qa-motivos-titulo">Motivos para {{ fotoAtiva }}</div>
+                            <div class="qa-motivos">
+                                <label v-for="motivo in motivos" :key="motivo" class="qa-motivo-item">
+                                    <input type="checkbox" :checked="(marcadas[fotoAtiva] || []).includes(motivo)" @change="togglarMotivoAtivo(motivo)"> {{ motivo }}
+                                </label>
+                            </div>
+                        </div>
 
                         <div class="qa-enviar-conferencia mt-3">
                             <button type="button" class="btn btn-primary btn-sm" :disabled="temMarcacao() || aprovando || !!mensagem" @click="aprovarGtin">
