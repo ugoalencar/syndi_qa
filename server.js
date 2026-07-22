@@ -105,6 +105,44 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    if (req.method === 'GET' && req.url.startsWith('/api/imagem')) {
+        const query = new URL(req.url, 'http://localhost').searchParams;
+        const os = query.get('os') || '';
+        const gtin = query.get('gtin') || '';
+        const nome = query.get('nome') || '';
+        if (!isNomeSeguro(os) || !isNomeSeguro(gtin)) {
+            enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin invalidos' });
+            return;
+        }
+        const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+        if (!pastaOsNome) {
+            enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
+            return;
+        }
+        const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(path.join(qaSyndi.AGCONFERENCIA, pastaOsNome), gtin, /^(\d+)/);
+        if (!pastaGtinNome) {
+            enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
+            return;
+        }
+        const pastaGtinPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome, pastaGtinNome);
+        const caminhoImagem = qaSyndi.resolverImagemSegura(pastaGtinPath, nome);
+        if (!caminhoImagem || !fs.existsSync(caminhoImagem)) {
+            res.writeHead(404, { 'Content-Type': 'text/plain' });
+            res.end('Imagem nao encontrada');
+            return;
+        }
+        fs.readFile(caminhoImagem, (err, content) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Erro no servidor');
+                return;
+            }
+            res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+            res.end(content);
+        });
+        return;
+    }
+
     if (req.method === 'POST' && req.url === '/api/aprovar') {
         lerCorpo(req).then(corpo => {
             let dados;
