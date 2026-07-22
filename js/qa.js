@@ -241,18 +241,26 @@ createApp({
 
         async function abrirPainelEnvio() {
             if (!selecionado.value || temMarcacao() || preparandoEnvio.value) return;
+            const os = selecionado.value.os;
+            const gtin = selecionado.value.gtin;
             preparandoEnvio.value = true;
             erro.value = '';
             try {
-                const resp = await fetch(API + '/api/aprovar/preparar?os=' + encodeURIComponent(selecionado.value.os) + '&gtin=' + encodeURIComponent(selecionado.value.gtin));
+                const resp = await fetch(API + '/api/aprovar/preparar?os=' + encodeURIComponent(os) + '&gtin=' + encodeURIComponent(gtin));
                 const dados = await resp.json();
                 if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
+                // Resposta atrasada de um GTIN anterior nao pode reabrir o painel com os
+                // campos errados depois que o usuario ja trocou de selecao - conferir se
+                // ainda estamos no mesmo GTIN antes de aplicar (mesmo padrao do sphoto).
+                if (!selecionado.value || selecionado.value.os !== os || selecionado.value.gtin !== gtin) return;
                 formEnvio.responsavel = dados.campos.responsavel || '';
                 formEnvio.qtdRecorte = dados.campos.qtdRecorte || '';
                 formEnvio.qtdMockup = dados.campos.qtdMockup || '';
                 painelEnvio.value = { destino: dados.destino, motivo: dados.motivo };
             } catch (err) {
-                erro.value = 'Erro ao preparar envio: ' + err.message;
+                if (selecionado.value && selecionado.value.os === os && selecionado.value.gtin === gtin) {
+                    erro.value = 'Erro ao preparar envio: ' + err.message;
+                }
             } finally {
                 preparandoEnvio.value = false;
             }
