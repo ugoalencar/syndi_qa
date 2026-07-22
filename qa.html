@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syndi_qa</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/qa.css">
+</head>
+<body>
+    <div id="qaApp">
+        <header class="header">
+            <div class="header-inner">
+                <div class="header-left">
+                    <span class="header-title">Syndi_qa</span>
+                </div>
+                <div class="header-right">
+                    <button type="button" class="btn btn-sm btn-outline-light" @click="carregarFila" :disabled="carregandoFila">
+                        <i class="bi bi-arrow-clockwise"></i> Atualizar fila
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="qa-layout">
+            <aside class="qa-arvore">
+                <div v-if="carregandoFila" class="qa-vazio">Carregando...</div>
+                <div v-else-if="erroFila" class="text-danger p-2">{{ erroFila }}</div>
+                <div v-else-if="fila.length === 0" class="qa-vazio">Nenhum GTIN aguardando conferência.</div>
+                <div v-else>
+                    <div class="qa-os-grupo" v-for="grupo in fila" :key="grupo.os">
+                        <div class="qa-os-titulo"><span>OS {{ grupo.os }} ({{ grupo.gtins.length }})</span></div>
+                        <div
+                            class="qa-gtin-item"
+                            v-for="item in grupo.gtins"
+                            :key="item.gtin"
+                            :class="{ ativo: selecionado && selecionado.os === grupo.os && selecionado.gtin === item.gtin }"
+                            @click="selecionarGtin(grupo.os, item.gtin)"
+                        >
+                            <span>{{ item.gtin }}</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="qa-detalhe">
+                <div v-if="!selecionado" class="qa-vazio">Selecione um GTIN na lista ao lado.</div>
+
+                <div v-else>
+                    <h5 class="mb-3">GTIN {{ selecionado.gtin }} <small class="text-muted">- OS {{ selecionado.os }}</small></h5>
+
+                    <div v-if="carregandoDetalhe" class="qa-vazio">Carregando pasta...</div>
+                    <div v-else-if="erroDetalhe" class="text-danger p-3">{{ erroDetalhe }}</div>
+
+                    <template v-else-if="detalhe">
+                        <div class="qa-subpasta-titulo">Raiz ({{ detalhe.imagens.raiz.length }})</div>
+                        <div class="qa-grid">
+                            <div class="qa-miniatura-wrap" v-for="img in detalhe.imagens.raiz" :key="img.nome">
+                                <div class="qa-miniatura">
+                                    <img :src="'data:image/jpeg;base64,' + img.arquivo" :alt="img.nome">
+                                </div>
+                                <div class="qa-miniatura-nome">{{ img.nome }}</div>
+                                <label class="qa-acoes-mini">
+                                    <input type="checkbox" :checked="!!marcadas[img.nome]" @change="togglarProblema(img.nome)"> marcar problema
+                                </label>
+                                <div v-if="marcadas[img.nome]" class="qa-motivos">
+                                    <label v-for="motivo in motivos" :key="motivo" class="qa-motivo-item">
+                                        <input type="checkbox" :checked="marcadas[img.nome].includes(motivo)" @change="togglarMotivo(img.nome, motivo)"> {{ motivo }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <template v-for="tag in ['RT', 'IS', 'AP']" :key="tag">
+                            <template v-if="detalhe.imagens.subpastas[tag] && detalhe.imagens.subpastas[tag].length">
+                                <div class="qa-subpasta-titulo">{{ tag }} ({{ detalhe.imagens.subpastas[tag].length }})</div>
+                                <div class="qa-grid">
+                                    <div class="qa-miniatura-wrap" v-for="img in detalhe.imagens.subpastas[tag]" :key="img.nome">
+                                        <div class="qa-miniatura">
+                                            <img :src="'data:image/jpeg;base64,' + img.arquivo" :alt="img.nome">
+                                        </div>
+                                        <div class="qa-miniatura-nome">{{ img.nome }}</div>
+                                        <label class="qa-acoes-mini">
+                                            <input type="checkbox" :checked="!!marcadas[tag + '/' + img.nome]" @change="togglarProblema(tag + '/' + img.nome)"> marcar problema
+                                        </label>
+                                        <div v-if="marcadas[tag + '/' + img.nome]" class="qa-motivos">
+                                            <label v-for="motivo in motivos" :key="motivo" class="qa-motivo-item">
+                                                <input type="checkbox" :checked="marcadas[tag + '/' + img.nome].includes(motivo)" @change="togglarMotivo(tag + '/' + img.nome, motivo)"> {{ motivo }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </template>
+
+                        <div class="qa-enviar-conferencia mt-3">
+                            <button type="button" class="btn btn-primary btn-sm" :disabled="temMarcacao() || aprovando || !!mensagem" @click="aprovarGtin">
+                                <i class="bi bi-check2-circle"></i> Aprovar GTIN
+                            </button>
+                            <button type="button" class="btn btn-warning btn-sm" :disabled="!temMarcacao() || enviandoRetrabalho || !!mensagem" @click="confirmarRetrabalho">
+                                <i class="bi bi-arrow-counterclockwise"></i> Confirmar Retrabalho
+                            </button>
+                            <span v-if="mensagem" class="ms-3 text-success">{{ mensagem }}</span>
+                            <span v-if="erro" class="ms-3 text-danger">{{ erro }}</span>
+                        </div>
+                    </template>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/vue.global.js"></script>
+    <script src="js/qa.js"></script>
+</body>
+</html>
