@@ -213,7 +213,7 @@ const server = http.createServer((req, res) => {
                 return;
             }
             try {
-                const resultado = qaSyndi.retrabalharGtin(qaSyndi.AGCONFERENCIA, qaSyndi.RETRABALHO, pastaOsNome, pastaGtinNome, gtin, marcacoes);
+                const resultado = qaSyndi.retrabalharGtin(qaSyndi.AGCONFERENCIA, qaSyndi.RETRABALHO, pastaOsNome, pastaGtinNome, os, gtin, marcacoes);
                 enviarJson(res, 200, { ok: true, destino: resultado.destino });
             } catch (err) {
                 enviarJson(res, 500, { ok: false, error: err.message });
