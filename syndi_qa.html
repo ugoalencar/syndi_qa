@@ -106,6 +106,7 @@
                                     <button type="button" class="qa-acao-mini rt" title="Mover para Rótulo" @click="toggleSubpasta(img.nome, 'RT')">RT</button>
                                     <button type="button" class="qa-acao-mini is" title="Mover para Insumos" @click="toggleSubpasta(img.nome, 'IS')">IS</button>
                                     <button type="button" class="qa-acao-mini ap" title="Mover para Apoio" @click="toggleSubpasta(img.nome, 'AP')">AP</button>
+                                    <button type="button" class="qa-acao-mini zoom" title="Ampliar" @click="ampliarImagem(img.nome, detalhe.imagens.raiz.map(i => i.nome))"><i class="bi bi-zoom-in"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -125,6 +126,7 @@
                                         <div class="qa-miniatura-nome">{{ img.nome }}</div>
                                         <div class="qa-acoes-mini">
                                             <button type="button" class="qa-acao-mini voltar" title="Tirar da subpasta" @click="toggleSubpasta(img.nome, tag)">Voltar p/ raiz</button>
+                                            <button type="button" class="qa-acao-mini zoom" title="Ampliar" @click="ampliarImagem(tag + '/' + img.nome, detalhe.imagens.subpastas[tag].map(i => tag + '/' + i.nome))"><i class="bi bi-zoom-in"></i></button>
                                         </div>
                                     </div>
                                 </div>
@@ -153,6 +155,32 @@
                     </template>
                 </div>
             </main>
+        </div>
+
+        <div class="modal fade" id="modalImagem" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header border-0">
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <div class="nav-arrows">
+                            <button type="button" class="btn btn-outline-light btn-sm" @click="navegarAmpliada(-1)">
+                                <i class="bi bi-chevron-left"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-light btn-sm" @click="navegarAmpliada(1)">
+                                <i class="bi bi-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="modal-body d-flex align-items-center justify-content-center p-0">
+                        <img v-if="imagemAmpliada" :src="urlImagem(imagemAmpliada)" :alt="imagemAmpliada" id="imgAmpliada">
+                    </div>
+                    <div class="modal-footer border-0">
+                        <div class="info-imagem">
+                            <span>{{ imagemAmpliada || '' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

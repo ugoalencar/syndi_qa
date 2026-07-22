@@ -1,4 +1,4 @@
-const { createApp, ref, reactive } = Vue;
+const { createApp, ref, reactive, nextTick, onMounted } = Vue;
 const API = 'http://localhost:3001';
 
 createApp({
@@ -36,6 +36,9 @@ createApp({
         let timeoutFecharDepoisDeConcluir = null;
 
         const marcandoDestino = ref(false);
+
+        const imagemAmpliada = ref(null);
+        const listaAmpliada = ref([]);
 
         async function carregarFila() {
             carregandoFila.value = true;
@@ -198,6 +201,24 @@ createApp({
             return nomes.length > 0 && nomes.every(nome => marcadas[nome].length > 0);
         }
 
+        // Zoom de miniatura - guarda o mesmo "nome composto" que urlImagem/selecionarFoto
+        // ja usam (com prefixo de subpasta quando aplicavel, ex.: "RT/foto.jpg"), pra
+        // urlImagem(imagemAmpliada) funcionar sem tratamento especial.
+        function ampliarImagem(nomeComposto, lista) {
+            imagemAmpliada.value = nomeComposto;
+            listaAmpliada.value = lista;
+            nextTick(() => {
+                bootstrap.Modal.getOrCreateInstance(document.getElementById('modalImagem')).show();
+            });
+        }
+
+        function navegarAmpliada(delta) {
+            if (!imagemAmpliada.value || !listaAmpliada.value.length) return;
+            const idx = listaAmpliada.value.indexOf(imagemAmpliada.value);
+            const total = listaAmpliada.value.length;
+            imagemAmpliada.value = listaAmpliada.value[(idx + delta + total) % total];
+        }
+
         async function aprovarGtin() {
             if (!selecionado.value || temMarcacao()) return;
             aprovando.value = true;
@@ -298,6 +319,18 @@ createApp({
             }
         }
 
+        onMounted(() => {
+            document.getElementById('modalImagem').addEventListener('hidden.bs.modal', () => {
+                imagemAmpliada.value = null;
+                listaAmpliada.value = [];
+            });
+            document.addEventListener('keydown', (e) => {
+                if (!imagemAmpliada.value) return;
+                if (e.key === 'ArrowLeft') navegarAmpliada(-1);
+                if (e.key === 'ArrowRight') navegarAmpliada(1);
+            });
+        });
+
         carregarFila();
         carregarMotivosDisponiveis();
 
@@ -308,6 +341,7 @@ createApp({
             aprovando, enviandoRetrabalho, mensagem, erro,
             atualizacaoInfo, verificandoAtualizacao, resultadoAtualizacao, aplicandoAtualizacao,
             marcandoDestino, marcarDestinoManual, toggleCoding, toggleSubpasta,
+            imagemAmpliada, listaAmpliada, ampliarImagem, navegarAmpliada,
             carregarFila, selecionarGtin, urlImagem, selecionarFoto, togglarMotivoAtivo, temMarcacao, todasMarcacoesTemMotivo,
             aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao
         };
