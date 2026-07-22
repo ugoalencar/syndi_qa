@@ -20,6 +20,14 @@ createApp({
         const mensagem = ref('');
         const erro = ref('');
 
+        // Atualizacao via git (mesmo par verificar/aplicar do sphoto) - so aciona
+        // sob demanda (botao), nunca sozinho no load: git fetch a cada abertura da
+        // tela seria custo desnecessario pro uso normal do QA Hub.
+        const atualizacaoInfo = ref(null);
+        const verificandoAtualizacao = ref(false);
+        const resultadoAtualizacao = ref(null);
+        const aplicandoAtualizacao = ref(false);
+
         // Guarda o id do setTimeout de fecharDepoisDeConcluir. Sem isso, trocar de
         // GTIN dentro da janela de 2s deixa o timer do GTIN anterior orfao: ele
         // dispara depois e zera detalhe/selecionado/mensagem do GTIN novo que o
@@ -97,6 +105,15 @@ createApp({
             return Object.keys(marcadas).length > 0;
         }
 
+        // Retrabalho so faz sentido se toda foto marcada tiver pelo menos um motivo
+        // escolhido - marcadas[foto] comeca como array vazio (togglarProblema), e sem
+        // isso "Confirmar Retrabalho" habilitava com uma linha vazia (sem motivo
+        // nenhum) indo pro retrabalho.txt, inutil pro fotografo corrigir.
+        function todasMarcacoesTemMotivo() {
+            const nomes = Object.keys(marcadas);
+            return nomes.length > 0 && nomes.every(nome => marcadas[nome].length > 0);
+        }
+
         async function aprovarGtin() {
             if (!selecionado.value || temMarcacao()) return;
             aprovando.value = true;
@@ -124,7 +141,7 @@ createApp({
         }
 
         async function confirmarRetrabalho() {
-            if (!selecionado.value || !temMarcacao()) return;
+            if (!selecionado.value || !todasMarcacoesTemMotivo()) return;
             enviandoRetrabalho.value = true;
             mensagem.value = '';
             erro.value = '';
@@ -159,6 +176,40 @@ createApp({
             }, 2000);
         }
 
+        async function verificarAtualizacao() {
+            verificandoAtualizacao.value = true;
+            resultadoAtualizacao.value = null;
+            try {
+                const resp = await fetch(API + '/api/atualizacao/verificar');
+                atualizacaoInfo.value = await resp.json();
+            } catch (err) {
+                // ok:false discreto - esperado sempre que nao ha rede/remoto configurado
+                // nesta fase do projeto, nao pode quebrar a tela.
+                atualizacaoInfo.value = { ok: false, error: 'Erro ao verificar: ' + err.message };
+            } finally {
+                verificandoAtualizacao.value = false;
+            }
+        }
+
+        async function aplicarAtualizacao() {
+            aplicandoAtualizacao.value = true;
+            resultadoAtualizacao.value = null;
+            try {
+                const resp = await fetch(API + '/api/atualizacao/aplicar', { method: 'POST' });
+                resultadoAtualizacao.value = await resp.json();
+                // Reconsulta pra sino/mensagem "ja atualizado" refletirem o novo HEAD.
+                // Nunca reinicia o servidor sozinho - se precisaReiniciar, quem le a tela
+                // reinicia manualmente (auto-restart e proposital fora de escopo).
+                if (resultadoAtualizacao.value.ok) {
+                    await verificarAtualizacao();
+                }
+            } catch (err) {
+                resultadoAtualizacao.value = { ok: false, error: 'Erro ao aplicar: ' + err.message };
+            } finally {
+                aplicandoAtualizacao.value = false;
+            }
+        }
+
         carregarFila();
         carregarMotivosDisponiveis();
 
@@ -167,8 +218,9 @@ createApp({
             selecionado, detalhe, carregandoDetalhe, erroDetalhe,
             motivos, marcadas,
             aprovando, enviandoRetrabalho, mensagem, erro,
-            carregarFila, selecionarGtin, togglarProblema, togglarMotivo, temMarcacao,
-            aprovarGtin, confirmarRetrabalho
+            atualizacaoInfo, verificandoAtualizacao, resultadoAtualizacao, aplicandoAtualizacao,
+            carregarFila, selecionarGtin, togglarProblema, togglarMotivo, temMarcacao, todasMarcacoesTemMotivo,
+            aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao
         };
     }
 }).mount('#qaApp');

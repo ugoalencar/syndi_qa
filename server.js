@@ -156,6 +156,14 @@ const server = http.createServer((req, res) => {
                 enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin/marcacoes invalidos' });
                 return;
             }
+            // Defesa em profundidade: o front-end ja impede marcar retrabalho sem motivo
+            // (todasMarcacoesTemMotivo em qa.js), mas o servidor nao pode confiar cegamente
+            // no cliente - foto marcada sem motivo vira linha vazia e inutil no retrabalho.txt.
+            const temFotoSemMotivo = Object.values(marcacoes).some(lista => !Array.isArray(lista) || lista.length === 0);
+            if (temFotoSemMotivo) {
+                enviarJson(res, 400, { ok: false, error: 'Toda foto marcada precisa de pelo menos um motivo selecionado' });
+                return;
+            }
             const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
             if (!pastaOsNome) {
                 enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });

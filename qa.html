@@ -7,6 +7,7 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/sphoto.css">
     <link rel="stylesheet" href="css/qa.css">
 </head>
 <body>
@@ -17,6 +18,28 @@
                     <span class="header-title">Syndi_qa</span>
                 </div>
                 <div class="header-right">
+                    <i v-if="atualizacaoInfo && atualizacaoInfo.ok && atualizacaoInfo.temAtualizacao"
+                       class="bi bi-bell qa-sino-atualizacao" title="Ha uma atualizacao disponivel"></i>
+                    <span v-if="atualizacaoInfo && !atualizacaoInfo.ok" class="qa-atualizacao-msg" :title="atualizacaoInfo.error">
+                        Atualização indisponível
+                    </span>
+                    <span v-else-if="atualizacaoInfo && atualizacaoInfo.ok && !atualizacaoInfo.temAtualizacao" class="qa-atualizacao-msg">
+                        Já está na versão mais recente
+                    </span>
+                    <span v-if="resultadoAtualizacao" class="qa-atualizacao-msg" :class="{ 'qa-atualizacao-erro': !resultadoAtualizacao.ok }">
+                        <template v-if="resultadoAtualizacao.ok">
+                            Atualizado.
+                            <strong v-if="resultadoAtualizacao.precisaReiniciar">Reinicie o servidor manualmente para aplicar.</strong>
+                        </template>
+                        <template v-else>{{ resultadoAtualizacao.error }}</template>
+                    </span>
+                    <button type="button" class="btn btn-sm btn-outline-light" @click="verificarAtualizacao" :disabled="verificandoAtualizacao">
+                        <i class="bi bi-cloud-arrow-down"></i> Verificar atualização
+                    </button>
+                    <button v-if="atualizacaoInfo && atualizacaoInfo.ok && atualizacaoInfo.temAtualizacao"
+                            type="button" class="btn btn-sm btn-success" @click="aplicarAtualizacao" :disabled="aplicandoAtualizacao">
+                        <i class="bi bi-download"></i> Atualizar agora
+                    </button>
                     <button type="button" class="btn btn-sm btn-outline-light" @click="carregarFila" :disabled="carregandoFila">
                         <i class="bi bi-arrow-clockwise"></i> Atualizar fila
                     </button>
@@ -99,7 +122,7 @@
                             <button type="button" class="btn btn-primary btn-sm" :disabled="temMarcacao() || aprovando || !!mensagem" @click="aprovarGtin">
                                 <i class="bi bi-check2-circle"></i> Aprovar GTIN
                             </button>
-                            <button type="button" class="btn btn-warning btn-sm" :disabled="!temMarcacao() || enviandoRetrabalho || !!mensagem" @click="confirmarRetrabalho">
+                            <button type="button" class="btn btn-warning btn-sm" :disabled="!todasMarcacoesTemMotivo() || enviandoRetrabalho || !!mensagem" @click="confirmarRetrabalho">
                                 <i class="bi bi-arrow-counterclockwise"></i> Confirmar Retrabalho
                             </button>
                             <span v-if="mensagem" class="ms-3 text-success">{{ mensagem }}</span>
