@@ -77,6 +77,16 @@ const server = http.createServer((req, res) => {
     const urlSemQuery = req.url.split('?')[0];
     let filePath = path.join(BASE_PATH, urlSemQuery === '/' ? 'qa.html' : urlSemQuery);
 
+    // Contencao contra path traversal: um cliente pode mandar '..' literal na URL
+    // sem normalizar (ex.: curl --path-as-is) e o path.join acima escapa de BASE_PATH.
+    // Resolve o caminho final e confere que ainda esta dentro da pasta do projeto.
+    filePath = path.resolve(filePath);
+    if (filePath !== BASE_PATH && !filePath.startsWith(BASE_PATH + path.sep)) {
+        res.writeHead(403, { 'Content-Type': 'text/plain' });
+        res.end('Acesso negado');
+        return;
+    }
+
     if (ehArquivoBloqueado(filePath)) {
         console.error('Bloqueado acesso HTTP a arquivo sensivel:', urlSemQuery);
         res.writeHead(403, { 'Content-Type': 'text/plain' });
