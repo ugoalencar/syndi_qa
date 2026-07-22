@@ -256,8 +256,33 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    // Campos inferidos pro formulario de envio pra edicao (responsavel/quantidades) -
+    // so leitura, nada e gravado nem movido aqui.
+    if (req.method === 'GET' && req.url.startsWith('/api/aprovar/preparar')) {
+        const query = new URL(req.url, 'http://localhost').searchParams;
+        const os = query.get('os') || '';
+        const gtin = query.get('gtin') || '';
+        if (!isNomeSeguro(os) || !isNomeSeguro(gtin)) {
+            enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin invalidos' });
+            return;
+        }
+        const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+        if (!pastaOsNome) {
+            enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
+            return;
+        }
+        const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(path.join(qaSyndi.AGCONFERENCIA, pastaOsNome), gtin, /^(\d+)/);
+        if (!pastaGtinNome) {
+            enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
+            return;
+        }
+        const inferido = qaSyndi.inferirCamposEdicao(path.join(qaSyndi.AGCONFERENCIA, pastaOsNome, pastaGtinNome));
+        enviarJson(res, 200, { ok: true, destino: inferido.destino, motivo: inferido.motivo || null, campos: inferido.campos });
+        return;
+    }
+
     if (req.method === 'POST' && req.url === '/api/aprovar') {
-        lerCorpo(req).then(corpo => {
+        lerCorpo(req).then(async corpo => {
             let dados;
             try {
                 dados = JSON.parse(corpo);
@@ -271,6 +296,13 @@ const server = http.createServer((req, res) => {
                 enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin invalidos' });
                 return;
             }
+            const responsavel = typeof dados.responsavel === 'string' ? dados.responsavel.trim() : '';
+            const qtdRecorte = typeof dados.qtdRecorte === 'string' ? dados.qtdRecorte.trim() : '';
+            const qtdMockup = typeof dados.qtdMockup === 'string' ? dados.qtdMockup.trim() : '';
+            if (!/^\d*$/.test(responsavel) || !/^\d*$/.test(qtdRecorte) || !/^\d*$/.test(qtdMockup)) {
+                enviarJson(res, 400, { ok: false, error: 'responsavel/qtdRecorte/qtdMockup devem ser numericos ou vazios' });
+                return;
+            }
             const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
             if (!pastaOsNome) {
                 enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
@@ -281,9 +313,22 @@ const server = http.createServer((req, res) => {
                 enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
                 return;
             }
+            // Grava Responsavel/Quantidades ANTES de mover - falha aqui IMPEDE o aprovar
+            // (diferente do retrabalho, que segue com aviso): sem esses campos o editor
+            // nao sabe o que fazer com o material. Campos todos vazios = pula o Redmine
+            // (escolha explicita do analista). Situacao das Imagens continua do robo.
+            let redmineGravado = false;
+            try {
+                const r = await redmine.gravarCamposEdicao(BASE_PATH, gtin, { responsavel, qtdRecorte, qtdMockup });
+                redmineGravado = r.gravado;
+            } catch (err) {
+                console.error('Erro ao gravar campos de edicao no Redmine para GTIN', gtin, err);
+                enviarJson(res, 500, { ok: false, error: 'Nao foi possivel gravar no Redmine - o GTIN NAO foi enviado: ' + err.message });
+                return;
+            }
             try {
                 const resultado = qaSyndi.aprovarGtin(qaSyndi.AGCONFERENCIA, qaSyndi.AGENVIO, pastaOsNome, pastaGtinNome);
-                enviarJson(res, 200, { ok: true, destino: resultado.destino });
+                enviarJson(res, 200, { ok: true, destino: resultado.destino, redmineGravado });
             } catch (err) {
                 enviarJson(res, 500, { ok: false, error: err.message });
             }
