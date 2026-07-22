@@ -396,7 +396,7 @@ const server = http.createServer((req, res) => {
     // Handler estatico - serve qa.html, css, js e qualquer outro arquivo da raiz
     // do projeto, exceto os bloqueados.
     const urlSemQuery = req.url.split('?')[0];
-    let filePath = path.join(BASE_PATH, urlSemQuery === '/' ? 'qa.html' : urlSemQuery);
+    let filePath = path.join(BASE_PATH, urlSemQuery === '/' ? 'syndi_qa.html' : urlSemQuery);
 
     // Contencao contra path traversal: um cliente pode mandar '..' literal na URL
     // sem normalizar (ex.: curl --path-as-is) e o path.join acima escapa de BASE_PATH.

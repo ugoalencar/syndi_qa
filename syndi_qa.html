@@ -74,21 +74,39 @@
                 <div v-else>
                     <h5 class="mb-3">GTIN {{ selecionado.gtin }} <small class="text-muted">- OS {{ selecionado.os }}</small></h5>
 
+                    <div class="qa-legenda">
+                        <span class="qa-legenda-item"><span class="qa-legenda-cor coding"></span> _coding (referência de edição)</span>
+                        <span class="qa-legenda-item"><span class="qa-legenda-cor rt"></span> RT - Rótulo</span>
+                        <span class="qa-legenda-item"><span class="qa-legenda-cor is"></span> IS - Insumos</span>
+                        <span class="qa-legenda-item"><span class="qa-legenda-cor ap"></span> AP - Apoio</span>
+                    </div>
+
                     <div v-if="carregandoDetalhe" class="qa-vazio">Carregando pasta...</div>
                     <div v-else-if="erroDetalhe" class="text-danger p-3">{{ erroDetalhe }}</div>
 
                     <template v-else-if="detalhe">
+                        <div class="qa-destino-manual">
+                            <span class="qa-destino-manual-label">Tipo de pós-produção:</span>
+                            <button type="button" class="qa-destino-btn recorte" :class="{ ativa: detalhe.imagens.destino === 'Recorte' }" :disabled="marcandoDestino" @click="marcarDestinoManual('Recorte')">Recorte</button>
+                            <button type="button" class="qa-destino-btn mockup" :class="{ ativa: detalhe.imagens.destino === 'Mockup' }" :disabled="marcandoDestino" @click="marcarDestinoManual('Mockup')">Mockup</button>
+                        </div>
                         <div class="qa-subpasta-titulo">Raiz ({{ detalhe.imagens.raiz.length }})</div>
                         <div class="qa-grid">
                             <div class="qa-miniatura-wrap" v-for="img in detalhe.imagens.raiz" :key="img.nome">
                                 <div
                                     class="qa-miniatura"
-                                    :class="{ ativa: fotoAtiva === img.nome, marcada: !!marcadas[img.nome] }"
+                                    :class="{ ativa: fotoAtiva === img.nome, marcada: !!marcadas[img.nome], 'tem-coding': img.nome.includes('_coding') }"
                                     @click="selecionarFoto(img.nome)"
                                 >
                                     <img :src="urlImagem(img.nome)" :alt="img.nome" loading="lazy">
                                 </div>
                                 <div class="qa-miniatura-nome">{{ img.nome }}</div>
+                                <div class="qa-acoes-mini">
+                                    <button type="button" class="qa-acao-mini coding" :class="{ ativa: img.nome.includes('_coding') }" title="Marcar/desmarcar _coding" @click="toggleCoding(img.nome)">C</button>
+                                    <button type="button" class="qa-acao-mini rt" title="Mover para Rótulo" @click="toggleSubpasta(img.nome, 'RT')">RT</button>
+                                    <button type="button" class="qa-acao-mini is" title="Mover para Insumos" @click="toggleSubpasta(img.nome, 'IS')">IS</button>
+                                    <button type="button" class="qa-acao-mini ap" title="Mover para Apoio" @click="toggleSubpasta(img.nome, 'AP')">AP</button>
+                                </div>
                             </div>
                         </div>
 
@@ -99,12 +117,15 @@
                                     <div class="qa-miniatura-wrap" v-for="img in detalhe.imagens.subpastas[tag]" :key="img.nome">
                                         <div
                                             class="qa-miniatura"
-                                            :class="{ ativa: fotoAtiva === (tag + '/' + img.nome), marcada: !!marcadas[tag + '/' + img.nome] }"
+                                            :class="{ ativa: fotoAtiva === (tag + '/' + img.nome), marcada: !!marcadas[tag + '/' + img.nome], ['tem-' + tag.toLowerCase()]: true }"
                                             @click="selecionarFoto(tag + '/' + img.nome)"
                                         >
                                             <img :src="urlImagem(tag + '/' + img.nome)" :alt="img.nome" loading="lazy">
                                         </div>
                                         <div class="qa-miniatura-nome">{{ img.nome }}</div>
+                                        <div class="qa-acoes-mini">
+                                            <button type="button" class="qa-acao-mini voltar" title="Tirar da subpasta" @click="toggleSubpasta(img.nome, tag)">Voltar p/ raiz</button>
+                                        </div>
                                     </div>
                                 </div>
                             </template>

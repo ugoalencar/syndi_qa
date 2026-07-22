@@ -35,6 +35,8 @@ createApp({
         // usuario ja esta revisando.
         let timeoutFecharDepoisDeConcluir = null;
 
+        const marcandoDestino = ref(false);
+
         async function carregarFila() {
             carregandoFila.value = true;
             erroFila.value = '';
@@ -96,6 +98,72 @@ createApp({
             return API + '/api/imagem?os=' + encodeURIComponent(selecionado.value.os) +
                 '&gtin=' + encodeURIComponent(selecionado.value.gtin) +
                 '&nome=' + encodeURIComponent(nome);
+        }
+
+        // Recarrega so o detalhe do GTIN atual, sem mexer em fotoAtiva/marcadas (estado
+        // do retrabalho, nao persistido) - usado depois de qualquer acao de tagging.
+        async function recarregarDetalheAtual() {
+            if (!selecionado.value) return;
+            try {
+                const resp = await fetch(API + '/api/gtin?os=' + encodeURIComponent(selecionado.value.os) + '&gtin=' + encodeURIComponent(selecionado.value.gtin));
+                const dados = await resp.json();
+                if (dados.ok) detalhe.value = dados;
+            } catch (err) {
+                console.error('Erro ao recarregar detalhe:', err);
+            }
+        }
+
+        async function toggleCoding(nome) {
+            if (!selecionado.value) return;
+            try {
+                const resp = await fetch(API + '/api/marcar-coding', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ os: selecionado.value.os, gtin: selecionado.value.gtin, nome })
+                });
+                const dados = await resp.json();
+                if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
+                await recarregarDetalheAtual();
+            } catch (err) {
+                alert('Erro ao marcar _coding: ' + err.message);
+            }
+        }
+
+        async function toggleSubpasta(nome, pasta) {
+            if (!selecionado.value) return;
+            try {
+                const resp = await fetch(API + '/api/tag-subpasta', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ os: selecionado.value.os, gtin: selecionado.value.gtin, nome, pasta })
+                });
+                const dados = await resp.json();
+                if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
+                await recarregarDetalheAtual();
+            } catch (err) {
+                alert('Erro ao mover para ' + pasta + ': ' + err.message);
+            }
+        }
+
+        async function marcarDestinoManual(tipo) {
+            if (!selecionado.value || marcandoDestino.value) return;
+            const jaAtivo = detalhe.value && detalhe.value.imagens.destino === tipo;
+            const novoTipo = jaAtivo ? null : tipo;
+            marcandoDestino.value = true;
+            try {
+                const resp = await fetch(API + '/api/marcar-destino', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ os: selecionado.value.os, gtin: selecionado.value.gtin, tipo: novoTipo })
+                });
+                const dados = await resp.json();
+                if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
+                await recarregarDetalheAtual();
+            } catch (err) {
+                alert('Erro ao marcar destino: ' + err.message);
+            } finally {
+                marcandoDestino.value = false;
+            }
         }
 
         // Clicar numa foto so a torna "ativa" (o painel abaixo do palco passa a mostrar
@@ -239,6 +307,7 @@ createApp({
             motivos, marcadas, fotoAtiva,
             aprovando, enviandoRetrabalho, mensagem, erro,
             atualizacaoInfo, verificandoAtualizacao, resultadoAtualizacao, aplicandoAtualizacao,
+            marcandoDestino, marcarDestinoManual, toggleCoding, toggleSubpasta,
             carregarFila, selecionarGtin, urlImagem, selecionarFoto, togglarMotivoAtivo, temMarcacao, todasMarcacoesTemMotivo,
             aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao
         };
