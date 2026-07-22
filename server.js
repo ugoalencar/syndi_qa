@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 const qaSyndi = require('./lib/qaSyndi');
 
 // So loga antes de encerrar - depois de um erro nao tratado o processo fica em
@@ -177,6 +178,46 @@ const server = http.createServer((req, res) => {
 
     if (req.method === 'GET' && req.url === '/api/motivos') {
         enviarJson(res, 200, { ok: true, motivos: qaSyndi.carregarMotivos(BASE_PATH) });
+        return;
+    }
+
+    // So compara HEAD local com origin/main (git fetch, sem baixar/aplicar nada) -
+    // alimenta a tela de configuracao. Pasta sem .git ou sem rede cai no catch e
+    // devolve ok:false. Mesmo endpoint que o sphoto ja usa (server.js dele).
+    if (req.method === 'GET' && req.url === '/api/atualizacao/verificar') {
+        try {
+            execSync('git fetch origin main --tags', { cwd: BASE_PATH, stdio: 'pipe' });
+            const commitsAtras = parseInt(execSync('git rev-list HEAD..origin/main --count', { cwd: BASE_PATH }).toString().trim(), 10) || 0;
+            const versaoAtual = execSync('git describe --tags --always', { cwd: BASE_PATH }).toString().trim();
+            const versaoDisponivel = execSync('git describe --tags --always origin/main', { cwd: BASE_PATH }).toString().trim();
+            enviarJson(res, 200, { ok: true, versaoAtual, versaoDisponivel, temAtualizacao: commitsAtras > 0 });
+        } catch (err) {
+            enviarJson(res, 200, { ok: false, error: 'Nao foi possivel consultar atualizacoes (sem rede, sem remoto configurado, ou esta pasta nao e um repositorio git)' });
+        }
+        return;
+    }
+
+    // Traz o codigo novo com "git pull --ff-only" - nunca cria merge/resolve conflito
+    // sozinho, entao se a pasta tiver alteracao local nao commitada ou o historico
+    // tiver divergido, aborta e devolve erro em vez de arriscar quebrar a pasta.
+    if (req.method === 'POST' && req.url === '/api/atualizacao/aplicar') {
+        try {
+            const statusSujo = execSync('git status --porcelain', { cwd: BASE_PATH }).toString().trim();
+            if (statusSujo) {
+                enviarJson(res, 200, { ok: false, error: 'Ha alteracoes locais nao commitadas nesta pasta - resolva manualmente (git status) antes de atualizar' });
+                return;
+            }
+            const antes = execSync('git rev-parse HEAD', { cwd: BASE_PATH }).toString().trim();
+            execSync('git pull --ff-only origin main', { cwd: BASE_PATH, stdio: 'pipe' });
+            const depois = execSync('git rev-parse HEAD', { cwd: BASE_PATH }).toString().trim();
+            const arquivosMudados = antes === depois ? [] : execSync('git diff --name-only ' + antes + ' ' + depois, { cwd: BASE_PATH })
+                .toString().trim().split('\n').filter(Boolean);
+            const precisaReiniciar = arquivosMudados.some((f) => f === 'server.js' || f.startsWith('lib/'));
+            const versaoAtual = execSync('git describe --tags --always', { cwd: BASE_PATH }).toString().trim();
+            enviarJson(res, 200, { ok: true, jaEstavaAtualizado: antes === depois, versaoAtual, arquivosMudados, precisaReiniciar });
+        } catch (err) {
+            enviarJson(res, 200, { ok: false, error: 'git pull falhou: ' + (err.message || String(err)).slice(0, 500) });
+        }
         return;
     }
 
