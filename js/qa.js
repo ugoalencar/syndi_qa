@@ -86,6 +86,16 @@ createApp({
             }
         }
 
+        // Monta a URL da rota GET /api/imagem pro GTIN selecionado no momento - troca o
+        // antigo base64 embutido no JSON (lento com fotos reais grandes) por uma URL
+        // normal, que o navegador carrega em paralelo sem travar a tela toda.
+        function urlImagem(nome) {
+            if (!selecionado.value) return '';
+            return API + '/api/imagem?os=' + encodeURIComponent(selecionado.value.os) +
+                '&gtin=' + encodeURIComponent(selecionado.value.gtin) +
+                '&nome=' + encodeURIComponent(nome);
+        }
+
         function togglarProblema(nomeFoto) {
             if (marcadas[nomeFoto]) {
                 delete marcadas[nomeFoto];
@@ -219,7 +229,7 @@ createApp({
             motivos, marcadas,
             aprovando, enviandoRetrabalho, mensagem, erro,
             atualizacaoInfo, verificandoAtualizacao, resultadoAtualizacao, aplicandoAtualizacao,
-            carregarFila, selecionarGtin, togglarProblema, togglarMotivo, temMarcacao, todasMarcacoesTemMotivo,
+            carregarFila, selecionarGtin, urlImagem, togglarProblema, togglarMotivo, temMarcacao, todasMarcacoesTemMotivo,
             aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao
         };
     }

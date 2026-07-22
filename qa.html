@@ -82,7 +82,7 @@
                         <div class="qa-grid">
                             <div class="qa-miniatura-wrap" v-for="img in detalhe.imagens.raiz" :key="img.nome">
                                 <div class="qa-miniatura">
-                                    <img :src="'data:image/jpeg;base64,' + img.arquivo" :alt="img.nome">
+                                    <img :src="urlImagem(img.nome)" :alt="img.nome" loading="lazy">
                                 </div>
                                 <div class="qa-miniatura-nome">{{ img.nome }}</div>
                                 <label class="qa-acoes-mini">
@@ -102,7 +102,7 @@
                                 <div class="qa-grid">
                                     <div class="qa-miniatura-wrap" v-for="img in detalhe.imagens.subpastas[tag]" :key="img.nome">
                                         <div class="qa-miniatura">
-                                            <img :src="'data:image/jpeg;base64,' + img.arquivo" :alt="img.nome">
+                                            <img :src="urlImagem(tag + '/' + img.nome)" :alt="img.nome" loading="lazy">
                                         </div>
                                         <div class="qa-miniatura-nome">{{ img.nome }}</div>
                                         <label class="qa-acoes-mini">
