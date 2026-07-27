@@ -68,38 +68,40 @@
             </div>
 
             <div v-if="carregandoAgenda && agenda.length === 0" class="qa-vazio">Carregando agenda...</div>
-            <div v-else-if="erroAgenda" class="text-danger p-3">{{ erroAgenda }}</div>
-            <div v-else-if="agendaFiltrada.length === 0" class="qa-vazio">Nenhum item de edição para os filtros atuais.</div>
-            <table v-else class="qa-agenda-tabela">
-                <thead>
-                    <tr>
-                        <th>OS</th>
-                        <th>GTIN</th>
-                        <th>Produto</th>
-                        <th>Responsável</th>
-                        <th>Previsão de Entrega</th>
-                        <th>Progresso</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="item in agendaFiltrada" :key="item.issueId">
-                        <td>{{ item.os || '-' }}</td>
-                        <td>{{ item.gtin }}</td>
-                        <td>{{ item.produto }}</td>
-                        <td>{{ opcoesResponsavel[item.responsavel] || item.responsavel || '-' }}</td>
-                        <td>
-                            <span v-if="item.previsaoEntrega">{{ item.previsaoEntrega }}</span>
-                            <span v-else class="text-muted">sem previsão</span>
-                        </td>
-                        <td>
-                            <div v-if="item.progresso !== null" class="qa-progresso-barra">
-                                <div class="qa-progresso-preenchido" :class="'qa-progresso-' + item.cor" :style="{ width: item.progresso + '%' }"></div>
-                            </div>
-                            <span v-else class="text-muted">sem dados</span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div v-if="erroAgenda" class="text-danger p-3">{{ erroAgenda }}</div>
+            <div v-if="!carregandoAgenda || agenda.length > 0">
+                <div v-if="agendaFiltrada.length === 0" class="qa-vazio">Nenhum item de edição para os filtros atuais.</div>
+                <table v-else class="qa-agenda-tabela">
+                    <thead>
+                        <tr>
+                            <th>OS</th>
+                            <th>GTIN</th>
+                            <th>Produto</th>
+                            <th>Responsável</th>
+                            <th>Previsão de Entrega</th>
+                            <th>Progresso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in agendaFiltrada" :key="item.issueId">
+                            <td>{{ item.os || '-' }}</td>
+                            <td>{{ item.gtin }}</td>
+                            <td>{{ item.produto }}</td>
+                            <td>{{ opcoesResponsavel[item.responsavel] || item.responsavel || '-' }}</td>
+                            <td>
+                                <span v-if="item.previsaoEntrega">{{ item.previsaoEntrega }}</span>
+                                <span v-else class="text-muted">sem previsão</span>
+                            </td>
+                            <td>
+                                <div v-if="item.progresso !== null" class="qa-progresso-barra">
+                                    <div class="qa-progresso-preenchido" :class="'qa-progresso-' + item.cor" :style="{ width: item.progresso + '%' }"></div>
+                                </div>
+                                <span v-else class="text-muted">sem dados</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="qa-layout" v-show="viewAtiva === 'fila'">
