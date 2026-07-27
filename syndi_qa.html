@@ -17,6 +17,10 @@
                 <div class="header-left">
                     <span class="header-title">Syndi_qa</span>
                 </div>
+                <div class="qa-top-tabs">
+                    <button type="button" class="qa-top-tab-btn" :class="{ ativa: viewAtiva === 'fila' }" @click="viewAtiva = 'fila'">Fila de Conferência</button>
+                    <button type="button" class="qa-top-tab-btn" :class="{ ativa: viewAtiva === 'agenda' }" @click="mudarParaAgenda">Agenda de Edição</button>
+                </div>
                 <div class="header-right">
                     <i v-if="atualizacaoInfo && atualizacaoInfo.ok && atualizacaoInfo.temAtualizacao"
                        class="bi bi-bell qa-sino-atualizacao" title="Ha uma atualizacao disponivel"></i>
@@ -40,14 +44,68 @@
                             type="button" class="btn btn-sm btn-success" @click="aplicarAtualizacao" :disabled="aplicandoAtualizacao">
                         <i class="bi bi-download"></i> Atualizar agora
                     </button>
-                    <button type="button" class="btn btn-sm btn-outline-light" @click="carregarFila" :disabled="carregandoFila">
+                    <button v-if="viewAtiva === 'fila'" type="button" class="btn btn-sm btn-outline-light" @click="carregarFila" :disabled="carregandoFila">
                         <i class="bi bi-arrow-clockwise"></i> Atualizar fila
+                    </button>
+                    <button v-else type="button" class="btn btn-sm btn-outline-light" @click="carregarAgenda" :disabled="carregandoAgenda">
+                        <i class="bi bi-arrow-clockwise" :class="{ 'qa-girando': carregandoAgenda }"></i> Atualizar agenda
                     </button>
                 </div>
             </div>
         </header>
 
-        <div class="qa-layout">
+        <div class="qa-agenda" v-show="viewAtiva === 'agenda'">
+            <div class="qa-agenda-filtros">
+                <div class="qa-agenda-filtro-responsavel">
+                    <button type="button" class="qa-top-tab-btn" :class="{ ativa: filtroResponsavel === 'todos' }" @click="filtroResponsavel = 'todos'">Todos</button>
+                    <button type="button" class="qa-top-tab-btn" :class="{ ativa: filtroResponsavel === '32' }" @click="filtroResponsavel = '32'">Virafilme (Best Image)</button>
+                    <button type="button" class="qa-top-tab-btn" :class="{ ativa: filtroResponsavel === '258' }" @click="filtroResponsavel = '258'">Bright River</button>
+                </div>
+                <div class="qa-agenda-filtro-periodo">
+                    <label>De <input type="date" v-model="filtroPeriodoDe"></label>
+                    <label>Até <input type="date" v-model="filtroPeriodoAte"></label>
+                </div>
+            </div>
+
+            <div v-if="carregandoAgenda && agenda.length === 0" class="qa-vazio">Carregando agenda...</div>
+            <div v-if="erroAgenda" class="text-danger p-3">{{ erroAgenda }}</div>
+            <div v-if="agenda.length > 0">
+                <div v-if="agendaFiltrada.length === 0" class="qa-vazio">Nenhum item de edição para os filtros atuais.</div>
+                <table v-else class="qa-agenda-tabela">
+                    <thead>
+                        <tr>
+                            <th>OS</th>
+                            <th>GTIN</th>
+                            <th>Produto</th>
+                            <th>Responsável</th>
+                            <th>Previsão de Entrega</th>
+                            <th>Progresso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in agendaFiltrada" :key="item.issueId">
+                            <td>{{ item.os || '-' }}</td>
+                            <td>{{ item.gtin }}</td>
+                            <td>{{ item.produto }}</td>
+                            <td>{{ opcoesResponsavel[item.responsavel] || item.responsavel || '-' }}</td>
+                            <td>
+                                <span v-if="item.previsaoEntrega">{{ item.previsaoEntrega }}</span>
+                                <span v-else class="text-muted">sem previsão</span>
+                            </td>
+                            <td>
+                                <div v-if="item.progresso !== null" class="qa-progresso-barra">
+                                    <div class="qa-progresso-preenchido" :class="'qa-progresso-' + item.cor" :style="{ width: item.progresso + '%' }"></div>
+                                </div>
+                                <span v-else class="text-muted">sem dados</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div v-else-if="!carregandoAgenda && !erroAgenda" class="qa-vazio">Nenhum item de edição para os filtros atuais.</div>
+        </div>
+
+        <div class="qa-layout" v-show="viewAtiva === 'fila'">
             <aside class="qa-arvore">
                 <div v-if="carregandoFila" class="qa-vazio">Carregando...</div>
                 <div v-else-if="erroFila" class="text-danger p-2">{{ erroFila }}</div>

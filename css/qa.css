@@ -503,3 +503,55 @@
     padding: 60px 20px;
     font-size: 0.95rem;
 }
+
+/* Agenda de Edicao - filtros (responsavel + periodo) acima da tabela. */
+.qa-agenda-filtros {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.qa-agenda-filtro-responsavel {
+    display: flex;
+    gap: 4px;
+}
+
+.qa-agenda-filtro-periodo {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.qa-agenda-filtro-periodo input[type="date"] {
+    background-color: var(--bg-input);
+    color: #fff;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-left: 6px;
+}
+
+/* Barra de progresso semaforo ate a previsao de entrega - ver
+   docs/superpowers/specs/2026-07-23-syndi-qa-agenda-edicao-design.md secao 3. */
+.qa-progresso-barra {
+    width: 100%;
+    max-width: 160px;
+    height: 8px;
+    border-radius: 4px;
+    background-color: var(--bg-input);
+    overflow: hidden;
+}
+
+.qa-progresso-preenchido {
+    height: 100%;
+    border-radius: 4px;
+}
+
+.qa-progresso-verde { background-color: var(--success); }
+.qa-progresso-amarelo { background-color: var(--warning); }
+.qa-progresso-vermelho { background-color: var(--danger); }

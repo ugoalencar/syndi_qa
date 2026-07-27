@@ -60,6 +60,11 @@ function enviarJson(res, status, dados) {
     res.end(JSON.stringify(dados));
 }
 
+function hojeISO() {
+    const agora = new Date();
+    return agora.getFullYear() + '-' + String(agora.getMonth() + 1).padStart(2, '0') + '-' + String(agora.getDate()).padStart(2, '0');
+}
+
 const server = http.createServer((req, res) => {
     console.log(`${req.method} ${req.url}`);
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -395,6 +400,19 @@ const server = http.createServer((req, res) => {
 
     if (req.method === 'GET' && req.url === '/api/motivos') {
         enviarJson(res, 200, { ok: true, motivos: qaSyndi.carregarMotivos(BASE_PATH) });
+        return;
+    }
+
+    // Agenda de Edicao - so leitura, nenhuma escrita no Redmine (ver spec
+    // docs/superpowers/specs/2026-07-23-syndi-qa-agenda-edicao-design.md).
+    if (req.method === 'GET' && req.url === '/api/agenda') {
+        redmine.buscarIssuesAgenda(BASE_PATH).then(issues => {
+            const hoje = hojeISO();
+            const itens = issues.map(issue => qaSyndi.montarItemAgenda(issue, hoje));
+            enviarJson(res, 200, { ok: true, itens });
+        }).catch(err => {
+            enviarJson(res, 500, { ok: false, error: err.message });
+        });
         return;
     }
 
