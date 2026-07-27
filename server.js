@@ -461,7 +461,7 @@ const server = http.createServer((req, res) => {
             }
             try {
                 const resultado = await redmine.gravarCamposEdicaoCompleto(BASE_PATH, gtin, { situacao, responsavel, qtdRecorte, qtdMockup });
-                enviarJson(res, 200, { ok: true, gravado: resultado.gravado, issueId: resultado.issueId || null });
+                enviarJson(res, 200, { ok: true, gravado: resultado.gravado, issueId: resultado.issueId || null, idsGravados: resultado.idsGravados || [] });
             } catch (err) {
                 enviarJson(res, 500, { ok: false, error: err.message });
             }

@@ -128,7 +128,7 @@ createApp({
                 if (valorRedmine) {
                     camposEdicao[id] = valorRedmine;
                     origemCampoEdicao[id] = 'manual';
-                } else if (chaveSugerido && dados.sugeridos[chaveSugerido] !== undefined) {
+                } else if (chaveSugerido && dados.sugeridos && dados.sugeridos[chaveSugerido] !== undefined) {
                     camposEdicao[id] = dados.sugeridos[chaveSugerido];
                     origemCampoEdicao[id] = 'inferido';
                 } else {
@@ -178,6 +178,8 @@ createApp({
 
         async function confirmarEnvioEdicao() {
             if (!selecionado.value || enviandoEdicao.value) return;
+            const os = selecionado.value.os;
+            const gtin = selecionado.value.gtin;
             enviandoEdicao.value = true;
             mensagemEdicao.value = '';
             erroEnvioEdicao.value = '';
@@ -186,8 +188,8 @@ createApp({
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        os: selecionado.value.os,
-                        gtin: selecionado.value.gtin,
+                        os,
+                        gtin,
                         situacao: String(camposEdicao['15'] || ''),
                         responsavel: String(camposEdicao['23'] || ''),
                         qtdRecorte: String(camposEdicao['176'] || ''),
@@ -196,11 +198,27 @@ createApp({
                 });
                 const dados = await resp.json();
                 if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
-                mensagemEdicao.value = dados.gravado ? 'Campos gravados no Redmine.' : 'Nenhum campo preenchido - nada foi gravado.';
+                // Resposta atrasada de um GTIN anterior nao pode aplicar mensagem/badges
+                // errados depois que o usuario ja trocou de selecao - mesmo guard do
+                // carregarDetalheEdicao.
+                if (!selecionado.value || selecionado.value.os !== os || selecionado.value.gtin !== gtin) return;
+                if (dados.gravado && dados.idsGravados && dados.idsGravados.length) {
+                    // So os campos que realmente foram gravados viram "manual" - um campo
+                    // que ficou vazio (pulado por montarCamposEdicaoCompleto) nao muda de
+                    // origem, e a mensagem reflete exatamente o que foi escrito, nao um
+                    // "gravado" generico que poderia sugerir que TODOS os campos foram.
+                    const NOMES_CAMPO_EDICAO = { '15': 'Situação', '23': 'Responsável', '176': 'Qtd Recorte', '175': 'Qtd Mockup' };
+                    dados.idsGravados.forEach(id => { origemCampoEdicao[id] = 'manual'; });
+                    mensagemEdicao.value = 'Gravado no Redmine: ' + dados.idsGravados.map(id => NOMES_CAMPO_EDICAO[id] || id).join(', ') + '.';
+                } else {
+                    mensagemEdicao.value = 'Nenhum campo preenchido - nada foi gravado.';
+                }
             } catch (err) {
-                erroEnvioEdicao.value = 'Erro ao gravar: ' + err.message;
+                if (selecionado.value && selecionado.value.os === os && selecionado.value.gtin === gtin) {
+                    erroEnvioEdicao.value = 'Erro ao gravar: ' + err.message;
+                }
             } finally {
-                enviandoEdicao.value = false;
+                if (selecionado.value && selecionado.value.os === os && selecionado.value.gtin === gtin) enviandoEdicao.value = false;
             }
         }
 
