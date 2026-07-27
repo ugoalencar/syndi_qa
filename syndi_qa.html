@@ -69,7 +69,7 @@
 
             <div v-if="carregandoAgenda && agenda.length === 0" class="qa-vazio">Carregando agenda...</div>
             <div v-if="erroAgenda" class="text-danger p-3">{{ erroAgenda }}</div>
-            <div v-if="!carregandoAgenda || agenda.length > 0">
+            <div v-if="agenda.length > 0">
                 <div v-if="agendaFiltrada.length === 0" class="qa-vazio">Nenhum item de edição para os filtros atuais.</div>
                 <table v-else class="qa-agenda-tabela">
                     <thead>
@@ -102,6 +102,7 @@
                     </tbody>
                 </table>
             </div>
+            <div v-else-if="!carregandoAgenda && !erroAgenda" class="qa-vazio">Nenhum item de edição para os filtros atuais.</div>
         </div>
 
         <div class="qa-layout" v-show="viewAtiva === 'fila'">
