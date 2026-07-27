@@ -1,4 +1,4 @@
-const { createApp, ref, reactive, nextTick, onMounted } = Vue;
+const { createApp, ref, reactive, computed, nextTick, onMounted } = Vue;
 const API = 'http://localhost:3001';
 
 createApp({
@@ -49,6 +49,20 @@ createApp({
         const formEnvio = reactive({ responsavel: '', qtdRecorte: '', qtdMockup: '' });
         const opcoesResponsavel = ref({});
 
+        // Agenda de Edicao - aba de topo separada da fila (viewAtiva), carregada sob
+        // demanda na primeira vez que a aba abre (agendaCarregadaAlgumaVez), mesmo
+        // principio do mudarParaAgenda do sphoto. Filtros (responsavel/periodo) sao
+        // aplicados no front sobre o array ja carregado - base pequena, sem ida-e-volta
+        // ao servidor por filtro.
+        const viewAtiva = ref('fila'); // 'fila' | 'agenda'
+        const agenda = ref([]);
+        const carregandoAgenda = ref(false);
+        const erroAgenda = ref('');
+        let agendaCarregadaAlgumaVez = false;
+        const filtroResponsavel = ref('todos'); // 'todos' | '32' (Virafilme) | '258' (Bright River)
+        const filtroPeriodoDe = ref('');
+        const filtroPeriodoAte = ref('');
+
         async function carregarFila() {
             carregandoFila.value = true;
             erroFila.value = '';
@@ -83,6 +97,34 @@ createApp({
                 console.error('Erro ao carregar redmine-campos.json:', err);
             }
         }
+
+        async function carregarAgenda() {
+            carregandoAgenda.value = true;
+            erroAgenda.value = '';
+            try {
+                const resp = await fetch(API + '/api/agenda');
+                const dados = await resp.json();
+                if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
+                agenda.value = dados.itens;
+                agendaCarregadaAlgumaVez = true;
+            } catch (err) {
+                erroAgenda.value = 'Erro ao carregar agenda: ' + err.message + ' (server.js rodando?)';
+            } finally {
+                carregandoAgenda.value = false;
+            }
+        }
+
+        function mudarParaAgenda() {
+            viewAtiva.value = 'agenda';
+            if (!agendaCarregadaAlgumaVez) carregarAgenda();
+        }
+
+        const agendaFiltrada = computed(() => agenda.value.filter(item => {
+            if (filtroResponsavel.value !== 'todos' && String(item.responsavel) !== filtroResponsavel.value) return false;
+            if (filtroPeriodoDe.value && (!item.previsaoEntrega || item.previsaoEntrega < filtroPeriodoDe.value)) return false;
+            if (filtroPeriodoAte.value && (!item.previsaoEntrega || item.previsaoEntrega > filtroPeriodoAte.value)) return false;
+            return true;
+        }));
 
         async function selecionarGtin(os, gtin) {
             // Cancela o timer orfao de reset de selecao (fecharDepoisDeConcluir) de um
@@ -405,7 +447,9 @@ createApp({
             imagemAmpliada, listaAmpliada, ampliarImagem, navegarAmpliada,
             carregarFila, selecionarGtin, urlImagem, selecionarFoto, togglarMotivoAtivo, temMarcacao, todasMarcacoesTemMotivo,
             aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao,
-            painelEnvio, preparandoEnvio, formEnvio, opcoesResponsavel, abrirPainelEnvio, fecharPainelEnvio
+            painelEnvio, preparandoEnvio, formEnvio, opcoesResponsavel, abrirPainelEnvio, fecharPainelEnvio,
+            viewAtiva, mudarParaAgenda, agenda, carregandoAgenda, erroAgenda, carregarAgenda,
+            filtroResponsavel, filtroPeriodoDe, filtroPeriodoAte, agendaFiltrada
         };
     }
 }).mount('#qaApp');
