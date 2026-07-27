@@ -77,6 +77,13 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    // So confirma que o server.js esta de pe (se respondeu, esta rodando) - usado
+    // pelo monitor.html, nao toca em nenhum outro processo/porta.
+    if (req.method === 'GET' && req.url === '/api/status') {
+        enviarJson(res, 200, { ok: true });
+        return;
+    }
+
     if (req.method === 'GET' && req.url === '/api/fila') {
         try {
             const fila = qaSyndi.listarFila(qaSyndi.AGCONFERENCIA);
