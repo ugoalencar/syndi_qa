@@ -403,6 +403,72 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    // Detalhe da aba "QA para Edicao" - situacao atual no Redmine (se houver ficha aberta)
+    // + sugestoes locais de Responsavel/Quantidades (mesma inferencia do Aprovar). So
+    // leitura, nada e gravado nem movido aqui.
+    if (req.method === 'GET' && req.url.startsWith('/api/edicao/detalhe')) {
+        const query = new URL(req.url, 'http://localhost').searchParams;
+        const os = query.get('os') || '';
+        const gtin = query.get('gtin') || '';
+        if (!isNomeSeguro(os) || !isNomeSeguro(gtin)) {
+            enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin invalidos' });
+            return;
+        }
+        const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+        if (!pastaOsNome) {
+            enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
+            return;
+        }
+        const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(path.join(qaSyndi.AGCONFERENCIA, pastaOsNome), gtin, /^(\d+)/);
+        if (!pastaGtinNome) {
+            enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
+            return;
+        }
+        redmine.buscarDetalheEdicao(BASE_PATH, gtin).then(resultado => {
+            const inferido = qaSyndi.inferirCamposEdicao(path.join(qaSyndi.AGCONFERENCIA, pastaOsNome, pastaGtinNome));
+            enviarJson(res, 200, { ok: true, issue: resultado.issue, sugeridos: inferido.campos });
+        }).catch(err => {
+            enviarJson(res, 500, { ok: false, error: err.message });
+        });
+        return;
+    }
+
+    // Grava os 4 campos da aba "QA para Edicao" (incluindo Situacao) - independente do
+    // Aprovar, nunca move pasta. Reaproveita o mesmo padrao de validacao numerica de
+    // /api/aprovar.
+    if (req.method === 'POST' && req.url === '/api/edicao/gravar') {
+        lerCorpo(req).then(async corpo => {
+            let dados;
+            try {
+                dados = JSON.parse(corpo);
+            } catch (err) {
+                enviarJson(res, 400, { ok: false, error: 'JSON invalido' });
+                return;
+            }
+            const os = dados.os;
+            const gtin = dados.gtin;
+            if (!isNomeSeguro(os) || !isNomeSeguro(gtin)) {
+                enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin invalidos' });
+                return;
+            }
+            const situacao = typeof dados.situacao === 'string' ? dados.situacao.trim() : '';
+            const responsavel = typeof dados.responsavel === 'string' ? dados.responsavel.trim() : '';
+            const qtdRecorte = typeof dados.qtdRecorte === 'string' ? dados.qtdRecorte.trim() : '';
+            const qtdMockup = typeof dados.qtdMockup === 'string' ? dados.qtdMockup.trim() : '';
+            if (!/^\d*$/.test(situacao) || !/^\d*$/.test(responsavel) || !/^\d*$/.test(qtdRecorte) || !/^\d*$/.test(qtdMockup)) {
+                enviarJson(res, 400, { ok: false, error: 'situacao/responsavel/qtdRecorte/qtdMockup devem ser numericos ou vazios' });
+                return;
+            }
+            try {
+                const resultado = await redmine.gravarCamposEdicaoCompleto(BASE_PATH, gtin, { situacao, responsavel, qtdRecorte, qtdMockup });
+                enviarJson(res, 200, { ok: true, gravado: resultado.gravado, issueId: resultado.issueId || null });
+            } catch (err) {
+                enviarJson(res, 500, { ok: false, error: err.message });
+            }
+        });
+        return;
+    }
+
     // Agenda de Edicao - so leitura, nenhuma escrita no Redmine (ver spec
     // docs/superpowers/specs/2026-07-23-syndi-qa-agenda-edicao-design.md).
     if (req.method === 'GET' && req.url === '/api/agenda') {
