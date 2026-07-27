@@ -2,3 +2,4 @@ node_modules/
 caminhos-locais.json
 redmine-config.json
 .claude/
+graphify-out/
