@@ -552,6 +552,6 @@
     border-radius: 4px;
 }
 
-.qa-progresso-verde { background-color: #2e7d32; }
-.qa-progresso-amarelo { background-color: #f9a825; }
-.qa-progresso-vermelho { background-color: #c62828; }
+.qa-progresso-verde { background-color: var(--success); }
+.qa-progresso-amarelo { background-color: var(--warning); }
+.qa-progresso-vermelho { background-color: var(--danger); }
