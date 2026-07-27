@@ -132,6 +132,12 @@
                 <div v-else>
                     <h5 class="mb-3">GTIN {{ selecionado.gtin }} <small class="text-muted">- OS {{ selecionado.os }}</small></h5>
 
+                    <div class="qa-tabs">
+                        <button type="button" class="qa-tab-btn" :class="{ ativa: abaDetalhe === 'foto' }" @click="abaDetalhe = 'foto'">QA de Foto</button>
+                        <button type="button" class="qa-tab-btn" :class="{ ativa: abaDetalhe === 'edicao' }" @click="abrirAbaEdicao">QA para Edição</button>
+                    </div>
+
+                    <div v-show="abaDetalhe === 'foto'">
                     <div class="qa-legenda">
                         <span class="qa-legenda-item"><span class="qa-legenda-cor coding"></span> _coding (referência de edição)</span>
                         <span class="qa-legenda-item"><span class="qa-legenda-cor rt"></span> RT - Rótulo</span>
@@ -238,6 +244,58 @@
                             <span v-if="erro" class="ms-3 text-danger">{{ erro }}</span>
                         </div>
                     </template>
+                    </div>
+
+                    <div v-show="abaDetalhe === 'edicao'">
+                        <div v-if="carregandoEdicao" class="qa-vazio">Carregando dados de edição...</div>
+                        <div v-else-if="erroEdicao" class="text-danger p-3">{{ erroEdicao }}</div>
+                        <template v-else>
+                            <div v-if="semFichaEdicao" class="qa-conflito-aviso">
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                Nenhuma ficha aberta encontrada no Redmine para este GTIN.
+                            </div>
+
+                            <div class="qa-campo-linha">
+                                <span class="qa-campo-label">Situação das Imagens</span>
+                                <select class="form-select form-select-sm w-auto" v-model="camposEdicao['15']" @change="marcarTocadoEdicao('15')">
+                                    <option value="">-</option>
+                                    <option v-for="(rotulo, id) in opcoesSituacao" :key="id" :value="id">{{ rotulo }}</option>
+                                </select>
+                                <span class="qa-campo-origem" :class="origemCampoEdicao['15']">{{ origemCampoEdicao['15'] }}</span>
+                            </div>
+                            <div class="qa-conflito-aviso">
+                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                O robô syncIMG.jar também grava este campo ao mover a pasta - se você alterar aqui, pode ser sobrescrito automaticamente em seguida.
+                            </div>
+
+                            <div class="qa-campo-linha">
+                                <span class="qa-campo-label">Responsável Pós-Produção</span>
+                                <select class="form-select form-select-sm w-auto" v-model="camposEdicao['23']" @change="marcarTocadoEdicao('23')">
+                                    <option value="">-</option>
+                                    <option v-for="(rotulo, id) in opcoesResponsavel" :key="id" :value="id">{{ rotulo }}</option>
+                                </select>
+                                <span class="qa-campo-origem" :class="origemCampoEdicao['23']">{{ origemCampoEdicao['23'] }}</span>
+                            </div>
+
+                            <div class="qa-campo-linha">
+                                <span class="qa-campo-label">Qtd Imagens Recorte</span>
+                                <input type="number" min="0" class="form-control form-control-sm" style="width:100px" v-model="camposEdicao['176']" @input="marcarTocadoEdicao('176')">
+                                <span class="qa-campo-origem" :class="origemCampoEdicao['176']">{{ origemCampoEdicao['176'] }}</span>
+                            </div>
+
+                            <div class="qa-campo-linha">
+                                <span class="qa-campo-label">Qtd Imagens Mockup</span>
+                                <input type="number" min="0" class="form-control form-control-sm" style="width:100px" v-model="camposEdicao['175']" @input="marcarTocadoEdicao('175')">
+                                <span class="qa-campo-origem" :class="origemCampoEdicao['175']">{{ origemCampoEdicao['175'] }}</span>
+                            </div>
+
+                            <button type="button" class="btn btn-primary btn-sm mt-2" :disabled="enviandoEdicao || carregandoEdicao" @click="confirmarEnvioEdicao">
+                                <i class="bi bi-cloud-upload"></i> Confirmar e Enviar ao Redmine
+                            </button>
+                            <span v-if="mensagemEdicao" class="ms-3 text-success">{{ mensagemEdicao }}</span>
+                            <span v-if="erroEnvioEdicao" class="ms-3 text-danger">{{ erroEnvioEdicao }}</span>
+                        </template>
+                    </div>
                 </div>
             </main>
         </div>
