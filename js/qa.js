@@ -49,6 +49,23 @@ createApp({
         const formEnvio = reactive({ responsavel: '', qtdRecorte: '', qtdMockup: '' });
         const opcoesResponsavel = ref({});
 
+        // Aba "QA para Edicao" - fixa dentro do detalhe do GTIN, independente do Aprovar/
+        // painelEnvio acima. Mostra e deixa editar os 4 campos do Redmine, Situacao incluida
+        // (excecao deliberada - ver docs/superpowers/specs/2026-07-27-syndi-qa-aba-edicao-design.md).
+        const abaDetalhe = ref('foto'); // 'foto' | 'edicao'
+        const camposEdicao = reactive({ '15': '', '23': '', '175': '', '176': '' });
+        const origemCampoEdicao = reactive({ '15': 'inferido', '23': 'inferido', '175': 'inferido', '176': 'inferido' });
+        const carregandoEdicao = ref(false);
+        const erroEdicao = ref(''); // erro ao CARREGAR - esconde o formulario
+        const erroEnvioEdicao = ref(''); // erro ao GRAVAR - mensagem inline, nao esconde nada
+        const mensagemEdicao = ref('');
+        const enviandoEdicao = ref(false);
+        const semFichaEdicao = ref(false);
+        const opcoesSituacao = ref({});
+        const CAMPOS_EDICAO_IDS = ['15', '23', '176', '175'];
+        const CHAVE_SUGERIDO_EDICAO = { '23': 'responsavel', '176': 'qtdRecorte', '175': 'qtdMockup' };
+        let edicaoCarregadaParaGtin = null; // "os|gtin" da ultima carga - evita recarregar toda vez que a aba abre
+
         // Agenda de Edicao - aba de topo separada da fila (viewAtiva), carregada sob
         // demanda na primeira vez que a aba abre (agendaCarregadaAlgumaVez), mesmo
         // principio do mudarParaAgenda do sphoto. Filtros (responsavel/periodo) sao
@@ -93,8 +110,97 @@ createApp({
                 const resp = await fetch(API + '/redmine-campos.json');
                 const dados = await resp.json();
                 opcoesResponsavel.value = dados.campos.cf_23.opcoes;
+                opcoesSituacao.value = dados.campos.cf_15.opcoes;
             } catch (err) {
                 console.error('Erro ao carregar redmine-campos.json:', err);
+            }
+        }
+
+        // Aplica a resposta de /api/edicao/detalhe no estado reativo - campos que ja tem
+        // valor confirmado (do Redmine, ou editado manualmente nesta sessao) nao sao
+        // sobrescritos por uma recarga. Mesmo principio do aplicarDetalhe do sphoto (js/qa.js).
+        function aplicarDetalheEdicao(dados) {
+            semFichaEdicao.value = !dados.issue;
+            CAMPOS_EDICAO_IDS.forEach(id => {
+                if (origemCampoEdicao[id] === 'manual') return;
+                const valorRedmine = dados.issue ? dados.issue.customFields[id] : '';
+                const chaveSugerido = CHAVE_SUGERIDO_EDICAO[id];
+                if (valorRedmine) {
+                    camposEdicao[id] = valorRedmine;
+                    origemCampoEdicao[id] = 'manual';
+                } else if (chaveSugerido && dados.sugeridos[chaveSugerido] !== undefined) {
+                    camposEdicao[id] = dados.sugeridos[chaveSugerido];
+                    origemCampoEdicao[id] = 'inferido';
+                } else {
+                    camposEdicao[id] = camposEdicao[id] || '';
+                    origemCampoEdicao[id] = 'inferido';
+                }
+            });
+        }
+
+        async function carregarDetalheEdicao() {
+            if (!selecionado.value) return;
+            const os = selecionado.value.os;
+            const gtin = selecionado.value.gtin;
+            carregandoEdicao.value = true;
+            erroEdicao.value = '';
+            try {
+                const resp = await fetch(API + '/api/edicao/detalhe?os=' + encodeURIComponent(os) + '&gtin=' + encodeURIComponent(gtin));
+                const dados = await resp.json();
+                if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
+                // Resposta atrasada de um GTIN anterior nao pode aplicar campos errados
+                // depois que o usuario ja trocou de selecao - mesmo guard do abrirPainelEnvio.
+                if (!selecionado.value || selecionado.value.os !== os || selecionado.value.gtin !== gtin) return;
+                aplicarDetalheEdicao(dados);
+                edicaoCarregadaParaGtin = os + '|' + gtin;
+            } catch (err) {
+                if (selecionado.value && selecionado.value.os === os && selecionado.value.gtin === gtin) {
+                    erroEdicao.value = 'Erro ao carregar dados de edicao: ' + err.message + ' (server.js rodando?)';
+                }
+            } finally {
+                if (selecionado.value && selecionado.value.os === os && selecionado.value.gtin === gtin) carregandoEdicao.value = false;
+            }
+        }
+
+        // Troca pra aba "QA para Edicao" e carrega os dados so na primeira vez pra este
+        // GTIN (edicaoCarregadaParaGtin) - evita ida-e-volta ao Redmine toda vez que o
+        // analista alterna entre as abas Foto/Edicao do mesmo GTIN.
+        function abrirAbaEdicao() {
+            abaDetalhe.value = 'edicao';
+            if (!selecionado.value) return;
+            const chave = selecionado.value.os + '|' + selecionado.value.gtin;
+            if (edicaoCarregadaParaGtin !== chave) carregarDetalheEdicao();
+        }
+
+        function marcarTocadoEdicao(id) {
+            origemCampoEdicao[id] = 'manual';
+        }
+
+        async function confirmarEnvioEdicao() {
+            if (!selecionado.value || enviandoEdicao.value) return;
+            enviandoEdicao.value = true;
+            mensagemEdicao.value = '';
+            erroEnvioEdicao.value = '';
+            try {
+                const resp = await fetch(API + '/api/edicao/gravar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        os: selecionado.value.os,
+                        gtin: selecionado.value.gtin,
+                        situacao: String(camposEdicao['15'] || ''),
+                        responsavel: String(camposEdicao['23'] || ''),
+                        qtdRecorte: String(camposEdicao['176'] || ''),
+                        qtdMockup: String(camposEdicao['175'] || '')
+                    })
+                });
+                const dados = await resp.json();
+                if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
+                mensagemEdicao.value = dados.gravado ? 'Campos gravados no Redmine.' : 'Nenhum campo preenchido - nada foi gravado.';
+            } catch (err) {
+                erroEnvioEdicao.value = 'Erro ao gravar: ' + err.message;
+            } finally {
+                enviandoEdicao.value = false;
             }
         }
 
@@ -140,6 +246,16 @@ createApp({
             Object.keys(marcadas).forEach(chave => delete marcadas[chave]);
             fotoAtiva.value = null;
             painelEnvio.value = null;
+            abaDetalhe.value = 'foto';
+            edicaoCarregadaParaGtin = null;
+            semFichaEdicao.value = false;
+            erroEdicao.value = '';
+            erroEnvioEdicao.value = '';
+            mensagemEdicao.value = '';
+            CAMPOS_EDICAO_IDS.forEach(id => {
+                camposEdicao[id] = '';
+                origemCampoEdicao[id] = 'inferido';
+            });
             mensagem.value = '';
             erro.value = '';
             carregandoDetalhe.value = true;
@@ -449,7 +565,10 @@ createApp({
             aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao,
             painelEnvio, preparandoEnvio, formEnvio, opcoesResponsavel, abrirPainelEnvio, fecharPainelEnvio,
             viewAtiva, mudarParaAgenda, agenda, carregandoAgenda, erroAgenda, carregarAgenda,
-            filtroResponsavel, filtroPeriodoDe, filtroPeriodoAte, agendaFiltrada
+            filtroResponsavel, filtroPeriodoDe, filtroPeriodoAte, agendaFiltrada,
+            abaDetalhe, camposEdicao, origemCampoEdicao, carregandoEdicao, erroEdicao, erroEnvioEdicao,
+            mensagemEdicao, enviandoEdicao, semFichaEdicao, opcoesSituacao,
+            abrirAbaEdicao, marcarTocadoEdicao, confirmarEnvioEdicao
         };
     }
 }).mount('#qaApp');
