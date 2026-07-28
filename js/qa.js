@@ -132,7 +132,14 @@ createApp({
                     camposEdicao[id] = dados.sugeridos[chaveSugerido];
                     origemCampoEdicao[id] = 'inferido';
                 } else {
-                    camposEdicao[id] = camposEdicao[id] || '';
+                    // Se o campo pode ser sugerido (23/176/175) e a resposta atual nao
+                    // trouxe sugestao pra ele, limpa em vez de manter o valor antigo -
+                    // sem isso, uma sugestao que "some" numa reorganizacao de pasta
+                    // (ex.: Recorte desmarcado) deixava o valor velho na tela, ainda
+                    // marcado 'inferido', e ele acabava indo pro Redmine sem querer.
+                    // Situacao (id '15') nunca e sugerida, entao mantem o comportamento
+                    // antigo pra ela.
+                    camposEdicao[id] = chaveSugerido ? '' : (camposEdicao[id] || '');
                     origemCampoEdicao[id] = 'inferido';
                 }
             });
@@ -171,6 +178,9 @@ createApp({
         // docs/superpowers/specs/2026-07-28-syndi-qa-correcoes-qa-design.md secao 2.
         function invalidarSugestaoEdicao() {
             edicaoCarregadaParaGtin = null;
+            // Hoje isso nunca dispara na pratica (as 3 chamadoras so sao acionaveis
+            // na aba "QA de Foto", nunca com "QA para Edicao" ativa ao mesmo tempo) -
+            // mantido por seguranca caso o fluxo mude no futuro.
             if (abaDetalhe.value === 'edicao') carregarDetalheEdicao();
         }
 

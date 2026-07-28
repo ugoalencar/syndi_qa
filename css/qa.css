@@ -238,6 +238,11 @@
     margin-top: 3px;
 }
 
+.qa-checkbox-retrabalho {
+    flex: none;
+    align-self: center;
+}
+
 .qa-acao-mini {
     flex: 1;
     padding: 3px 0;
@@ -264,8 +269,8 @@
 .qa-acao-mini.zoom { border-color: var(--primary); color: var(--primary); }
 
 .qa-acao-mini.voltar {
-    flex: none;
-    width: 100%;
+    flex: 1;
+    width: auto;
     color: var(--text-muted);
 }
 
