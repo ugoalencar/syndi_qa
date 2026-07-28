@@ -21,6 +21,15 @@ createApp({
         const mensagem = ref('');
         const erro = ref('');
 
+        // Identidade do analista (engrenagem) - mesmo mecanismo do sphoto: arquivo JSON
+        // pessoal carregado uma vez, persistido em localStorage sob as mesmas chaves
+        // (regra/user_id/nome_usuario) pra nao inventar um formato novo. Usado nas 3
+        // gravacoes no Redmine (Aprovar, Retrabalho, aba QA para Edicao) - ver
+        // docs/superpowers/specs/2026-07-28-syndi-qa-identidade-analista-design.md.
+        const analistaId = ref(localStorage.getItem('user_id') || '');
+        const analistaNome = ref(localStorage.getItem('nome_usuario') || '');
+        const erroIdentidade = ref('');
+
         // Atualizacao via git (mesmo par verificar/aplicar do sphoto) - so aciona
         // sob demanda (botao), nunca sozinho no load: git fetch a cada abertura da
         // tela seria custo desnecessario pro uso normal do QA Hub.
@@ -200,6 +209,10 @@ createApp({
 
         async function confirmarEnvioEdicao() {
             if (!selecionado.value || enviandoEdicao.value) return;
+            if (!analistaId.value) {
+                erroEnvioEdicao.value = 'Identidade nao configurada! Clique no icone de engrenagem.';
+                return;
+            }
             const os = selecionado.value.os;
             const gtin = selecionado.value.gtin;
             enviandoEdicao.value = true;
@@ -215,7 +228,8 @@ createApp({
                         situacao: String(camposEdicao['15'] || ''),
                         responsavel: String(camposEdicao['23'] || ''),
                         qtdRecorte: String(camposEdicao['176'] || ''),
-                        qtdMockup: String(camposEdicao['175'] || '')
+                        qtdMockup: String(camposEdicao['175'] || ''),
+                        userId: analistaId.value
                     })
                 });
                 const dados = await resp.json();
@@ -485,6 +499,10 @@ createApp({
 
         async function aprovarGtin() {
             if (!selecionado.value || !painelEnvio.value || aprovando.value) return;
+            if (!analistaId.value) {
+                erro.value = 'Identidade nao configurada! Clique no icone de engrenagem.';
+                return;
+            }
             aprovando.value = true;
             mensagem.value = '';
             erro.value = '';
@@ -497,7 +515,8 @@ createApp({
                         gtin: selecionado.value.gtin,
                         responsavel: String(formEnvio.responsavel || ''),
                         qtdRecorte: String(formEnvio.qtdRecorte || ''),
-                        qtdMockup: String(formEnvio.qtdMockup || '')
+                        qtdMockup: String(formEnvio.qtdMockup || ''),
+                        userId: analistaId.value
                     })
                 });
                 const dados = await resp.json();
@@ -520,6 +539,10 @@ createApp({
 
         async function confirmarRetrabalho() {
             if (!selecionado.value || !todasMarcacoesTemMotivo()) return;
+            if (!analistaId.value) {
+                erro.value = 'Identidade nao configurada! Clique no icone de engrenagem.';
+                return;
+            }
             enviandoRetrabalho.value = true;
             mensagem.value = '';
             erro.value = '';
@@ -527,7 +550,7 @@ createApp({
                 const resp = await fetch(API + '/api/retrabalho', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ os: selecionado.value.os, gtin: selecionado.value.gtin, marcacoes: { ...marcadas } })
+                    body: JSON.stringify({ os: selecionado.value.os, gtin: selecionado.value.gtin, marcacoes: { ...marcadas }, userId: analistaId.value })
                 });
                 const dados = await resp.json();
                 if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
@@ -543,6 +566,38 @@ createApp({
             } finally {
                 enviandoRetrabalho.value = false;
             }
+        }
+
+        // Le o arquivo JSON pessoal selecionado no modal da engrenagem, extrai userId/userName
+        // e persiste em localStorage - mesmas chaves que o sphoto usa (regra/user_id/
+        // nome_usuario), mesmo formato de arquivo (campos de roteamento de regra que o sphoto
+        // usa pra outra finalidade sao ignorados aqui de proposito).
+        function carregarArquivoIdentidade(event) {
+            const arquivo = event.target.files && event.target.files[0];
+            if (!arquivo) return;
+            erroIdentidade.value = '';
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const conteudo = e.target.result;
+                    const obj = JSON.parse(conteudo);
+                    if (!obj.userId || !obj.userName) {
+                        erroIdentidade.value = 'Arquivo invalido: precisa ter userId e userName.';
+                        return;
+                    }
+                    analistaId.value = String(obj.userId);
+                    analistaNome.value = obj.userName;
+                    localStorage.setItem('regra', conteudo);
+                    localStorage.setItem('user_id', String(obj.userId));
+                    localStorage.setItem('nome_usuario', obj.userName);
+                    const modalEl = document.getElementById('modalIdentidade');
+                    const modal = modalEl && bootstrap.Modal.getInstance(modalEl);
+                    if (modal) modal.hide();
+                } catch (err) {
+                    erroIdentidade.value = 'Erro ao ler arquivo JSON: ' + err.message;
+                }
+            };
+            reader.readAsText(arquivo, 'UTF-8');
         }
 
         // Da tempo do usuario ler a mensagem de sucesso antes de voltar pra tela
@@ -613,6 +668,7 @@ createApp({
             selecionado, detalhe, carregandoDetalhe, erroDetalhe,
             motivos, marcadas, fotoAtiva,
             aprovando, enviandoRetrabalho, mensagem, erro,
+            analistaId, analistaNome, erroIdentidade, carregarArquivoIdentidade,
             atualizacaoInfo, verificandoAtualizacao, resultadoAtualizacao, aplicandoAtualizacao,
             marcandoDestino, marcarDestinoManual, toggleCoding, toggleSubpasta,
             imagemAmpliada, listaAmpliada, ampliarImagem, navegarAmpliada,

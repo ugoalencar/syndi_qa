@@ -22,6 +22,9 @@
                     <button type="button" class="qa-top-tab-btn" :class="{ ativa: viewAtiva === 'agenda' }" @click="mudarParaAgenda">Agenda de Edição</button>
                 </div>
                 <div class="header-right">
+                    <button type="button" class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalIdentidade">
+                        <i class="bi bi-gear"></i> {{ analistaNome || 'Configurar identidade' }}
+                    </button>
                     <i v-if="atualizacaoInfo && atualizacaoInfo.ok && atualizacaoInfo.temAtualizacao"
                        class="bi bi-bell qa-sino-atualizacao" title="Ha uma atualizacao disponivel"></i>
                     <span v-if="atualizacaoInfo && !atualizacaoInfo.ok" class="qa-atualizacao-msg" :title="atualizacaoInfo.error">
@@ -53,6 +56,29 @@
                 </div>
             </div>
         </header>
+
+        <div class="modal fade" id="modalIdentidade" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="bi bi-gear"></i> Identidade do analista</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="inputArquivoIdentidade" class="form-label">Arquivo de identidade JSON</label>
+                            <input type="file" class="form-control" id="inputArquivoIdentidade" accept=".json" @change="carregarArquivoIdentidade">
+                            <div class="form-text">Selecione seu arquivo pessoal (ex.: fotoEstudiougo.json)</div>
+                        </div>
+                        <div class="alert alert-info mb-0">
+                            <i class="bi bi-info-circle"></i>
+                            <strong>Analista atual:</strong> {{ analistaNome || 'Nenhum configurado' }}
+                        </div>
+                        <div v-if="erroIdentidade" class="alert alert-danger mt-3 mb-0">{{ erroIdentidade }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="qa-agenda" v-show="viewAtiva === 'agenda'">
             <div class="qa-agenda-filtros">
