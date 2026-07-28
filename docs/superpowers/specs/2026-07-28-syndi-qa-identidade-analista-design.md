@@ -34,6 +34,13 @@ de `/api/imagem`, preview reduzido de imagens.)
 - **O nome do analista atual aparece ao lado do ícone no header**, não só dentro do modal — dá
   visibilidade constante de quem vai assinar as próximas gravações, reduz erro de esquecer de
   trocar identidade numa máquina compartilhada entre analistas.
+- **Efeito colateral aceito, confirmado com o usuário na revisão final**: como `userId` passa a
+  ser sempre obrigatório, `montarCamposEdicao`/`montarCamposEdicaoCompleto` nunca mais devolvem
+  uma lista vazia — ou seja, Aprovar e a gravação da aba "QA para Edição" passam a EXIGIR uma
+  ficha aberta no Redmine pro GTIN mesmo quando o analista deixa todos os campos de formulário
+  (responsável/quantidades/situação) em branco, o que antes deste spec não acontecia (o Redmine
+  era pulado inteiramente nesse caso). Decisão: aceitável — toda gravação real, mesmo que seja só
+  a identidade do analista, precisa de um lugar (a issue aberta) pra ser gravada.
 
 ## 2. Captura e armazenamento da identidade
 
