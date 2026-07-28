@@ -4,6 +4,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 const qaSyndi = require('./lib/qaSyndi');
 const redmine = require('./lib/redmine');
+const previewImagem = require('./lib/previewImagem');
 
 // So loga antes de encerrar - depois de um erro nao tratado o processo fica em
 // estado indefinido, entao nao deve continuar rodando "zumbi". Mesmo padrao do
@@ -58,6 +59,18 @@ function lerCorpo(req) {
 function enviarJson(res, status, dados) {
     res.writeHead(status, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(dados));
+}
+
+function enviarArquivoImagem(res, caminho) {
+    fs.readFile(caminho, (err, content) => {
+        if (err) {
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('Erro no servidor');
+            return;
+        }
+        res.writeHead(200, { 'Content-Type': 'image/jpeg' });
+        res.end(content);
+    });
 }
 
 function hojeISO() {
@@ -167,15 +180,19 @@ const server = http.createServer((req, res) => {
             res.end('Imagem nao encontrada');
             return;
         }
-        fs.readFile(caminhoImagem, (err, content) => {
-            if (err) {
-                res.writeHead(500, { 'Content-Type': 'text/plain' });
-                res.end('Erro no servidor');
-                return;
-            }
-            res.writeHead(200, { 'Content-Type': 'image/jpeg' });
-            res.end(content);
-        });
+        const tamanho = query.get('tamanho') || '';
+        if (tamanho === 'mini' || tamanho === 'zoom') {
+            previewImagem.gerarPreview(caminhoImagem, tamanho)
+                .then(caminhoPreview => enviarArquivoImagem(res, caminhoPreview))
+                .catch(err => {
+                    // Preview quebrado nunca pode deixar a tela em branco - cai pro
+                    // original (mais lento, mas funciona).
+                    console.error('Erro ao gerar preview, servindo original:', err);
+                    enviarArquivoImagem(res, caminhoImagem);
+                });
+            return;
+        }
+        enviarArquivoImagem(res, caminhoImagem);
         return;
     }
 
