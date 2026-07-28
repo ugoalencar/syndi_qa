@@ -355,6 +355,11 @@ const server = http.createServer((req, res) => {
                 enviarJson(res, 400, { ok: false, error: 'responsavel/qtdRecorte/qtdMockup devem ser numericos ou vazios' });
                 return;
             }
+            const userId = typeof dados.userId === 'string' ? dados.userId.trim() : '';
+            if (!/^\d+$/.test(userId)) {
+                enviarJson(res, 400, { ok: false, error: 'Identidade do analista obrigatoria (configure a engrenagem)' });
+                return;
+            }
             const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
             if (!pastaOsNome) {
                 enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
@@ -371,7 +376,7 @@ const server = http.createServer((req, res) => {
             // (escolha explicita do analista). Situacao das Imagens continua do robo.
             let redmineGravado = false;
             try {
-                const r = await redmine.gravarCamposEdicao(BASE_PATH, gtin, { responsavel, qtdRecorte, qtdMockup });
+                const r = await redmine.gravarCamposEdicao(BASE_PATH, gtin, { responsavel, qtdRecorte, qtdMockup, userId });
                 redmineGravado = r.gravado;
             } catch (err) {
                 console.error('Erro ao gravar campos de edicao no Redmine para GTIN', gtin, err);
@@ -412,6 +417,11 @@ const server = http.createServer((req, res) => {
                 enviarJson(res, 400, { ok: false, error: 'Toda foto marcada precisa de pelo menos um motivo selecionado' });
                 return;
             }
+            const userId = typeof dados.userId === 'string' ? dados.userId.trim() : '';
+            if (!/^\d+$/.test(userId)) {
+                enviarJson(res, 400, { ok: false, error: 'Identidade do analista obrigatoria (configure a engrenagem)' });
+                return;
+            }
             const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
             if (!pastaOsNome) {
                 enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
@@ -431,7 +441,7 @@ const server = http.createServer((req, res) => {
                 let redmineOk = true;
                 let redmineError = null;
                 try {
-                    await redmine.marcarRetrabalhoFotografia(BASE_PATH, gtin);
+                    await redmine.marcarRetrabalhoFotografia(BASE_PATH, gtin, userId);
                 } catch (err) {
                     redmineOk = false;
                     redmineError = err.message;
@@ -506,8 +516,13 @@ const server = http.createServer((req, res) => {
                 enviarJson(res, 400, { ok: false, error: 'situacao/responsavel/qtdRecorte/qtdMockup devem ser numericos ou vazios' });
                 return;
             }
+            const userId = typeof dados.userId === 'string' ? dados.userId.trim() : '';
+            if (!/^\d+$/.test(userId)) {
+                enviarJson(res, 400, { ok: false, error: 'Identidade do analista obrigatoria (configure a engrenagem)' });
+                return;
+            }
             try {
-                const resultado = await redmine.gravarCamposEdicaoCompleto(BASE_PATH, gtin, { situacao, responsavel, qtdRecorte, qtdMockup });
+                const resultado = await redmine.gravarCamposEdicaoCompleto(BASE_PATH, gtin, { situacao, responsavel, qtdRecorte, qtdMockup, userId });
                 enviarJson(res, 200, { ok: true, gravado: resultado.gravado, issueId: resultado.issueId || null, idsGravados: resultado.idsGravados || [] });
             } catch (err) {
                 enviarJson(res, 500, { ok: false, error: err.message });
