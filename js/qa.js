@@ -316,9 +316,17 @@ createApp({
         // normal, que o navegador carrega em paralelo sem travar a tela toda.
         function urlImagem(nome) {
             if (!selecionado.value) return '';
-            return API + '/api/imagem?os=' + encodeURIComponent(selecionado.value.os) +
+            let url = API + '/api/imagem?os=' + encodeURIComponent(selecionado.value.os) +
                 '&gtin=' + encodeURIComponent(selecionado.value.gtin) +
                 '&nome=' + encodeURIComponent(nome);
+            // Reaproveita os nomes de pasta decorados que GET /api/gtin ja resolveu -
+            // evita o servidor varrer o disco de novo (readdirSync) pra cada foto da
+            // grade, que antes rodava a cada miniatura carregada.
+            if (detalhe.value && detalhe.value.pastaOsNome && detalhe.value.pastaGtinNome) {
+                url += '&pastaOsNome=' + encodeURIComponent(detalhe.value.pastaOsNome) +
+                    '&pastaGtinNome=' + encodeURIComponent(detalhe.value.pastaGtinNome);
+            }
+            return url;
         }
 
         // Recarrega so o detalhe do GTIN atual, sem mexer em fotoAtiva/marcadas (estado

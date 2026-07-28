@@ -123,16 +123,39 @@ const server = http.createServer((req, res) => {
         const os = query.get('os') || '';
         const gtin = query.get('gtin') || '';
         const nome = query.get('nome') || '';
+        const pastaOsNomeParam = query.get('pastaOsNome') || '';
+        const pastaGtinNomeParam = query.get('pastaGtinNome') || '';
         if (!isNomeSeguro(os) || !isNomeSeguro(gtin)) {
             enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin invalidos' });
             return;
         }
-        const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+        // Se o front-end ja mandou os nomes decorados (obtidos de GET /api/gtin, que ja
+        // fez essa resolucao uma vez), reaproveita em vez de varrer a pasta de novo pra
+        // cada foto - varredura sincrona (readdirSync) bloqueava o event loop a cada
+        // imagem carregada, e um GTIN tem dezenas de fotos. So aceita se o nome bate
+        // exatamente com o prefixo esperado pro os/gtin pedido (nomeDecoradoBate) E a
+        // pasta existir de verdade - nunca confia cegamente no valor do cliente pra
+        // montar o caminho. Sem esses parametros (uso direto da URL, por ex.), cai no
+        // comportamento antigo.
+        let pastaOsNome = null;
+        if (isNomeSeguro(pastaOsNomeParam) && qaSyndi.nomeDecoradoBate(pastaOsNomeParam, os, /^OS_(\d+)/) &&
+            fs.existsSync(path.join(qaSyndi.AGCONFERENCIA, pastaOsNomeParam))) {
+            pastaOsNome = pastaOsNomeParam;
+        } else {
+            pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+        }
         if (!pastaOsNome) {
             enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
             return;
         }
-        const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(path.join(qaSyndi.AGCONFERENCIA, pastaOsNome), gtin, /^(\d+)/);
+        const pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome);
+        let pastaGtinNome = null;
+        if (isNomeSeguro(pastaGtinNomeParam) && qaSyndi.nomeDecoradoBate(pastaGtinNomeParam, gtin, /^(\d+)/) &&
+            fs.existsSync(path.join(pastaOsPath, pastaGtinNomeParam))) {
+            pastaGtinNome = pastaGtinNomeParam;
+        } else {
+            pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(pastaOsPath, gtin, /^(\d+)/);
+        }
         if (!pastaGtinNome) {
             enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
             return;
