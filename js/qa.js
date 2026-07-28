@@ -162,6 +162,18 @@ createApp({
             }
         }
 
+
+        // Qualquer mudanca na organizacao da pasta (tagging) invalida a sugestao ja
+        // carregada da aba "QA para Edicao" - ela recarrega sozinha na proxima vez que a
+        // aba abrir, ou imediatamente se ja estiver aberta. Campos que o analista ja
+        // editou manualmente (origemCampoEdicao 'manual') continuam intocados - essa
+        // protecao ja existe em aplicarDetalheEdicao, nao muda. Ver
+        // docs/superpowers/specs/2026-07-28-syndi-qa-correcoes-qa-design.md secao 2.
+        function invalidarSugestaoEdicao() {
+            edicaoCarregadaParaGtin = null;
+            if (abaDetalhe.value === 'edicao') carregarDetalheEdicao();
+        }
+
         // Troca pra aba "QA para Edicao" e carrega os dados so na primeira vez pra este
         // GTIN (edicaoCarregadaParaGtin) - evita ida-e-volta ao Redmine toda vez que o
         // analista alterna entre as abas Foto/Edicao do mesmo GTIN.
@@ -323,6 +335,7 @@ createApp({
                 const dados = await resp.json();
                 if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
                 await recarregarDetalheAtual();
+                invalidarSugestaoEdicao();
             } catch (err) {
                 alert('Erro ao marcar _coding: ' + err.message);
             }
@@ -339,6 +352,7 @@ createApp({
                 const dados = await resp.json();
                 if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
                 await recarregarDetalheAtual();
+                invalidarSugestaoEdicao();
             } catch (err) {
                 alert('Erro ao mover para ' + pasta + ': ' + err.message);
             }
@@ -358,6 +372,7 @@ createApp({
                 const dados = await resp.json();
                 if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
                 await recarregarDetalheAtual();
+                invalidarSugestaoEdicao();
             } catch (err) {
                 alert('Erro ao marcar destino: ' + err.message);
             } finally {
@@ -368,8 +383,11 @@ createApp({
         // Clicar numa foto so a torna "ativa" (o painel abaixo do palco passa a mostrar
         // o estado dela) - nao marca nada sozinho. So marcar motivo (togglarMotivoAtivo)
         // e o que conta como "foto com problema".
+        // Agora e um toggle (era so "seleciona") porque o gatilho virou um checkbox
+        // dedicado (ver syndi_qa.html) em vez do clique no corpo da foto - o corpo
+        // passou a ampliar. Ver docs/superpowers/specs/2026-07-28-syndi-qa-correcoes-qa-design.md secao 3.
         function selecionarFoto(nomeFoto) {
-            fotoAtiva.value = nomeFoto;
+            fotoAtiva.value = fotoAtiva.value === nomeFoto ? null : nomeFoto;
         }
 
         function togglarMotivoAtivo(motivo) {
