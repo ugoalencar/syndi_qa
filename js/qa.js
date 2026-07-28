@@ -314,11 +314,12 @@ createApp({
         // Monta a URL da rota GET /api/imagem pro GTIN selecionado no momento - troca o
         // antigo base64 embutido no JSON (lento com fotos reais grandes) por uma URL
         // normal, que o navegador carrega em paralelo sem travar a tela toda.
-        function urlImagem(nome) {
+        function urlImagem(nome, tamanho) {
             if (!selecionado.value) return '';
             let url = API + '/api/imagem?os=' + encodeURIComponent(selecionado.value.os) +
                 '&gtin=' + encodeURIComponent(selecionado.value.gtin) +
-                '&nome=' + encodeURIComponent(nome);
+                '&nome=' + encodeURIComponent(nome) +
+                '&tamanho=' + encodeURIComponent(tamanho || 'mini');
             // Reaproveita os nomes de pasta decorados que GET /api/gtin ja resolveu -
             // evita o servidor varrer o disco de novo (readdirSync) pra cada foto da
             // grade, que antes rodava a cada miniatura carregada.
