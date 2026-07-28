@@ -370,10 +370,13 @@ const server = http.createServer((req, res) => {
                 enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
                 return;
             }
-            // Grava Responsavel/Quantidades ANTES de mover - falha aqui IMPEDE o aprovar
-            // (diferente do retrabalho, que segue com aviso): sem esses campos o editor
-            // nao sabe o que fazer com o material. Campos todos vazios = pula o Redmine
-            // (escolha explicita do analista). Situacao das Imagens continua do robo.
+            // Grava Responsavel/Quantidades/identidade ANTES de mover - falha aqui IMPEDE o
+            // aprovar (diferente do retrabalho, que segue com aviso): sem esses campos o
+            // editor nao sabe o que fazer com o material. userId e sempre obrigatorio (ver
+            // checagem acima), entao a lista de custom_fields nunca fica vazia - o GTIN
+            // precisa ter uma ficha aberta no Redmine pra aprovar, mesmo que
+            // responsavel/qtdRecorte/qtdMockup fiquem todos em branco. Situacao das Imagens
+            // continua do robo.
             let redmineGravado = false;
             try {
                 const r = await redmine.gravarCamposEdicao(BASE_PATH, gtin, { responsavel, qtdRecorte, qtdMockup, userId });

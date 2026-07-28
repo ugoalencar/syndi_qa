@@ -243,9 +243,16 @@ createApp({
                     // que ficou vazio (pulado por montarCamposEdicaoCompleto) nao muda de
                     // origem, e a mensagem reflete exatamente o que foi escrito, nao um
                     // "gravado" generico que poderia sugerir que TODOS os campos foram.
+                    // cf_85 (Responsavel QA Imagem) e metadado de autoria, sempre gravado
+                    // junto quando ha identidade configurada - nao e um dos 4 campos desta
+                    // aba, entao fica de fora da mensagem/badges (evita mostrar "85" cru
+                    // pro analista).
                     const NOMES_CAMPO_EDICAO = { '15': 'Situação', '23': 'Responsável', '176': 'Qtd Recorte', '175': 'Qtd Mockup' };
-                    dados.idsGravados.forEach(id => { origemCampoEdicao[id] = 'manual'; });
-                    mensagemEdicao.value = 'Gravado no Redmine: ' + dados.idsGravados.map(id => NOMES_CAMPO_EDICAO[id] || id).join(', ') + '.';
+                    const idsCamposDaAba = dados.idsGravados.filter(id => NOMES_CAMPO_EDICAO[id]);
+                    idsCamposDaAba.forEach(id => { origemCampoEdicao[id] = 'manual'; });
+                    mensagemEdicao.value = idsCamposDaAba.length
+                        ? 'Gravado no Redmine: ' + idsCamposDaAba.map(id => NOMES_CAMPO_EDICAO[id]).join(', ') + '.'
+                        : 'Identidade do analista gravada no Redmine.';
                 } else {
                     mensagemEdicao.value = 'Nenhum campo preenchido - nada foi gravado.';
                 }
