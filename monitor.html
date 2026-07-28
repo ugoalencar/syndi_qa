@@ -110,11 +110,11 @@
 
         function checarServer() {
             fetch('http://localhost:3001/api/status')
-                .then(function() {
-                    aplicarStatus('Server', true, 'OK', 'Offline');
+                .then(function(r) {
+                    aplicarStatus('Server', r.ok, 'OK', 'Offline', r.ok ? '' : 'HTTP ' + r.status);
                 })
                 .catch(function() {
-                    aplicarStatus('Server', false, 'OK', 'Offline', 'server.js não respondeu');
+                    aplicarStatus('Server', false, '', 'Offline', 'server.js não respondeu');
                 });
         }
 
