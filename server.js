@@ -512,9 +512,9 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    // Grava os 4 campos da aba "QA para Edicao" (incluindo Situacao) - independente do
-    // Aprovar, nunca move pasta. Reaproveita o mesmo padrao de validacao numerica de
-    // /api/aprovar.
+    // Grava os 6 campos da aba "QA para Edicao" (incluindo Situacao, Responsavel QA Imagem
+    // e Responsavel 3 Check) - independente do Aprovar, nunca move pasta. Reaproveita o
+    // mesmo padrao de validacao numerica de /api/aprovar.
     if (req.method === 'POST' && req.url === '/api/edicao/gravar') {
         lerCorpo(req).then(async corpo => {
             let dados;
@@ -534,8 +534,14 @@ const server = http.createServer((req, res) => {
             const responsavel = typeof dados.responsavel === 'string' ? dados.responsavel.trim() : '';
             const qtdRecorte = typeof dados.qtdRecorte === 'string' ? dados.qtdRecorte.trim() : '';
             const qtdMockup = typeof dados.qtdMockup === 'string' ? dados.qtdMockup.trim() : '';
-            if (!/^\d*$/.test(situacao) || !/^\d*$/.test(responsavel) || !/^\d*$/.test(qtdRecorte) || !/^\d*$/.test(qtdMockup)) {
-                enviarJson(res, 400, { ok: false, error: 'situacao/responsavel/qtdRecorte/qtdMockup devem ser numericos ou vazios' });
+            // userId so serve pro bloqueio de identidade abaixo (obrigatoria pra gravar
+            // QUALQUER coisa nesta aba) - NAO entra no objeto campos, cf_85 virou um
+            // dropdown manual comum (responsavelQaImagem), igual aos outros campos.
+            const responsavelQaImagem = typeof dados.responsavelQaImagem === 'string' ? dados.responsavelQaImagem.trim() : '';
+            const responsavel3Check = typeof dados.responsavel3Check === 'string' ? dados.responsavel3Check.trim() : '';
+            if (!/^\d*$/.test(situacao) || !/^\d*$/.test(responsavel) || !/^\d*$/.test(qtdRecorte) || !/^\d*$/.test(qtdMockup) ||
+                !/^\d*$/.test(responsavelQaImagem) || !/^\d*$/.test(responsavel3Check)) {
+                enviarJson(res, 400, { ok: false, error: 'situacao/responsavel/qtdRecorte/qtdMockup/responsavelQaImagem/responsavel3Check devem ser numericos ou vazios' });
                 return;
             }
             const userId = typeof dados.userId === 'string' ? dados.userId.trim() : '';
@@ -543,11 +549,6 @@ const server = http.createServer((req, res) => {
                 enviarJson(res, 400, { ok: false, error: 'Identidade do analista obrigatoria (configure a engrenagem)' });
                 return;
             }
-            // userId so serve pro bloqueio acima (identidade obrigatoria pra gravar QUALQUER
-            // coisa nesta aba) - NAO entra mais no objeto campos, cf_85 virou um dropdown
-            // manual comum (responsavelQaImagem), igual aos outros campos do formulario.
-            const responsavelQaImagem = typeof dados.responsavelQaImagem === 'string' ? dados.responsavelQaImagem.trim() : '';
-            const responsavel3Check = typeof dados.responsavel3Check === 'string' ? dados.responsavel3Check.trim() : '';
             try {
                 const resultado = await redmine.gravarCamposEdicaoCompleto(BASE_PATH, gtin, { situacao, responsavel, qtdRecorte, qtdMockup, responsavelQaImagem, responsavel3Check });
                 enviarJson(res, 200, { ok: true, gravado: resultado.gravado, issueId: resultado.issueId || null, idsGravados: resultado.idsGravados || [] });

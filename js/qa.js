@@ -62,11 +62,11 @@ createApp({
         const orientacoesMockup = ref([]);
 
         // Aba "QA para Edicao" - fixa dentro do detalhe do GTIN, independente do Aprovar/
-        // painelEnvio acima. Mostra e deixa editar os 4 campos do Redmine, Situacao incluida
+        // painelEnvio acima. Mostra e deixa editar os 6 campos do Redmine, Situacao incluida
         // (excecao deliberada - ver docs/superpowers/specs/2026-07-27-syndi-qa-aba-edicao-design.md).
         const abaDetalhe = ref('foto'); // 'foto' | 'edicao'
-        const camposEdicao = reactive({ '15': '', '23': '', '175': '', '176': '' });
-        const origemCampoEdicao = reactive({ '15': 'inferido', '23': 'inferido', '175': 'inferido', '176': 'inferido' });
+        const camposEdicao = reactive({ '15': '', '23': '', '175': '', '176': '', '85': '', '172': '' });
+        const origemCampoEdicao = reactive({ '15': 'inferido', '23': 'inferido', '175': 'inferido', '176': 'inferido', '85': 'inferido', '172': 'inferido' });
         const carregandoEdicao = ref(false);
         const erroEdicao = ref(''); // erro ao CARREGAR - esconde o formulario
         const erroEnvioEdicao = ref(''); // erro ao GRAVAR - mensagem inline, nao esconde nada
