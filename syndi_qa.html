@@ -331,6 +331,23 @@
                                 <span class="qa-campo-origem" :class="origemCampoEdicao['175']">{{ origemCampoEdicao['175'] }}</span>
                             </div>
 
+                            <div class="qa-campo-linha">
+                                <span class="qa-campo-label">Responsável QA Imagem</span>
+                                <select class="form-select form-select-sm w-auto" v-model="camposEdicao['85']" @change="marcarTocadoEdicao('85')">
+                                    <option value="">-</option>
+                                    <option v-for="(rotulo, id) in opcoesResponsavelQaImagem" :key="id" :value="id">{{ rotulo }}</option>
+                                </select>
+                                <span class="qa-campo-origem" :class="origemCampoEdicao['85']">{{ origemCampoEdicao['85'] }}</span>
+                            </div>
+                            <div class="qa-campo-linha">
+                                <span class="qa-campo-label">Responsável 3º Check</span>
+                                <select class="form-select form-select-sm w-auto" v-model="camposEdicao['172']" @change="marcarTocadoEdicao('172')">
+                                    <option value="">-</option>
+                                    <option v-for="(rotulo, id) in opcoesResponsavel3Check" :key="id" :value="id">{{ rotulo }}</option>
+                                </select>
+                                <span class="qa-campo-origem" :class="origemCampoEdicao['172']">{{ origemCampoEdicao['172'] }}</span>
+                            </div>
+
                             <button type="button" class="btn btn-primary btn-sm mt-2" :disabled="enviandoEdicao || carregandoEdicao" @click="confirmarEnvioEdicao">
                                 <i class="bi bi-cloud-upload"></i> Confirmar e Enviar ao Redmine
                             </button>

@@ -57,6 +57,8 @@ createApp({
         const preparandoEnvio = ref(false);
         const formEnvio = reactive({ responsavel: '', qtdRecorte: '', qtdMockup: '', numeroMockup: '', orientacoesMockup: [] });
         const opcoesResponsavel = ref({});
+        const opcoesResponsavelQaImagem = ref({});
+        const opcoesResponsavel3Check = ref({});
         const orientacoesMockup = ref([]);
 
         // Aba "QA para Edicao" - fixa dentro do detalhe do GTIN, independente do Aprovar/
@@ -72,7 +74,7 @@ createApp({
         const enviandoEdicao = ref(false);
         const semFichaEdicao = ref(false);
         const opcoesSituacao = ref({});
-        const CAMPOS_EDICAO_IDS = ['15', '23', '176', '175'];
+        const CAMPOS_EDICAO_IDS = ['15', '23', '176', '175', '85', '172'];
         const CHAVE_SUGERIDO_EDICAO = { '23': 'responsavel', '176': 'qtdRecorte', '175': 'qtdMockup' };
         let edicaoCarregadaParaGtin = null; // "os|gtin" da ultima carga - evita recarregar toda vez que a aba abre
 
@@ -131,6 +133,8 @@ createApp({
                 const dados = await resp.json();
                 opcoesResponsavel.value = dados.campos.cf_23.opcoes;
                 opcoesSituacao.value = dados.campos.cf_15.opcoes;
+                opcoesResponsavelQaImagem.value = dados.campos.cf_85.opcoes;
+                opcoesResponsavel3Check.value = dados.campos.cf_172.opcoes;
             } catch (err) {
                 console.error('Erro ao carregar redmine-campos.json:', err);
             }
@@ -240,7 +244,9 @@ createApp({
                         responsavel: String(camposEdicao['23'] || ''),
                         qtdRecorte: String(camposEdicao['176'] || ''),
                         qtdMockup: String(camposEdicao['175'] || ''),
-                        userId: analistaId.value
+                        userId: analistaId.value,
+                        responsavelQaImagem: String(camposEdicao['85'] || ''),
+                        responsavel3Check: String(camposEdicao['172'] || '')
                     })
                 });
                 const dados = await resp.json();
@@ -258,7 +264,7 @@ createApp({
                     // junto quando ha identidade configurada - nao e um dos 4 campos desta
                     // aba, entao fica de fora da mensagem/badges (evita mostrar "85" cru
                     // pro analista).
-                    const NOMES_CAMPO_EDICAO = { '15': 'Situação', '23': 'Responsável', '176': 'Qtd Recorte', '175': 'Qtd Mockup' };
+                    const NOMES_CAMPO_EDICAO = { '15': 'Situação', '23': 'Responsável', '176': 'Qtd Recorte', '175': 'Qtd Mockup', '85': 'Responsável QA Imagem', '172': 'Responsável 3º Check' };
                     const idsCamposDaAba = dados.idsGravados.filter(id => NOMES_CAMPO_EDICAO[id]);
                     idsCamposDaAba.forEach(id => { origemCampoEdicao[id] = 'manual'; });
                     mensagemEdicao.value = idsCamposDaAba.length
@@ -715,6 +721,7 @@ createApp({
             filtroResponsavel, filtroPeriodoDe, filtroPeriodoAte, agendaFiltrada,
             abaDetalhe, camposEdicao, origemCampoEdicao, carregandoEdicao, erroEdicao, erroEnvioEdicao,
             mensagemEdicao, enviandoEdicao, semFichaEdicao, opcoesSituacao,
+            opcoesResponsavelQaImagem, opcoesResponsavel3Check,
             abrirAbaEdicao, marcarTocadoEdicao, confirmarEnvioEdicao
         };
     }
