@@ -370,6 +370,20 @@ const server = http.createServer((req, res) => {
                 enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
                 return;
             }
+            const pastaGtinPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome, pastaGtinNome);
+            const destinoAtual = qaSyndi.listarImagensGtin(pastaGtinPath).destino;
+            let mockupInfo;
+            if (destinoAtual === 'Mockup') {
+                const numeroMockup = typeof dados.numeroMockup === 'string' ? dados.numeroMockup.trim() : '';
+                if (!numeroMockup) {
+                    enviarJson(res, 400, { ok: false, error: 'Numero do Mockup e obrigatorio quando o destino e Mockup' });
+                    return;
+                }
+                const orientacoesMockup = Array.isArray(dados.orientacoesMockup)
+                    ? dados.orientacoesMockup.filter(o => typeof o === 'string')
+                    : [];
+                mockupInfo = { numero: numeroMockup, orientacoes: orientacoesMockup };
+            }
             // Grava Responsavel/Quantidades/identidade ANTES de mover - falha aqui IMPEDE o
             // aprovar (diferente do retrabalho, que segue com aviso): sem esses campos o
             // editor nao sabe o que fazer com o material. userId e sempre obrigatorio (ver
@@ -387,7 +401,7 @@ const server = http.createServer((req, res) => {
                 return;
             }
             try {
-                const resultado = qaSyndi.aprovarGtin(qaSyndi.AGCONFERENCIA, qaSyndi.AGENVIO, pastaOsNome, pastaGtinNome);
+                const resultado = qaSyndi.aprovarGtin(qaSyndi.AGCONFERENCIA, qaSyndi.AGENVIO, pastaOsNome, pastaGtinNome, mockupInfo);
                 enviarJson(res, 200, { ok: true, destino: resultado.destino, redmineGravado });
             } catch (err) {
                 enviarJson(res, 500, { ok: false, error: err.message });
@@ -460,6 +474,11 @@ const server = http.createServer((req, res) => {
 
     if (req.method === 'GET' && req.url === '/api/motivos') {
         enviarJson(res, 200, { ok: true, motivos: qaSyndi.carregarMotivos(BASE_PATH) });
+        return;
+    }
+
+    if (req.method === 'GET' && req.url === '/api/orientacoes-mockup') {
+        enviarJson(res, 200, { ok: true, orientacoes: qaSyndi.carregarOrientacoesMockup(BASE_PATH) });
         return;
     }
 
