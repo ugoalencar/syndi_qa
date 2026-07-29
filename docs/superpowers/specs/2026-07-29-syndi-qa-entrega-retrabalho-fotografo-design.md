@@ -46,7 +46,24 @@ identificou esta peça como pendência.)
   precisar provisionar um bucket-raiz novo no lado do servidor remoto, que ficaria fora do
   alcance de verificar/criar nesta sessão.
 
-## 2. Regra SEND (aplicar NESTA máquina, `C:\SyncIMGSend` — a instalação ativa confirmada)
+## 2. Regra SEND — APLICADA em produção em 2026-07-29
+
+**Correção importante em relação ao rascunho original desta seção**: a instalação realmente em
+uso nesta máquina não é `C:\SyncIMGSend` (raiz do C:, que está vazia — nenhum dado real de
+GTIN/OS) — é **`C:\Apps\SyncIMGSend`**, confirmado pelo usuário (é o `.jar` que ele aciona
+manualmente hoje, e é onde dados reais de produção já apareceram sozinhos via robô, ex.:
+`OS_49764`). Intrigantemente, o `ini.conf` de `C:\Apps\SyncIMGSend` tem todos os `PASTA_ORIGEM`/
+`PASTA_DESTINO`/`REGRA_JSON` dos 6 processos existentes escritos como `C:\SyncIMGSend\...`
+(não `C:\Apps\SyncIMGSend\...`) — mesmo assim os dados aparecem corretamente em
+`C:\Apps\SyncIMGSend`. Teoria de trabalho (não confirmada, sem acesso ao código-fonte do `.jar`):
+o robô resolve esses caminhos relativos a onde o processo é executado, ignorando o prefixo
+absoluto do valor. **A regra nova foi aplicada seguindo o MESMO estilo/padrão dos 6 processos
+existentes** (usando `C:\SyncIMGSend\...` nos valores, fisicamente dentro do `ini.conf` de
+`C:\Apps\SyncIMGSend`), para ficar consistente com o que já funciona empiricamente — precisa de
+confirmação por teste real (seção 6) antes de considerar certo.
+
+Backup do `ini.conf` anterior à mudança salvo em
+`C:\Apps\SyncIMGSend\ini.conf.backup-2026-07-29-antes-processo7`.
 
 Novo arquivo `C:\SyncIMGSend\SYNCIMG_SEND_IMAGES_RETRABALHO.json`:
 
@@ -115,25 +132,38 @@ Novo arquivo `C:\SyncIMGSend\SYNCIMG_SEND_IMAGES_RETRABALHO.json`:
 }
 ```
 
-Novo bloco no `ini.conf` de `C:\SyncIMGSend` (próximo `PROCESSO_N` livre é o 7 — hoje vai até 6;
-também incrementar `QTDE_PROCESSOS=6` para `QTDE_PROCESSOS=7` no topo do arquivo):
+Bloco ADICIONADO em produção em `C:\Apps\SyncIMGSend\ini.conf` (`QTDE_PROCESSOS` foi de `6` para
+`7`), incluindo os campos completos que o padrão real dos 6 processos existentes usa (não
+estavam todos no rascunho original desta spec — `CONTAR_IMAGENS_SUB_PASTAS`,
+`CONTAR_IMAGENS_EXTENSAO`, `MANTEM_ESTRUTURA_PASTA_NO_DESTINO`, `ATIVAR_LOG`):
 
 ```ini
 PROCESSO_7_IDENTIFICADOR=Enviando retrabalho de fotografia
 PROCESSO_7_TIPO=SEND_IMAGES
 PROCESSO_7_BUCKET=WaitingConference/Retrabalho
+PROCESSO_7_CONTAR_IMAGENS_SUB_PASTAS=N
+PROCESSO_7_CONTAR_IMAGENS_EXTENSAO=jpg;jpeg
+PROCESSO_7_MANTEM_ESTRUTURA_PASTA_NO_DESTINO=SIM
+PROCESSO_7_ATIVAR_LOG=N
 PROCESSO_7_PASTA_ORIGEM=C:\SyncIMGSend\Retrabalho
 PROCESSO_7_PASTA_DESTINO=C:\SyncIMGSend\RetrabalhoEnviado
 PROCESSO_7_REGRA_JSON=C:\SyncIMGSend\SYNCIMG_SEND_IMAGES_RETRABALHO.json
 PROCESSO_7_EXTENSAO=*
-PROCESSO_7_EXTENSAO_EXCLUIR=ini;db;DS_Store
+PROCESSO_7_EXTENSAO_EXCLUIR=ini;db;DS_Store;XnViewSort
 ```
 
-`PASTA_ORIGEM` bate exatamente com `RETRABALHO = path.join(SYNCIMGSEND_BASE, 'Retrabalho')` que o
-Syndi_qa já usa (`lib/qaSyndi.js`) — o robô passa a observar a MESMA pasta que o Syndi_qa já
-escreve, sem mudar nada no código. `PASTA_DESTINO` (`RetrabalhoEnviado`) segue o mesmo padrão já
-usado pelos processos SEND existentes (`EnviadoParaEditar`) — pasta onde o robô move o conteúdo
-local depois de confirmar o upload, evitando reenviar o mesmo GTIN de novo.
+`PASTA_ORIGEM` usa o mesmo valor literal `C:\SyncIMGSend\Retrabalho` que os 6 processos
+existentes já usam pros seus próprios caminhos (ver nota da seção 2 sobre a teoria de resolução
+relativa) — na prática, isso deve corresponder a `C:\Apps\SyncIMGSend\Retrabalho`, que É
+exatamente `RETRABALHO = path.join(SYNCIMGSEND_BASE, 'Retrabalho')` que o Syndi_qa já usa
+(`lib/qaSyndi.js`, com `SYNCIMGSEND_BASE` default `C:\Apps\SyncIMGSend` — confirmado, não existe
+`caminhos-locais.json` nesta máquina). `PASTA_DESTINO` (`RetrabalhoEnviado`) segue o mesmo padrão
+já usado pelos processos SEND existentes (`EnviadoParaEditar`) — pasta onde o robô move o
+conteúdo local depois de confirmar o upload, evitando reenviar o mesmo GTIN de novo.
+
+Arquivo de regra criado fisicamente em `C:\Apps\SyncIMGSend\SYNCIMG_SEND_IMAGES_RETRABALHO.json`
+(mesmo local físico dos outros 6 arquivos de regra, apesar de todos serem referenciados no
+`ini.conf` com o prefixo `C:\SyncIMGSend\...`).
 
 ## 3. Regra RECEIVER (especificação pronta pra aplicar na máquina do fotógrafo, quando o sistema
    for instalado/copiado pra lá)
@@ -218,10 +248,11 @@ que o Syndi_qa já move junto no retrabalho.
   há acesso a essa infraestrutura nesta sessão pra testar; o padrão observado
   (`Milium/WaitingEditing`) sugere que subcaminhos são suportados, mas vale confirmar com um
   teste real antes de depender disso em produção.
-- **Aplicar o bloco `PROCESSO_7` + a regra SEND em `C:\SyncIMGSend` (esta máquina)** — a criação
-  do arquivo JSON pode ser feita nesta sessão (é só um arquivo, similar aos specs), mas a edição
-  do `ini.conf` ativo do robô em produção é uma mudança de infraestrutura fora do repositório
-  Syndi_qa — confirmar com o usuário antes de tocar nesse arquivo especificamente (ver plano).
+- ~~Aplicar o bloco `PROCESSO_7` + a regra SEND~~ — **FEITO em 2026-07-29**, em
+  `C:\Apps\SyncIMGSend\ini.conf` (a instalação real, não `C:\SyncIMGSend` como o rascunho
+  original assumia — ver correção na seção 2). Backup do `ini.conf` anterior salvo. Ainda
+  pendente: teste real (seção 6) e cadastro da opção "Em Retrabalho de Foto" no Redmine acima —
+  sem essa opção cadastrada, a regra não vai conseguir gravar o valor no PUT.
 - **Instalar/copiar o sistema pra máquina do fotógrafo e aplicar a regra RECEIVER + o bloco
   `PROCESSO_N` lá** — ação física numa máquina sem acesso nesta sessão, o usuário faz depois.
 
@@ -230,11 +261,12 @@ que o Syndi_qa já move junto no retrabalho.
 Não há testes automatizados possíveis — é configuração de um robô fechado (`.jar`), sem
 interface de teste unitário. Verificação é manual, em duas etapas:
 
-- **Depois de aplicar a regra SEND nesta máquina**: confirmar um retrabalho real via Syndi_qa
-  (GTIN de teste), aguardar o robô rodar (ou forçar manualmente, se o robô tiver esse modo),
-  confirmar que a pasta `C:\SyncIMGSend\Retrabalho\<OS>\<gtin>\` foi movida pra
-  `RetrabalhoEnviado` e que `Situação das Imagens` da issue mudou pra "Em Retrabalho de Foto" no
-  Redmine.
+- **Depois de aplicar a regra SEND nesta máquina** (já aplicada — pendente só o teste em si):
+  confirmar um retrabalho real via Syndi_qa (GTIN de teste), aguardar o robô rodar (ou forçar
+  manualmente, se o robô tiver esse modo, executando o `.jar` de `C:\Apps\SyncIMGSend`), confirmar
+  que a pasta `Retrabalho\<OS>\<gtin>\` foi movida pra `RetrabalhoEnviado` e que `Situação das
+  Imagens` da issue mudou pra "Em Retrabalho de Foto" no Redmine. Esse teste também confirma ou
+  refuta a teoria da seção 2 sobre como o robô resolve os caminhos do `ini.conf`.
 - **Depois de aplicar a regra RECEIVER na máquina do fotógrafo**: confirmar que a pasta aparece
-  em `C:\SyncIMGSend\Retrabalho\<OS>\<gtin>\` daquela máquina (com o TXT e as fotos/subpastas
-  preservadas) e que `Situação das Imagens` mudou pra "Aguardando QA Fotografia".
+  em `Retrabalho\<OS>\<gtin>\` daquela máquina (com o TXT e as fotos/subpastas preservadas) e que
+  `Situação das Imagens` mudou pra "Aguardando QA Fotografia".
