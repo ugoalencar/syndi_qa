@@ -7,3 +7,4 @@ logs/
 .perfil-navegador/
 diagnostico.txt
 preview-cache/
+.env
