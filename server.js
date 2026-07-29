@@ -543,8 +543,13 @@ const server = http.createServer((req, res) => {
                 enviarJson(res, 400, { ok: false, error: 'Identidade do analista obrigatoria (configure a engrenagem)' });
                 return;
             }
+            // userId so serve pro bloqueio acima (identidade obrigatoria pra gravar QUALQUER
+            // coisa nesta aba) - NAO entra mais no objeto campos, cf_85 virou um dropdown
+            // manual comum (responsavelQaImagem), igual aos outros campos do formulario.
+            const responsavelQaImagem = typeof dados.responsavelQaImagem === 'string' ? dados.responsavelQaImagem.trim() : '';
+            const responsavel3Check = typeof dados.responsavel3Check === 'string' ? dados.responsavel3Check.trim() : '';
             try {
-                const resultado = await redmine.gravarCamposEdicaoCompleto(BASE_PATH, gtin, { situacao, responsavel, qtdRecorte, qtdMockup, userId });
+                const resultado = await redmine.gravarCamposEdicaoCompleto(BASE_PATH, gtin, { situacao, responsavel, qtdRecorte, qtdMockup, responsavelQaImagem, responsavel3Check });
                 enviarJson(res, 200, { ok: true, gravado: resultado.gravado, issueId: resultado.issueId || null, idsGravados: resultado.idsGravados || [] });
             } catch (err) {
                 enviarJson(res, 500, { ok: false, error: err.message });
