@@ -390,12 +390,13 @@ const server = http.createServer((req, res) => {
                     : [];
                 mockupInfo = { gtin, numero: numeroMockup, orientacoes: orientacoesMockup };
             }
-            // Grava Responsavel/Quantidades/identidade ANTES de mover - falha aqui IMPEDE o
-            // aprovar (diferente do retrabalho, que segue com aviso): sem esses campos o
-            // editor nao sabe o que fazer com o material. userId e sempre obrigatorio (ver
-            // checagem acima), entao a lista de custom_fields nunca fica vazia - o GTIN
-            // precisa ter uma ficha aberta no Redmine pra aprovar, mesmo que
-            // responsavel/qtdRecorte/qtdMockup fiquem todos em branco. Situacao das Imagens
+            // Grava Responsavel/Quantidades/Responsaveis QA ANTES de mover - falha aqui IMPEDE
+            // o aprovar (diferente do retrabalho, que segue com aviso): sem esses campos o
+            // editor nao sabe o que fazer com o material. userId continua obrigatorio pra poder
+            // aprovar (ver checagem acima), mas NAO entra mais nesta lista de custom_fields -
+            // se todos os campos (responsavel/qtdRecorte/qtdMockup/responsavelQaImagem/
+            // responsavel3Check) ficarem em branco, a lista fica vazia e nada e gravado no
+            // Redmine (aprova mesmo assim, sem exigir ficha aberta). Situacao das Imagens
             // continua do robo.
             let redmineGravado = false;
             try {
