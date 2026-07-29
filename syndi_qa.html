@@ -169,7 +169,7 @@
 
                     <template v-else-if="detalhe">
                     <div class="qa-foto-layout">
-                        <div class="qa-coluna-fotos">
+                        <div class="qa-coluna-fotos" role="region" aria-label="Grade de fotos">
                             <div class="qa-subpasta-titulo">Raiz ({{ detalhe.imagens.raiz.length }})</div>
                             <div class="qa-grid">
                                 <div class="qa-miniatura-wrap" v-for="img in detalhe.imagens.raiz" :key="img.nome">
@@ -216,7 +216,9 @@
                             </template>
                         </div>
 
-                        <div class="qa-coluna-acoes">
+                        <div class="qa-coluna-acoes" role="region" aria-label="Painel de ações">
+                            <span v-if="mensagem" class="d-block mb-2 text-success">{{ mensagem }}</span>
+                            <span v-if="erro" class="d-block mb-2 text-danger">{{ erro }}</span>
                             <div class="qa-legenda">
                                 <span class="qa-legenda-item"><span class="qa-legenda-cor coding"></span> _coding (referência de edição)</span>
                                 <span class="qa-legenda-item"><span class="qa-legenda-cor rt"></span> RT - Rótulo</span>
@@ -287,8 +289,6 @@
                                 <button type="button" class="btn btn-warning btn-sm" :disabled="!todasMarcacoesTemMotivo() || enviandoRetrabalho || !!mensagem" @click="confirmarRetrabalho">
                                     <i class="bi bi-arrow-counterclockwise"></i> Confirmar Retrabalho
                                 </button>
-                                <span v-if="mensagem" class="ms-3 text-success">{{ mensagem }}</span>
-                                <span v-if="erro" class="ms-3 text-danger">{{ erro }}</span>
                             </div>
                         </div>
                     </div>
