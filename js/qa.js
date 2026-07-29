@@ -61,6 +61,14 @@ createApp({
         const opcoesResponsavel3Check = ref({});
         const orientacoesMockup = ref([]);
 
+        // Controla se a lista de checkboxes de motivos/orientacoes esta expandida
+        // (dropdown inline, nao overlay - ver docs/superpowers/specs/
+        // 2026-07-29-syndi-qa-dropdown-checkboxes-design.md). Fecham sozinhos ao trocar
+        // de contexto (foto ativa / novo painel de envio) pra nao vazar estado "aberto"
+        // de uma selecao pra outra.
+        const mostrarDropdownMotivos = ref(false);
+        const mostrarDropdownOrientacoes = ref(false);
+
         // Aba "QA para Edicao" - fixa dentro do detalhe do GTIN, independente do Aprovar/
         // painelEnvio acima. Mostra e deixa editar os 6 campos do Redmine, Situacao incluida
         // (excecao deliberada - ver docs/superpowers/specs/2026-07-27-syndi-qa-aba-edicao-design.md).
@@ -445,6 +453,7 @@ createApp({
         // passou a ampliar. Ver docs/superpowers/specs/2026-07-28-syndi-qa-correcoes-qa-design.md secao 3.
         function selecionarFoto(nomeFoto) {
             fotoAtiva.value = fotoAtiva.value === nomeFoto ? null : nomeFoto;
+            mostrarDropdownMotivos.value = false;
         }
 
         function togglarMotivoAtivo(motivo) {
@@ -464,6 +473,14 @@ createApp({
         function togglarOrientacaoMockup(orientacao) {
             const idx = formEnvio.orientacoesMockup.indexOf(orientacao);
             if (idx === -1) formEnvio.orientacoesMockup.push(orientacao); else formEnvio.orientacoesMockup.splice(idx, 1);
+        }
+
+        function toggleDropdownMotivos() {
+            mostrarDropdownMotivos.value = !mostrarDropdownMotivos.value;
+        }
+
+        function toggleDropdownOrientacoes() {
+            mostrarDropdownOrientacoes.value = !mostrarDropdownOrientacoes.value;
         }
 
         function temMarcacao() {
@@ -517,6 +534,7 @@ createApp({
                 formEnvio.qtdMockup = dados.campos.qtdMockup || '';
                 formEnvio.numeroMockup = '';
                 formEnvio.orientacoesMockup = [];
+                mostrarDropdownOrientacoes.value = false;
                 painelEnvio.value = { destino: dados.destino, motivo: dados.motivo };
             } catch (err) {
                 if (selecionado.value && selecionado.value.os === os && selecionado.value.gtin === gtin) {
@@ -716,7 +734,7 @@ createApp({
             carregarFila, selecionarGtin, urlImagem, selecionarFoto, togglarMotivoAtivo, temMarcacao, todasMarcacoesTemMotivo,
             aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao,
             painelEnvio, preparandoEnvio, formEnvio, opcoesResponsavel, abrirPainelEnvio, fecharPainelEnvio,
-            orientacoesMockup, togglarOrientacaoMockup,
+            orientacoesMockup, togglarOrientacaoMockup, mostrarDropdownMotivos, mostrarDropdownOrientacoes, toggleDropdownMotivos, toggleDropdownOrientacoes,
             viewAtiva, mudarParaAgenda, agenda, carregandoAgenda, erroAgenda, carregarAgenda,
             filtroResponsavel, filtroPeriodoDe, filtroPeriodoAte, agendaFiltrada,
             abaDetalhe, camposEdicao, origemCampoEdicao, carregandoEdicao, erroEdicao, erroEnvioEdicao,
