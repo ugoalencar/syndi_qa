@@ -266,6 +266,20 @@
                                     <span class="qa-campo-label">Qtd Imagens Mockup</span>
                                     <input type="number" min="0" class="form-control form-control-sm" style="width:100px" v-model="formEnvio.qtdMockup">
                                 </div>
+                                <div class="qa-campo-linha">
+                                    <span class="qa-campo-label">Responsável QA Imagem</span>
+                                    <select class="form-select form-select-sm w-auto" v-model="formEnvio.responsavelQaImagem">
+                                        <option value="">-</option>
+                                        <option v-for="(rotulo, id) in opcoesResponsavelQaImagem" :key="id" :value="id">{{ rotulo }}</option>
+                                    </select>
+                                </div>
+                                <div class="qa-campo-linha">
+                                    <span class="qa-campo-label">Responsável 3º Check</span>
+                                    <select class="form-select form-select-sm w-auto" v-model="formEnvio.responsavel3Check">
+                                        <option value="">-</option>
+                                        <option v-for="(rotulo, id) in opcoesResponsavel3Check" :key="id" :value="id">{{ rotulo }}</option>
+                                    </select>
+                                </div>
                                 <template v-if="detalhe.imagens.destino === 'Mockup'">
                                     <div class="qa-campo-linha">
                                         <span class="qa-campo-label">Número do Mockup</span>

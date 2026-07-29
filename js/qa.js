@@ -55,7 +55,7 @@ createApp({
         // e o robo SyncIMGSend, nunca o Syndi_qa.
         const painelEnvio = ref(null); // { destino, motivo } aberto, null fechado
         const preparandoEnvio = ref(false);
-        const formEnvio = reactive({ responsavel: '', qtdRecorte: '', qtdMockup: '', numeroMockup: '', orientacoesMockup: [] });
+        const formEnvio = reactive({ responsavel: '', qtdRecorte: '', qtdMockup: '', numeroMockup: '', orientacoesMockup: [], responsavelQaImagem: '', responsavel3Check: '' });
         const opcoesResponsavel = ref({});
         const opcoesResponsavelQaImagem = ref({});
         const opcoesResponsavel3Check = ref({});
@@ -534,6 +534,8 @@ createApp({
                 formEnvio.qtdMockup = dados.campos.qtdMockup || '';
                 formEnvio.numeroMockup = '';
                 formEnvio.orientacoesMockup = [];
+                formEnvio.responsavelQaImagem = '';
+                formEnvio.responsavel3Check = '';
                 mostrarDropdownOrientacoes.value = false;
                 painelEnvio.value = { destino: dados.destino, motivo: dados.motivo };
             } catch (err) {
@@ -574,7 +576,9 @@ createApp({
                         qtdMockup: String(formEnvio.qtdMockup || ''),
                         userId: analistaId.value,
                         numeroMockup: formEnvio.numeroMockup.trim(),
-                        orientacoesMockup: formEnvio.orientacoesMockup
+                        orientacoesMockup: formEnvio.orientacoesMockup,
+                        responsavelQaImagem: String(formEnvio.responsavelQaImagem || ''),
+                        responsavel3Check: String(formEnvio.responsavel3Check || '')
                     })
                 });
                 const dados = await resp.json();
