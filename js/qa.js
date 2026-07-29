@@ -55,8 +55,9 @@ createApp({
         // e o robo SyncIMGSend, nunca o Syndi_qa.
         const painelEnvio = ref(null); // { destino, motivo } aberto, null fechado
         const preparandoEnvio = ref(false);
-        const formEnvio = reactive({ responsavel: '', qtdRecorte: '', qtdMockup: '' });
+        const formEnvio = reactive({ responsavel: '', qtdRecorte: '', qtdMockup: '', numeroMockup: '', orientacoesMockup: [] });
         const opcoesResponsavel = ref({});
+        const orientacoesMockup = ref([]);
 
         // Aba "QA para Edicao" - fixa dentro do detalhe do GTIN, independente do Aprovar/
         // painelEnvio acima. Mostra e deixa editar os 4 campos do Redmine, Situacao incluida
@@ -111,6 +112,16 @@ createApp({
                 if (dados.ok) motivos.value = dados.motivos;
             } catch (err) {
                 console.error('Erro ao carregar motivos:', err);
+            }
+        }
+
+        async function carregarOrientacoesMockupDisponiveis() {
+            try {
+                const resp = await fetch(API + '/api/orientacoes-mockup');
+                const dados = await resp.json();
+                if (dados.ok) orientacoesMockup.value = dados.orientacoes;
+            } catch (err) {
+                console.error('Erro ao carregar orientacoes de mockup:', err);
             }
         }
 
@@ -441,6 +452,14 @@ createApp({
             if (lista.length === 0) delete marcadas[fotoAtiva.value];
         }
 
+        // Toggle de orientacao de mockup - local ao formEnvio (nao vai ao servidor ate o
+        // Aprovar ser confirmado), mesmo principio do togglarMotivoAtivo mas sem o
+        // agrupamento por foto (mockup e por GTIN, nao por foto individual).
+        function togglarOrientacaoMockup(orientacao) {
+            const idx = formEnvio.orientacoesMockup.indexOf(orientacao);
+            if (idx === -1) formEnvio.orientacoesMockup.push(orientacao); else formEnvio.orientacoesMockup.splice(idx, 1);
+        }
+
         function temMarcacao() {
             return Object.keys(marcadas).length > 0;
         }
@@ -490,6 +509,8 @@ createApp({
                 formEnvio.responsavel = dados.campos.responsavel || '';
                 formEnvio.qtdRecorte = dados.campos.qtdRecorte || '';
                 formEnvio.qtdMockup = dados.campos.qtdMockup || '';
+                formEnvio.numeroMockup = '';
+                formEnvio.orientacoesMockup = [];
                 painelEnvio.value = { destino: dados.destino, motivo: dados.motivo };
             } catch (err) {
                 if (selecionado.value && selecionado.value.os === os && selecionado.value.gtin === gtin) {
@@ -510,6 +531,10 @@ createApp({
                 erro.value = 'Identidade nao configurada! Clique no icone de engrenagem.';
                 return;
             }
+            if (detalhe.value && detalhe.value.imagens.destino === 'Mockup' && !formEnvio.numeroMockup.trim()) {
+                erro.value = 'Numero do Mockup e obrigatorio quando o destino e Mockup.';
+                return;
+            }
             aprovando.value = true;
             mensagem.value = '';
             erro.value = '';
@@ -523,7 +548,9 @@ createApp({
                         responsavel: String(formEnvio.responsavel || ''),
                         qtdRecorte: String(formEnvio.qtdRecorte || ''),
                         qtdMockup: String(formEnvio.qtdMockup || ''),
-                        userId: analistaId.value
+                        userId: analistaId.value,
+                        numeroMockup: formEnvio.numeroMockup.trim(),
+                        orientacoesMockup: formEnvio.orientacoesMockup
                     })
                 });
                 const dados = await resp.json();
@@ -668,6 +695,7 @@ createApp({
 
         carregarFila();
         carregarMotivosDisponiveis();
+        carregarOrientacoesMockupDisponiveis();
         carregarOpcoesResponsavel();
 
         return {
@@ -682,6 +710,7 @@ createApp({
             carregarFila, selecionarGtin, urlImagem, selecionarFoto, togglarMotivoAtivo, temMarcacao, todasMarcacoesTemMotivo,
             aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao,
             painelEnvio, preparandoEnvio, formEnvio, opcoesResponsavel, abrirPainelEnvio, fecharPainelEnvio,
+            orientacoesMockup, togglarOrientacaoMockup,
             viewAtiva, mudarParaAgenda, agenda, carregandoAgenda, erroAgenda, carregarAgenda,
             filtroResponsavel, filtroPeriodoDe, filtroPeriodoAte, agendaFiltrada,
             abaDetalhe, camposEdicao, origemCampoEdicao, carregandoEdicao, erroEdicao, erroEnvioEdicao,
