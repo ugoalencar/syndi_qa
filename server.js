@@ -382,7 +382,7 @@ const server = http.createServer((req, res) => {
                 const orientacoesMockup = Array.isArray(dados.orientacoesMockup)
                     ? dados.orientacoesMockup.filter(o => typeof o === 'string')
                     : [];
-                mockupInfo = { numero: numeroMockup, orientacoes: orientacoesMockup };
+                mockupInfo = { gtin, numero: numeroMockup, orientacoes: orientacoesMockup };
             }
             // Grava Responsavel/Quantidades/identidade ANTES de mover - falha aqui IMPEDE o
             // aprovar (diferente do retrabalho, que segue com aviso): sem esses campos o
