@@ -375,10 +375,6 @@
     border-color: var(--primary);
 }
 
-.qa-dropdown-lista {
-    margin-top: 4px;
-}
-
 .qa-subpasta-titulo {
     font-size: 0.85rem;
     font-weight: 600;

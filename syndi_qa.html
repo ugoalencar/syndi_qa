@@ -234,11 +234,11 @@
 
                             <div v-if="fotoAtiva" class="qa-motivos-painel">
                                 <div class="qa-motivos-titulo">Motivos para {{ fotoAtiva }}</div>
-                                <button type="button" class="qa-dropdown-toggle" @click="toggleDropdownMotivos">
+                                <button type="button" class="qa-dropdown-toggle" :aria-expanded="mostrarDropdownMotivos" @click="toggleDropdownMotivos">
                                     <span>{{ (marcadas[fotoAtiva] || []).length ? 'Motivos (' + (marcadas[fotoAtiva] || []).length + ')' : 'Selecionar motivos' }}</span>
                                     <i class="bi" :class="mostrarDropdownMotivos ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
                                 </button>
-                                <div v-if="mostrarDropdownMotivos" class="qa-motivos qa-dropdown-lista">
+                                <div v-if="mostrarDropdownMotivos" class="qa-motivos">
                                     <label v-for="motivo in motivos" :key="motivo" class="qa-motivo-item">
                                         <input type="checkbox" :checked="(marcadas[fotoAtiva] || []).includes(motivo)" @change="togglarMotivoAtivo(motivo)"> {{ motivo }}
                                     </label>
@@ -273,11 +273,11 @@
                                     </div>
                                     <div class="qa-motivos-painel">
                                         <div class="qa-motivos-titulo">Orientações pro editor (opcional)</div>
-                                        <button type="button" class="qa-dropdown-toggle" @click="toggleDropdownOrientacoes">
+                                        <button type="button" class="qa-dropdown-toggle" :aria-expanded="mostrarDropdownOrientacoes" @click="toggleDropdownOrientacoes">
                                             <span>{{ formEnvio.orientacoesMockup.length ? 'Orientações (' + formEnvio.orientacoesMockup.length + ')' : 'Selecionar orientações' }}</span>
                                             <i class="bi" :class="mostrarDropdownOrientacoes ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
                                         </button>
-                                        <div v-if="mostrarDropdownOrientacoes" class="qa-motivos qa-dropdown-lista">
+                                        <div v-if="mostrarDropdownOrientacoes" class="qa-motivos">
                                             <label v-for="orientacao in orientacoesMockup" :key="orientacao" class="qa-motivo-item">
                                                 <input type="checkbox" :checked="formEnvio.orientacoesMockup.includes(orientacao)" @change="togglarOrientacaoMockup(orientacao)"> {{ orientacao }}
                                             </label>
