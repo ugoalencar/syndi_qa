@@ -8,3 +8,4 @@ logs/
 diagnostico.txt
 preview-cache/
 .env
+.superpowers/
