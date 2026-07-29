@@ -351,8 +351,14 @@ const server = http.createServer((req, res) => {
             const responsavel = typeof dados.responsavel === 'string' ? dados.responsavel.trim() : '';
             const qtdRecorte = typeof dados.qtdRecorte === 'string' ? dados.qtdRecorte.trim() : '';
             const qtdMockup = typeof dados.qtdMockup === 'string' ? dados.qtdMockup.trim() : '';
-            if (!/^\d*$/.test(responsavel) || !/^\d*$/.test(qtdRecorte) || !/^\d*$/.test(qtdMockup)) {
-                enviarJson(res, 400, { ok: false, error: 'responsavel/qtdRecorte/qtdMockup devem ser numericos ou vazios' });
+            // userId so serve pro bloqueio de identidade abaixo (obrigatoria pra aprovar
+            // QUALQUER coisa) - NAO entra mais no objeto campos, cf_85 virou um dropdown
+            // manual comum (responsavelQaImagem), igual ja e na aba QA para Edicao.
+            const responsavelQaImagem = typeof dados.responsavelQaImagem === 'string' ? dados.responsavelQaImagem.trim() : '';
+            const responsavel3Check = typeof dados.responsavel3Check === 'string' ? dados.responsavel3Check.trim() : '';
+            if (!/^\d*$/.test(responsavel) || !/^\d*$/.test(qtdRecorte) || !/^\d*$/.test(qtdMockup) ||
+                !/^\d*$/.test(responsavelQaImagem) || !/^\d*$/.test(responsavel3Check)) {
+                enviarJson(res, 400, { ok: false, error: 'responsavel/qtdRecorte/qtdMockup/responsavelQaImagem/responsavel3Check devem ser numericos ou vazios' });
                 return;
             }
             const userId = typeof dados.userId === 'string' ? dados.userId.trim() : '';
@@ -393,7 +399,7 @@ const server = http.createServer((req, res) => {
             // continua do robo.
             let redmineGravado = false;
             try {
-                const r = await redmine.gravarCamposEdicao(BASE_PATH, gtin, { responsavel, qtdRecorte, qtdMockup, userId });
+                const r = await redmine.gravarCamposEdicao(BASE_PATH, gtin, { responsavel, qtdRecorte, qtdMockup, responsavelQaImagem, responsavel3Check });
                 redmineGravado = r.gravado;
             } catch (err) {
                 console.error('Erro ao gravar campos de edicao no Redmine para GTIN', gtin, err);
