@@ -164,127 +164,134 @@
                     </div>
 
                     <div v-show="abaDetalhe === 'foto'">
-                    <div class="qa-legenda">
-                        <span class="qa-legenda-item"><span class="qa-legenda-cor coding"></span> _coding (referência de edição)</span>
-                        <span class="qa-legenda-item"><span class="qa-legenda-cor rt"></span> RT - Rótulo</span>
-                        <span class="qa-legenda-item"><span class="qa-legenda-cor is"></span> IS - Insumos</span>
-                        <span class="qa-legenda-item"><span class="qa-legenda-cor ap"></span> AP - Apoio</span>
-                    </div>
-
                     <div v-if="carregandoDetalhe" class="qa-vazio">Carregando pasta...</div>
                     <div v-else-if="erroDetalhe" class="text-danger p-3">{{ erroDetalhe }}</div>
 
                     <template v-else-if="detalhe">
-                        <div class="qa-destino-manual">
-                            <span class="qa-destino-manual-label">Tipo de pós-produção:</span>
-                            <button type="button" class="qa-destino-btn recorte" :class="{ ativa: detalhe.imagens.destino === 'Recorte' }" :disabled="marcandoDestino" @click="marcarDestinoManual('Recorte')">Recorte</button>
-                            <button type="button" class="qa-destino-btn mockup" :class="{ ativa: detalhe.imagens.destino === 'Mockup' }" :disabled="marcandoDestino" @click="marcarDestinoManual('Mockup')">Mockup</button>
-                        </div>
-                        <div class="qa-subpasta-titulo">Raiz ({{ detalhe.imagens.raiz.length }})</div>
-                        <div class="qa-grid">
-                            <div class="qa-miniatura-wrap" v-for="img in detalhe.imagens.raiz" :key="img.nome">
-                                <div
-                                    class="qa-miniatura"
-                                    :class="{ ativa: fotoAtiva === img.nome, marcada: !!marcadas[img.nome], 'tem-coding': img.nome.includes('_coding') }"
-                                    @click="ampliarImagem(img.nome, detalhe.imagens.raiz.map(i => i.nome))"
-                                >
-                                    <img :src="urlImagem(img.nome)" :alt="img.nome" loading="lazy">
-                                </div>
-                                <div class="qa-miniatura-nome">{{ img.nome }}</div>
-                                <div class="qa-acoes-mini">
-                                    <input type="checkbox" class="qa-checkbox-retrabalho" title="Selecionar para retrabalho" :checked="fotoAtiva === img.nome" @change="selecionarFoto(img.nome)">
-                                    <button type="button" class="qa-acao-mini coding" :class="{ ativa: img.nome.includes('_coding') }" title="Marcar/desmarcar _coding" @click="toggleCoding(img.nome)">C</button>
-                                    <button type="button" class="qa-acao-mini rt" title="Mover para Rótulo" @click="toggleSubpasta(img.nome, 'RT')">RT</button>
-                                    <button type="button" class="qa-acao-mini is" title="Mover para Insumos" @click="toggleSubpasta(img.nome, 'IS')">IS</button>
-                                    <button type="button" class="qa-acao-mini ap" title="Mover para Apoio" @click="toggleSubpasta(img.nome, 'AP')">AP</button>
-                                    <button type="button" class="qa-acao-mini zoom" title="Ampliar" @click="ampliarImagem(img.nome, detalhe.imagens.raiz.map(i => i.nome))"><i class="bi bi-zoom-in"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <template v-for="tag in ['RT', 'IS', 'AP']" :key="tag">
-                            <template v-if="detalhe.imagens.subpastas[tag] && detalhe.imagens.subpastas[tag].length">
-                                <div class="qa-subpasta-titulo">{{ tag }} ({{ detalhe.imagens.subpastas[tag].length }})</div>
-                                <div class="qa-grid">
-                                    <div class="qa-miniatura-wrap" v-for="img in detalhe.imagens.subpastas[tag]" :key="img.nome">
-                                        <div
-                                            class="qa-miniatura"
-                                            :class="{ ativa: fotoAtiva === (tag + '/' + img.nome), marcada: !!marcadas[tag + '/' + img.nome], ['tem-' + tag.toLowerCase()]: true }"
-                                            @click="ampliarImagem(tag + '/' + img.nome, detalhe.imagens.subpastas[tag].map(i => tag + '/' + i.nome))"
-                                        >
-                                            <img :src="urlImagem(tag + '/' + img.nome)" :alt="img.nome" loading="lazy">
-                                        </div>
-                                        <div class="qa-miniatura-nome">{{ img.nome }}</div>
-                                        <div class="qa-acoes-mini">
-                                            <input type="checkbox" class="qa-checkbox-retrabalho" title="Selecionar para retrabalho" :checked="fotoAtiva === (tag + '/' + img.nome)" @change="selecionarFoto(tag + '/' + img.nome)">
-                                            <button type="button" class="qa-acao-mini voltar" title="Tirar da subpasta" @click="toggleSubpasta(img.nome, tag)">Voltar p/ raiz</button>
-                                            <button type="button" class="qa-acao-mini zoom" title="Ampliar" @click="ampliarImagem(tag + '/' + img.nome, detalhe.imagens.subpastas[tag].map(i => tag + '/' + i.nome))"><i class="bi bi-zoom-in"></i></button>
-                                        </div>
+                    <div class="qa-foto-layout">
+                        <div class="qa-coluna-fotos" role="region" aria-label="Grade de fotos">
+                            <div class="qa-subpasta-titulo">Raiz ({{ detalhe.imagens.raiz.length }})</div>
+                            <div class="qa-grid">
+                                <div class="qa-miniatura-wrap" v-for="img in detalhe.imagens.raiz" :key="img.nome">
+                                    <div
+                                        class="qa-miniatura"
+                                        :class="{ ativa: fotoAtiva === img.nome, marcada: !!marcadas[img.nome], 'tem-coding': img.nome.includes('_coding') }"
+                                        @click="ampliarImagem(img.nome, detalhe.imagens.raiz.map(i => i.nome))"
+                                    >
+                                        <img :src="urlImagem(img.nome)" :alt="img.nome" loading="lazy">
+                                    </div>
+                                    <div class="qa-miniatura-nome">{{ img.nome }}</div>
+                                    <div class="qa-acoes-mini">
+                                        <input type="checkbox" class="qa-checkbox-retrabalho" title="Selecionar para retrabalho" :checked="fotoAtiva === img.nome" @change="selecionarFoto(img.nome)">
+                                        <button type="button" class="qa-acao-mini coding" :class="{ ativa: img.nome.includes('_coding') }" title="Marcar/desmarcar _coding" @click="toggleCoding(img.nome)">C</button>
+                                        <button type="button" class="qa-acao-mini rt" title="Mover para Rótulo" @click="toggleSubpasta(img.nome, 'RT')">RT</button>
+                                        <button type="button" class="qa-acao-mini is" title="Mover para Insumos" @click="toggleSubpasta(img.nome, 'IS')">IS</button>
+                                        <button type="button" class="qa-acao-mini ap" title="Mover para Apoio" @click="toggleSubpasta(img.nome, 'AP')">AP</button>
+                                        <button type="button" class="qa-acao-mini zoom" title="Ampliar" @click="ampliarImagem(img.nome, detalhe.imagens.raiz.map(i => i.nome))"><i class="bi bi-zoom-in"></i></button>
                                     </div>
                                 </div>
-                            </template>
-                        </template>
-
-                        <div v-if="fotoAtiva" class="qa-motivos-painel">
-                            <div class="qa-motivos-titulo">Motivos para {{ fotoAtiva }}</div>
-                            <div class="qa-motivos">
-                                <label v-for="motivo in motivos" :key="motivo" class="qa-motivo-item">
-                                    <input type="checkbox" :checked="(marcadas[fotoAtiva] || []).includes(motivo)" @change="togglarMotivoAtivo(motivo)"> {{ motivo }}
-                                </label>
                             </div>
+
+                            <template v-for="tag in ['RT', 'IS', 'AP']" :key="tag">
+                                <template v-if="detalhe.imagens.subpastas[tag] && detalhe.imagens.subpastas[tag].length">
+                                    <div class="qa-subpasta-titulo">{{ tag }} ({{ detalhe.imagens.subpastas[tag].length }})</div>
+                                    <div class="qa-grid">
+                                        <div class="qa-miniatura-wrap" v-for="img in detalhe.imagens.subpastas[tag]" :key="img.nome">
+                                            <div
+                                                class="qa-miniatura"
+                                                :class="{ ativa: fotoAtiva === (tag + '/' + img.nome), marcada: !!marcadas[tag + '/' + img.nome], ['tem-' + tag.toLowerCase()]: true }"
+                                                @click="ampliarImagem(tag + '/' + img.nome, detalhe.imagens.subpastas[tag].map(i => tag + '/' + i.nome))"
+                                            >
+                                                <img :src="urlImagem(tag + '/' + img.nome)" :alt="img.nome" loading="lazy">
+                                            </div>
+                                            <div class="qa-miniatura-nome">{{ img.nome }}</div>
+                                            <div class="qa-acoes-mini">
+                                                <input type="checkbox" class="qa-checkbox-retrabalho" title="Selecionar para retrabalho" :checked="fotoAtiva === (tag + '/' + img.nome)" @change="selecionarFoto(tag + '/' + img.nome)">
+                                                <button type="button" class="qa-acao-mini voltar" title="Tirar da subpasta" @click="toggleSubpasta(img.nome, tag)">Voltar p/ raiz</button>
+                                                <button type="button" class="qa-acao-mini zoom" title="Ampliar" @click="ampliarImagem(tag + '/' + img.nome, detalhe.imagens.subpastas[tag].map(i => tag + '/' + i.nome))"><i class="bi bi-zoom-in"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </template>
                         </div>
 
-                        <div v-if="painelEnvio" class="qa-editadas-recebidas">
-                            <div class="qa-editadas-header"><span>Enviar para Edição</span></div>
-                            <div v-if="painelEnvio.destino === 'indefinido'" class="qa-conflito-aviso">
-                                <i class="bi bi-exclamation-triangle-fill"></i>
-                                Não foi possível inferir automaticamente: {{ painelEnvio.motivo }}. Preencha os campos manualmente (ou confirme sem preencher pra não gravar nada no Redmine).
+                        <div class="qa-coluna-acoes" role="region" aria-label="Painel de ações">
+                            <span v-if="mensagem" class="d-block mb-2 text-success">{{ mensagem }}</span>
+                            <span v-if="erro" class="d-block mb-2 text-danger">{{ erro }}</span>
+                            <div class="qa-legenda">
+                                <span class="qa-legenda-item"><span class="qa-legenda-cor coding"></span> _coding (referência de edição)</span>
+                                <span class="qa-legenda-item"><span class="qa-legenda-cor rt"></span> RT - Rótulo</span>
+                                <span class="qa-legenda-item"><span class="qa-legenda-cor is"></span> IS - Insumos</span>
+                                <span class="qa-legenda-item"><span class="qa-legenda-cor ap"></span> AP - Apoio</span>
                             </div>
-                            <div class="qa-campo-linha">
-                                <span class="qa-campo-label">Responsável Pós-Produção</span>
-                                <select class="form-select form-select-sm w-auto" v-model="formEnvio.responsavel">
-                                    <option value="">-</option>
-                                    <option v-for="(rotulo, id) in opcoesResponsavel" :key="id" :value="id">{{ rotulo }}</option>
-                                </select>
+
+                            <div class="qa-destino-manual">
+                                <span class="qa-destino-manual-label">Tipo de pós-produção:</span>
+                                <button type="button" class="qa-destino-btn recorte" :class="{ ativa: detalhe.imagens.destino === 'Recorte' }" :disabled="marcandoDestino" @click="marcarDestinoManual('Recorte')">Recorte</button>
+                                <button type="button" class="qa-destino-btn mockup" :class="{ ativa: detalhe.imagens.destino === 'Mockup' }" :disabled="marcandoDestino" @click="marcarDestinoManual('Mockup')">Mockup</button>
                             </div>
-                            <div class="qa-campo-linha">
-                                <span class="qa-campo-label">Qtd Imagens Recorte</span>
-                                <input type="number" min="0" class="form-control form-control-sm" style="width:100px" v-model="formEnvio.qtdRecorte">
+
+                            <div v-if="fotoAtiva" class="qa-motivos-painel">
+                                <div class="qa-motivos-titulo">Motivos para {{ fotoAtiva }}</div>
+                                <div class="qa-motivos">
+                                    <label v-for="motivo in motivos" :key="motivo" class="qa-motivo-item">
+                                        <input type="checkbox" :checked="(marcadas[fotoAtiva] || []).includes(motivo)" @change="togglarMotivoAtivo(motivo)"> {{ motivo }}
+                                    </label>
+                                </div>
                             </div>
-                            <div class="qa-campo-linha">
-                                <span class="qa-campo-label">Qtd Imagens Mockup</span>
-                                <input type="number" min="0" class="form-control form-control-sm" style="width:100px" v-model="formEnvio.qtdMockup">
-                            </div>
-                            <template v-if="detalhe.imagens.destino === 'Mockup'">
+
+                            <div v-if="painelEnvio" class="qa-editadas-recebidas">
+                                <div class="qa-editadas-header"><span>Enviar para Edição</span></div>
+                                <div v-if="painelEnvio.destino === 'indefinido'" class="qa-conflito-aviso">
+                                    <i class="bi bi-exclamation-triangle-fill"></i>
+                                    Não foi possível inferir automaticamente: {{ painelEnvio.motivo }}. Preencha os campos manualmente (ou confirme sem preencher pra não gravar nada no Redmine).
+                                </div>
                                 <div class="qa-campo-linha">
-                                    <span class="qa-campo-label">Número do Mockup</span>
-                                    <input type="text" class="form-control form-control-sm" style="width:160px" v-model="formEnvio.numeroMockup" placeholder="ex.: MK-042">
+                                    <span class="qa-campo-label">Responsável Pós-Produção</span>
+                                    <select class="form-select form-select-sm w-auto" v-model="formEnvio.responsavel">
+                                        <option value="">-</option>
+                                        <option v-for="(rotulo, id) in opcoesResponsavel" :key="id" :value="id">{{ rotulo }}</option>
+                                    </select>
                                 </div>
-                                <div class="qa-motivos-painel">
-                                    <div class="qa-motivos-titulo">Orientações pro editor (opcional)</div>
-                                    <div class="qa-motivos">
-                                        <label v-for="orientacao in orientacoesMockup" :key="orientacao" class="qa-motivo-item">
-                                            <input type="checkbox" :checked="formEnvio.orientacoesMockup.includes(orientacao)" @change="togglarOrientacaoMockup(orientacao)"> {{ orientacao }}
-                                        </label>
+                                <div class="qa-campo-linha">
+                                    <span class="qa-campo-label">Qtd Imagens Recorte</span>
+                                    <input type="number" min="0" class="form-control form-control-sm" style="width:100px" v-model="formEnvio.qtdRecorte">
+                                </div>
+                                <div class="qa-campo-linha">
+                                    <span class="qa-campo-label">Qtd Imagens Mockup</span>
+                                    <input type="number" min="0" class="form-control form-control-sm" style="width:100px" v-model="formEnvio.qtdMockup">
+                                </div>
+                                <template v-if="detalhe.imagens.destino === 'Mockup'">
+                                    <div class="qa-campo-linha">
+                                        <span class="qa-campo-label">Número do Mockup</span>
+                                        <input type="text" class="form-control form-control-sm" style="width:160px" v-model="formEnvio.numeroMockup" placeholder="ex.: MK-042">
                                     </div>
-                                </div>
-                            </template>
-                            <button type="button" class="btn btn-primary btn-sm" :disabled="aprovando || !!mensagem" @click="aprovarGtin">
-                                <i class="bi bi-cloud-upload"></i> Confirmar e Enviar
-                            </button>
-                            <button type="button" class="btn btn-outline-light btn-sm ms-2" :disabled="aprovando" @click="fecharPainelEnvio">Cancelar</button>
-                        </div>
+                                    <div class="qa-motivos-painel">
+                                        <div class="qa-motivos-titulo">Orientações pro editor (opcional)</div>
+                                        <div class="qa-motivos">
+                                            <label v-for="orientacao in orientacoesMockup" :key="orientacao" class="qa-motivo-item">
+                                                <input type="checkbox" :checked="formEnvio.orientacoesMockup.includes(orientacao)" @change="togglarOrientacaoMockup(orientacao)"> {{ orientacao }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </template>
+                                <button type="button" class="btn btn-primary btn-sm" :disabled="aprovando || !!mensagem" @click="aprovarGtin">
+                                    <i class="bi bi-cloud-upload"></i> Confirmar e Enviar
+                                </button>
+                                <button type="button" class="btn btn-outline-light btn-sm ms-2" :disabled="aprovando" @click="fecharPainelEnvio">Cancelar</button>
+                            </div>
 
-                        <div class="qa-enviar-conferencia mt-3">
-                            <button type="button" class="btn btn-primary btn-sm" :disabled="temMarcacao() || preparandoEnvio || !!painelEnvio || aprovando || !!mensagem" @click="abrirPainelEnvio">
-                                <i class="bi bi-check2-circle"></i> Aprovar GTIN
-                            </button>
-                            <button type="button" class="btn btn-warning btn-sm" :disabled="!todasMarcacoesTemMotivo() || enviandoRetrabalho || !!mensagem" @click="confirmarRetrabalho">
-                                <i class="bi bi-arrow-counterclockwise"></i> Confirmar Retrabalho
-                            </button>
-                            <span v-if="mensagem" class="ms-3 text-success">{{ mensagem }}</span>
-                            <span v-if="erro" class="ms-3 text-danger">{{ erro }}</span>
+                            <div class="qa-enviar-conferencia mt-3">
+                                <button type="button" class="btn btn-primary btn-sm" :disabled="temMarcacao() || preparandoEnvio || !!painelEnvio || aprovando || !!mensagem" @click="abrirPainelEnvio">
+                                    <i class="bi bi-check2-circle"></i> Aprovar GTIN
+                                </button>
+                                <button type="button" class="btn btn-warning btn-sm" :disabled="!todasMarcacoesTemMotivo() || enviandoRetrabalho || !!mensagem" @click="confirmarRetrabalho">
+                                    <i class="bi bi-arrow-counterclockwise"></i> Confirmar Retrabalho
+                                </button>
+                            </div>
                         </div>
+                    </div>
                     </template>
                     </div>
 

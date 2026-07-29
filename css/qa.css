@@ -194,6 +194,45 @@
     border-bottom-color: var(--primary);
 }
 
+/* Layout em duas colunas da aba QA de Foto - grade de fotos rola independente na
+   esquerda, painel de acao (legenda, motivos, envio, aprovar) fica sempre visivel na
+   direita, com scroll proprio se o conteudo for maior que a altura disponivel. Abaixo
+   de 900px volta a empilhar (media query no fim deste arquivo). */
+.qa-foto-layout {
+    display: flex;
+    gap: 16px;
+    /* 200px cobre o cromo acima desta area: header (60px) + padding de .qa-detalhe
+       (20px topo + 20px base) + titulo do GTIN (~40px) + .qa-tabs (~55px) - ajustado
+       apos revisao final encontrar que 160px deixava a coluna estourar .qa-detalhe. */
+    height: calc(100vh - 200px);
+}
+
+.qa-coluna-fotos {
+    flex: 1.4;
+    overflow-y: auto;
+    min-width: 0;
+    /* Espaco pro box-shadow das miniaturas ativas/marcadas nao ser cortado pelo
+       overflow desta coluna. */
+    padding-right: 4px;
+}
+
+.qa-coluna-acoes {
+    flex: 1;
+    overflow-y: auto;
+    min-width: 0;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px;
+}
+
+/* Em telas mais estreitas (>=900px, onde a coluna ja fica ~350-380px de largura),
+   os campos do painel de envio (label + select/input lado a lado) nao cabem numa
+   linha so - permite quebrar em vez de gerar scroll horizontal dentro da coluna. */
+.qa-coluna-acoes .qa-campo-linha {
+    flex-wrap: wrap;
+}
+
 /* Grid de miniaturas 100x100 - bem mais leve que os 150x150 da captura */
 .qa-grid {
     display: flex;
@@ -560,3 +599,19 @@
 .qa-progresso-verde { background-color: var(--success); }
 .qa-progresso-amarelo { background-color: var(--warning); }
 .qa-progresso-vermelho { background-color: var(--danger); }
+
+@media (max-width: 900px) {
+    .qa-foto-layout {
+        display: block;
+        height: auto;
+    }
+
+    .qa-coluna-fotos,
+    .qa-coluna-acoes {
+        overflow-y: visible;
+    }
+
+    .qa-coluna-acoes {
+        margin-top: 16px;
+    }
+}
