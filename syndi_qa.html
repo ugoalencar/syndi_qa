@@ -255,6 +255,20 @@
                                 <span class="qa-campo-label">Qtd Imagens Mockup</span>
                                 <input type="number" min="0" class="form-control form-control-sm" style="width:100px" v-model="formEnvio.qtdMockup">
                             </div>
+                            <template v-if="detalhe.imagens.destino === 'Mockup'">
+                                <div class="qa-campo-linha">
+                                    <span class="qa-campo-label">Número do Mockup</span>
+                                    <input type="text" class="form-control form-control-sm" style="width:160px" v-model="formEnvio.numeroMockup" placeholder="ex.: MK-042">
+                                </div>
+                                <div class="qa-motivos-painel">
+                                    <div class="qa-motivos-titulo">Orientações pro editor (opcional)</div>
+                                    <div class="qa-motivos">
+                                        <label v-for="orientacao in orientacoesMockup" :key="orientacao" class="qa-motivo-item">
+                                            <input type="checkbox" :checked="formEnvio.orientacoesMockup.includes(orientacao)" @change="togglarOrientacaoMockup(orientacao)"> {{ orientacao }}
+                                        </label>
+                                    </div>
+                                </div>
+                            </template>
                             <button type="button" class="btn btn-primary btn-sm" :disabled="aprovando || !!mensagem" @click="aprovarGtin">
                                 <i class="bi bi-cloud-upload"></i> Confirmar e Enviar
                             </button>
