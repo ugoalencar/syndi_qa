@@ -445,6 +445,33 @@
 .qa-destino-btn.recorte.ativa { background-color: var(--success); border-color: var(--success); color: #fff; }
 .qa-destino-btn.mockup.ativa { background-color: var(--success); border-color: var(--success); color: #fff; }
 
+/* Recomendacao visual quando Recorte esta ativo - orienta uso do zoom */
+.qa-recomendacao-recorte {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 12px;
+    margin-bottom: 16px;
+    background-color: rgba(13, 110, 253, 0.1);
+    border: 1px solid rgba(13, 110, 253, 0.3);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: var(--text);
+    line-height: 1.4;
+}
+
+.qa-recomendacao-recorte .bi-info-circle {
+    flex-shrink: 0;
+    font-size: 1rem;
+    color: var(--info);
+    margin-top: 1px;
+}
+
+.qa-recomendacao-recorte .bi-zoom-in {
+    font-size: 0.75rem;
+    vertical-align: middle;
+}
+
 /* Envio pro robo Syncimg (copia pra AgEnvio + aciona o .bat que sobe pro S3) */
 .qa-enviar-conferencia {
     display: flex;
@@ -618,6 +645,46 @@
 .qa-progresso-verde { background-color: var(--success); }
 .qa-progresso-amarelo { background-color: var(--warning); }
 .qa-progresso-vermelho { background-color: var(--danger); }
+
+/* Zoom interativo no modal de imagem ampliada - a imagem continua vindo do preview tamanho=zoom. */
+.qa-modal-zoom-area {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: #0a0a0a;
+    cursor: zoom-in;
+    user-select: none;
+    touch-action: none;
+}
+
+.qa-modal-zoom-area #imgAmpliada {
+    max-width: 100%;
+    max-height: 100vh;
+    object-fit: contain;
+    transform-origin: center center;
+    transition: transform 120ms ease-out;
+    will-change: transform;
+    pointer-events: none;
+}
+
+.qa-modal-zoom-area #imgAmpliada.qa-img-zoomada {
+    cursor: grab;
+}
+
+.qa-modal-zoom-area:has(#imgAmpliada.qa-img-zoomada) {
+    cursor: grab;
+}
+
+.qa-modal-zoom-area:has(#imgAmpliada.qa-img-arrastando) {
+    cursor: grabbing;
+}
+
+.qa-modal-zoom-area #imgAmpliada.qa-img-arrastando {
+    transition: none;
+}
 
 @media (max-width: 900px) {
     .qa-foto-layout {

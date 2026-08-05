@@ -48,6 +48,30 @@ createApp({
 
         const imagemAmpliada = ref(null);
         const listaAmpliada = ref([]);
+        const zoomEscala = ref(1);
+        const zoomOffsetX = ref(0);
+        const zoomOffsetY = ref(0);
+        const zoomArrastando = ref(false);
+        const zoomMoveuDuranteArrasto = ref(false);
+        let zoomInicioX = 0;
+        let zoomInicioY = 0;
+        let zoomOffsetInicioX = 0;
+        let zoomOffsetInicioY = 0;
+
+        const ZOOM_MIN = 1;
+        const ZOOM_MAX = 4;
+        const ZOOM_DETALHE = 2;
+        const ZOOM_PASSO_WHEEL = 0.25;
+        const ZOOM_LIMIAR_CLIQUE = 4;
+
+        const estiloImagemAmpliada = computed(() => ({
+            transform: `translate(${zoomOffsetX.value}px, ${zoomOffsetY.value}px) scale(${zoomEscala.value})`
+        }));
+
+        const classeImagemAmpliada = computed(() => ({
+            'qa-img-zoomada': zoomEscala.value > 1,
+            'qa-img-arrastando': zoomArrastando.value
+        }));
 
         // Painel de envio pra edicao - abre no "Aprovar GTIN" com os campos inferidos
         // da pasta (Mockup/Recorte + contagem sem _coding), editaveis antes de
@@ -55,11 +79,12 @@ createApp({
         // e o robo SyncIMGSend, nunca o Syndi_qa.
         const painelEnvio = ref(null); // { destino, motivo } aberto, null fechado
         const preparandoEnvio = ref(false);
-        const formEnvio = reactive({ responsavel: '', qtdRecorte: '', qtdMockup: '', numeroMockup: '', orientacoesMockup: [], responsavelQaImagem: '', responsavel3Check: '' });
+        const formEnvio = reactive({ responsavel: '', qtdRecorte: '', qtdMockup: '', numeroMockup: '', orientacoesMockup: [], orientacoesRecorte: [], responsavelQaImagem: '', responsavel3Check: '' });
         const opcoesResponsavel = ref({});
         const opcoesResponsavelQaImagem = ref({});
         const opcoesResponsavel3Check = ref({});
         const orientacoesMockup = ref([]);
+        const orientacoesRecorte = ref([]);
 
         // Controla se a lista de checkboxes de motivos/orientacoes esta expandida
         // (dropdown inline, nao overlay - ver docs/superpowers/specs/
@@ -67,7 +92,8 @@ createApp({
         // de contexto (foto ativa / novo painel de envio) pra nao vazar estado "aberto"
         // de uma selecao pra outra.
         const mostrarDropdownMotivos = ref(false);
-        const mostrarDropdownOrientacoes = ref(false);
+        const mostrarDropdownOrientacoesMockup = ref(false);
+        const mostrarDropdownOrientacoesRecorte = ref(false);
 
         // Aba "QA para Edicao" - fixa dentro do detalhe do GTIN, independente do Aprovar/
         // painelEnvio acima. Mostra e deixa editar os 6 campos do Redmine, Situacao incluida
@@ -132,6 +158,16 @@ createApp({
                 if (dados.ok) orientacoesMockup.value = dados.orientacoes;
             } catch (err) {
                 console.error('Erro ao carregar orientacoes de mockup:', err);
+            }
+        }
+
+        async function carregarOrientacoesRecorteDisponiveis() {
+            try {
+                const resp = await fetch(API + '/api/orientacoes-recorte');
+                const dados = await resp.json();
+                if (dados.ok) orientacoesRecorte.value = dados.orientacoes;
+            } catch (err) {
+                console.error('Erro ao carregar orientacoes de recorte:', err);
             }
         }
 
@@ -475,12 +511,23 @@ createApp({
             if (idx === -1) formEnvio.orientacoesMockup.push(orientacao); else formEnvio.orientacoesMockup.splice(idx, 1);
         }
 
+        // Toggle de orientacao de recorte - local ao formEnvio (nao vai ao servidor ate o
+        // Aprovar ser confirmado), mesmo principio do togglarOrientacaoMockup.
+        function togglarOrientacaoRecorte(orientacao) {
+            const idx = formEnvio.orientacoesRecorte.indexOf(orientacao);
+            if (idx === -1) formEnvio.orientacoesRecorte.push(orientacao); else formEnvio.orientacoesRecorte.splice(idx, 1);
+        }
+
         function toggleDropdownMotivos() {
             mostrarDropdownMotivos.value = !mostrarDropdownMotivos.value;
         }
 
-        function toggleDropdownOrientacoes() {
-            mostrarDropdownOrientacoes.value = !mostrarDropdownOrientacoes.value;
+        function toggleDropdownOrientacoesMockup() {
+            mostrarDropdownOrientacoesMockup.value = !mostrarDropdownOrientacoesMockup.value;
+        }
+
+        function toggleDropdownOrientacoesRecorte() {
+            mostrarDropdownOrientacoesRecorte.value = !mostrarDropdownOrientacoesRecorte.value;
         }
 
         function temMarcacao() {
@@ -497,10 +544,81 @@ createApp({
             return nomes.length > 0 && nomes.every(nome => marcadas[nome].length > 0);
         }
 
+        function limitarZoom(valor) {
+            return Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, valor));
+        }
+
+        function aplicarEscalaZoom(novaEscala) {
+            zoomEscala.value = limitarZoom(novaEscala);
+            if (zoomEscala.value === ZOOM_MIN) {
+                zoomOffsetX.value = 0;
+                zoomOffsetY.value = 0;
+            }
+        }
+
+        function resetarZoomImagem() {
+            zoomEscala.value = ZOOM_MIN;
+            zoomOffsetX.value = 0;
+            zoomOffsetY.value = 0;
+            zoomArrastando.value = false;
+            zoomMoveuDuranteArrasto.value = false;
+        }
+
+        function alternarZoomImagem() {
+            if (zoomMoveuDuranteArrasto.value) {
+                zoomMoveuDuranteArrasto.value = false;
+                return;
+            }
+            if (zoomEscala.value === ZOOM_MIN) {
+                aplicarEscalaZoom(ZOOM_DETALHE);
+            } else {
+                resetarZoomImagem();
+            }
+        }
+
+        function ajustarZoomImagem(event) {
+            event.preventDefault();
+            const direcao = event.deltaY < 0 ? 1 : -1;
+            aplicarEscalaZoom(zoomEscala.value + (direcao * ZOOM_PASSO_WHEEL));
+        }
+
+        function iniciarArrastoZoom(event) {
+            if (zoomEscala.value <= ZOOM_MIN) return;
+            zoomArrastando.value = true;
+            zoomMoveuDuranteArrasto.value = false;
+            zoomInicioX = event.clientX;
+            zoomInicioY = event.clientY;
+            zoomOffsetInicioX = zoomOffsetX.value;
+            zoomOffsetInicioY = zoomOffsetY.value;
+            if (event.currentTarget && event.currentTarget.setPointerCapture) {
+                event.currentTarget.setPointerCapture(event.pointerId);
+            }
+        }
+
+        function moverArrastoZoom(event) {
+            if (!zoomArrastando.value) return;
+            const dx = event.clientX - zoomInicioX;
+            const dy = event.clientY - zoomInicioY;
+            if (Math.abs(dx) > ZOOM_LIMIAR_CLIQUE || Math.abs(dy) > ZOOM_LIMIAR_CLIQUE) {
+                zoomMoveuDuranteArrasto.value = true;
+            }
+            zoomOffsetX.value = zoomOffsetInicioX + dx;
+            zoomOffsetY.value = zoomOffsetInicioY + dy;
+        }
+
+        function finalizarArrastoZoom(event) {
+            if (!zoomArrastando.value) return;
+            zoomArrastando.value = false;
+            if (event && event.currentTarget && event.currentTarget.releasePointerCapture) {
+                try { event.currentTarget.releasePointerCapture(event.pointerId); } catch (err) {}
+            }
+        }
+
         // Zoom de miniatura - guarda o mesmo "nome composto" que urlImagem/selecionarFoto
         // ja usam (com prefixo de subpasta quando aplicavel, ex.: "RT/foto.jpg"), pra
         // urlImagem(imagemAmpliada) funcionar sem tratamento especial.
         function ampliarImagem(nomeComposto, lista) {
+            resetarZoomImagem();
             imagemAmpliada.value = nomeComposto;
             listaAmpliada.value = lista;
             nextTick(() => {
@@ -513,6 +631,7 @@ createApp({
             const idx = listaAmpliada.value.indexOf(imagemAmpliada.value);
             const total = listaAmpliada.value.length;
             imagemAmpliada.value = listaAmpliada.value[(idx + delta + total) % total];
+            resetarZoomImagem();
         }
 
         async function abrirPainelEnvio() {
@@ -534,9 +653,11 @@ createApp({
                 formEnvio.qtdMockup = dados.campos.qtdMockup || '';
                 formEnvio.numeroMockup = '';
                 formEnvio.orientacoesMockup = [];
+                formEnvio.orientacoesRecorte = [];
                 formEnvio.responsavelQaImagem = '';
                 formEnvio.responsavel3Check = '';
-                mostrarDropdownOrientacoes.value = false;
+                mostrarDropdownOrientacoesMockup.value = false;
+                mostrarDropdownOrientacoesRecorte.value = false;
                 painelEnvio.value = { destino: dados.destino, motivo: dados.motivo };
             } catch (err) {
                 if (selecionado.value && selecionado.value.os === os && selecionado.value.gtin === gtin) {
@@ -577,6 +698,7 @@ createApp({
                         userId: analistaId.value,
                         numeroMockup: formEnvio.numeroMockup.trim(),
                         orientacoesMockup: formEnvio.orientacoesMockup,
+                        orientacoesRecorte: formEnvio.orientacoesRecorte,
                         responsavelQaImagem: String(formEnvio.responsavelQaImagem || ''),
                         responsavel3Check: String(formEnvio.responsavel3Check || '')
                     })
@@ -711,6 +833,7 @@ createApp({
 
         onMounted(() => {
             document.getElementById('modalImagem').addEventListener('hidden.bs.modal', () => {
+                resetarZoomImagem();
                 imagemAmpliada.value = null;
                 listaAmpliada.value = [];
             });
@@ -724,6 +847,7 @@ createApp({
         carregarFila();
         carregarMotivosDisponiveis();
         carregarOrientacoesMockupDisponiveis();
+        carregarOrientacoesRecorteDisponiveis();
         carregarOpcoesResponsavel();
 
         return {
@@ -735,10 +859,16 @@ createApp({
             atualizacaoInfo, verificandoAtualizacao, resultadoAtualizacao, aplicandoAtualizacao,
             marcandoDestino, marcarDestinoManual, toggleCoding, toggleSubpasta,
             imagemAmpliada, listaAmpliada, ampliarImagem, navegarAmpliada,
+            zoomEscala, zoomOffsetX, zoomOffsetY, zoomArrastando,
+            estiloImagemAmpliada, classeImagemAmpliada,
+            resetarZoomImagem, alternarZoomImagem, ajustarZoomImagem,
+            iniciarArrastoZoom, moverArrastoZoom, finalizarArrastoZoom,
             carregarFila, selecionarGtin, urlImagem, selecionarFoto, togglarMotivoAtivo, temMarcacao, todasMarcacoesTemMotivo,
             aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao,
             painelEnvio, preparandoEnvio, formEnvio, opcoesResponsavel, abrirPainelEnvio, fecharPainelEnvio,
-            orientacoesMockup, togglarOrientacaoMockup, mostrarDropdownMotivos, mostrarDropdownOrientacoes, toggleDropdownMotivos, toggleDropdownOrientacoes,
+            orientacoesMockup, orientacoesRecorte, togglarOrientacaoMockup, togglarOrientacaoRecorte,
+            mostrarDropdownMotivos, mostrarDropdownOrientacoesMockup, mostrarDropdownOrientacoesRecorte,
+            toggleDropdownMotivos, toggleDropdownOrientacoesMockup, toggleDropdownOrientacoesRecorte,
             viewAtiva, mudarParaAgenda, agenda, carregandoAgenda, erroAgenda, carregarAgenda,
             filtroResponsavel, filtroPeriodoDe, filtroPeriodoAte, agendaFiltrada,
             abaDetalhe, camposEdicao, origemCampoEdicao, carregandoEdicao, erroEdicao, erroEnvioEdicao,

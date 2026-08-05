@@ -379,6 +379,7 @@ const server = http.createServer((req, res) => {
             const pastaGtinPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome, pastaGtinNome);
             const destinoAtual = qaSyndi.listarImagensGtin(pastaGtinPath).destino;
             let mockupInfo;
+            let recorteInfo;
             if (destinoAtual === 'Mockup') {
                 const numeroMockup = typeof dados.numeroMockup === 'string' ? dados.numeroMockup.trim() : '';
                 if (!numeroMockup) {
@@ -389,6 +390,12 @@ const server = http.createServer((req, res) => {
                     ? dados.orientacoesMockup.filter(o => typeof o === 'string')
                     : [];
                 mockupInfo = { gtin, numero: numeroMockup, orientacoes: orientacoesMockup };
+            }
+            if (destinoAtual === 'Recorte') {
+                const orientacoesRecorte = Array.isArray(dados.orientacoesRecorte)
+                    ? dados.orientacoesRecorte.filter(o => typeof o === 'string')
+                    : [];
+                recorteInfo = { gtin, orientacoes: orientacoesRecorte };
             }
             // Grava Responsavel/Quantidades/Responsaveis QA ANTES de mover - falha aqui IMPEDE
             // o aprovar (diferente do retrabalho, que segue com aviso): sem esses campos o
@@ -408,7 +415,7 @@ const server = http.createServer((req, res) => {
                 return;
             }
             try {
-                const resultado = qaSyndi.aprovarGtin(qaSyndi.AGCONFERENCIA, qaSyndi.AGENVIO, pastaOsNome, pastaGtinNome, mockupInfo);
+                const resultado = qaSyndi.aprovarGtin(qaSyndi.AGCONFERENCIA, qaSyndi.AGENVIO, pastaOsNome, pastaGtinNome, mockupInfo, recorteInfo);
                 enviarJson(res, 200, { ok: true, destino: resultado.destino, redmineGravado });
             } catch (err) {
                 enviarJson(res, 500, { ok: false, error: err.message });
@@ -486,6 +493,11 @@ const server = http.createServer((req, res) => {
 
     if (req.method === 'GET' && req.url === '/api/orientacoes-mockup') {
         enviarJson(res, 200, { ok: true, orientacoes: qaSyndi.carregarOrientacoesMockup(BASE_PATH) });
+        return;
+    }
+
+    if (req.method === 'GET' && req.url === '/api/orientacoes-recorte') {
+        enviarJson(res, 200, { ok: true, orientacoes: qaSyndi.carregarOrientacoesRecorte(BASE_PATH) });
         return;
     }
 

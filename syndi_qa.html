@@ -232,6 +232,11 @@
                                 <button type="button" class="qa-destino-btn mockup" :class="{ ativa: detalhe.imagens.destino === 'Mockup' }" :disabled="marcandoDestino" @click="marcarDestinoManual('Mockup')">Mockup</button>
                             </div>
 
+                            <div v-if="detalhe && detalhe.imagens.destino === 'Recorte'" class="qa-recomendacao-recorte">
+                                <i class="bi bi-info-circle"></i>
+                                <span>Use o botão <i class="bi bi-zoom-in"></i> ou clique nas miniaturas para ampliar e verificar a qualidade do recorte em detalhes.</span>
+                            </div>
+
                             <div v-if="fotoAtiva" class="qa-motivos-painel">
                                 <div class="qa-motivos-titulo">Motivos para {{ fotoAtiva }}</div>
                                 <button type="button" class="qa-dropdown-toggle" :aria-expanded="mostrarDropdownMotivos" @click="toggleDropdownMotivos">
@@ -287,13 +292,27 @@
                                     </div>
                                     <div class="qa-motivos-painel">
                                         <div class="qa-motivos-titulo">Orientações pro editor (opcional)</div>
-                                        <button type="button" class="qa-dropdown-toggle" :aria-expanded="mostrarDropdownOrientacoes" @click="toggleDropdownOrientacoes">
+                                        <button type="button" class="qa-dropdown-toggle" :aria-expanded="mostrarDropdownOrientacoesMockup" @click="toggleDropdownOrientacoesMockup">
                                             <span>{{ formEnvio.orientacoesMockup.length ? 'Orientações (' + formEnvio.orientacoesMockup.length + ')' : 'Selecionar orientações' }}</span>
-                                            <i class="bi" :class="mostrarDropdownOrientacoes ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+                                            <i class="bi" :class="mostrarDropdownOrientacoesMockup ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
                                         </button>
-                                        <div v-if="mostrarDropdownOrientacoes" class="qa-motivos">
+                                        <div v-if="mostrarDropdownOrientacoesMockup" class="qa-motivos">
                                             <label v-for="orientacao in orientacoesMockup" :key="orientacao" class="qa-motivo-item">
                                                 <input type="checkbox" :checked="formEnvio.orientacoesMockup.includes(orientacao)" @change="togglarOrientacaoMockup(orientacao)"> {{ orientacao }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </template>
+                                <template v-if="detalhe.imagens.destino === 'Recorte'">
+                                    <div class="qa-motivos-painel">
+                                        <div class="qa-motivos-titulo">Orientações pro editor (opcional)</div>
+                                        <button type="button" class="qa-dropdown-toggle" :aria-expanded="mostrarDropdownOrientacoesRecorte" @click="toggleDropdownOrientacoesRecorte">
+                                            <span>{{ formEnvio.orientacoesRecorte.length ? 'Orientações (' + formEnvio.orientacoesRecorte.length + ')' : 'Selecionar orientações' }}</span>
+                                            <i class="bi" :class="mostrarDropdownOrientacoesRecorte ? 'bi-chevron-up' : 'bi-chevron-down'"></i>
+                                        </button>
+                                        <div v-if="mostrarDropdownOrientacoesRecorte" class="qa-motivos">
+                                            <label v-for="orientacao in orientacoesRecorte" :key="orientacao" class="qa-motivo-item">
+                                                <input type="checkbox" :checked="formEnvio.orientacoesRecorte.includes(orientacao)" @change="togglarOrientacaoRecorte(orientacao)"> {{ orientacao }}
                                             </label>
                                         </div>
                                     </div>
@@ -402,13 +421,36 @@
                             </button>
                         </div>
                     </div>
-                    <div class="modal-body d-flex align-items-center justify-content-center p-0">
-                        <img v-if="imagemAmpliada" :src="urlImagem(imagemAmpliada, 'zoom')" :alt="imagemAmpliada" id="imgAmpliada">
+                    <div class="modal-body p-0">
+                        <div
+                            class="qa-modal-zoom-area"
+                            @wheel="ajustarZoomImagem"
+                            @pointerdown="iniciarArrastoZoom"
+                            @pointermove="moverArrastoZoom"
+                            @pointerup="finalizarArrastoZoom"
+                            @pointerleave="finalizarArrastoZoom"
+                            @click="alternarZoomImagem"
+                        >
+                            <img
+                                v-if="imagemAmpliada"
+                                :src="urlImagem(imagemAmpliada, 'zoom')"
+                                :alt="imagemAmpliada"
+                                id="imgAmpliada"
+                                :style="estiloImagemAmpliada"
+                                :class="classeImagemAmpliada"
+                                draggable="false"
+                            >
+                        </div>
                     </div>
                     <div class="modal-footer border-0">
                         <div class="info-imagem">
                             <span>{{ imagemAmpliada || '' }}</span>
+                            <span class="separator">•</span>
+                            <span>Zoom {{ Math.round(zoomEscala * 100) }}%</span>
                         </div>
+                        <button type="button" class="btn btn-outline-light btn-sm" :disabled="zoomEscala === 1" @click="resetarZoomImagem">
+                            <i class="bi bi-arrow-counterclockwise"></i> Resetar zoom
+                        </button>
                     </div>
                 </div>
             </div>
