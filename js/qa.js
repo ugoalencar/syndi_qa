@@ -37,6 +37,7 @@ createApp({
         const verificandoAtualizacao = ref(false);
         const resultadoAtualizacao = ref(null);
         const aplicandoAtualizacao = ref(false);
+        const versaoSistema = ref(null);
 
         // Guarda o id do setTimeout de fecharDepoisDeConcluir. Sem isso, trocar de
         // GTIN dentro da janela de 2s deixa o timer do GTIN anterior orfao: ele
@@ -797,6 +798,15 @@ createApp({
             }, 2000);
         }
 
+        async function carregarVersaoSistema() {
+            try {
+                const resp = await fetch(API + '/api/versao');
+                versaoSistema.value = await resp.json();
+            } catch (err) {
+                versaoSistema.value = { ok: false, nome: 'Syndi_qa', versao: 'dev', data: null, git: null };
+            }
+        }
+
         async function verificarAtualizacao() {
             verificandoAtualizacao.value = true;
             resultadoAtualizacao.value = null;
@@ -849,6 +859,7 @@ createApp({
         carregarOrientacoesMockupDisponiveis();
         carregarOrientacoesRecorteDisponiveis();
         carregarOpcoesResponsavel();
+        carregarVersaoSistema();
 
         return {
             fila, carregandoFila, erroFila,
@@ -856,7 +867,7 @@ createApp({
             motivos, marcadas, fotoAtiva,
             aprovando, enviandoRetrabalho, mensagem, erro,
             analistaId, analistaNome, erroIdentidade, carregarArquivoIdentidade,
-            atualizacaoInfo, verificandoAtualizacao, resultadoAtualizacao, aplicandoAtualizacao,
+            atualizacaoInfo, verificandoAtualizacao, resultadoAtualizacao, aplicandoAtualizacao, versaoSistema,
             marcandoDestino, marcarDestinoManual, toggleCoding, toggleSubpasta,
             imagemAmpliada, listaAmpliada, ampliarImagem, navegarAmpliada,
             zoomEscala, zoomOffsetX, zoomOffsetY, zoomArrastando,

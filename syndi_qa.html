@@ -16,6 +16,7 @@
             <div class="header-inner">
                 <div class="header-left">
                     <span class="header-title">Syndi_qa</span>
+                    <span v-if="versaoSistema && versaoSistema.ok && versaoSistema.versao && versaoSistema.versao !== 'dev'" class="qa-versao-sistema" :title="(versaoSistema.nome || 'Syndi_qa') + ' ' + versaoSistema.versao + (versaoSistema.data ? ' (' + versaoSistema.data + ')' : '') + (versaoSistema.git ? ' · ' + versaoSistema.git : '')">v{{ versaoSistema.versao }}</span>
                 </div>
                 <div class="qa-top-tabs">
                     <button type="button" class="qa-top-tab-btn" :class="{ ativa: viewAtiva === 'fila' }" @click="viewAtiva = 'fila'">Fila de Conferência</button>

@@ -686,6 +686,13 @@
     transition: none;
 }
 
+.qa-versao-sistema {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.8);
+    margin-left: 8px;
+    white-space: nowrap;
+}
+
 @media (max-width: 900px) {
     .qa-foto-layout {
         display: block;

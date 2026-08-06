@@ -5,6 +5,7 @@ const { execSync } = require('child_process');
 const qaSyndi = require('./lib/qaSyndi');
 const redmine = require('./lib/redmine');
 const previewImagem = require('./lib/previewImagem');
+const versionamento = require('./lib/versionamento');
 
 // So loga antes de encerrar - depois de um erro nao tratado o processo fica em
 // estado indefinido, entao nao deve continuar rodando "zumbi". Mesmo padrao do
@@ -97,10 +98,26 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    if (req.method === 'GET' && req.url === '/api/versao') {
+        const versao = versionamento.carregarVersao(BASE_PATH);
+        const git = versionamento.obterGitDescribe(BASE_PATH);
+        enviarJson(res, 200, { ok: true, nome: versao.nome, versao: versao.versao, data: versao.data, git });
+        return;
+    }
+
     if (req.method === 'GET' && req.url === '/api/fila') {
         try {
             const fila = qaSyndi.listarFila(qaSyndi.AGCONFERENCIA);
             enviarJson(res, 200, { ok: true, fila });
+        } catch (err) {
+            enviarJson(res, 500, { ok: false, error: err.message });
+        }
+        return;
+    }
+
+    if (req.method === 'GET' && req.url === '/api/diagnostico-fila') {
+        try {
+            enviarJson(res, 200, { ok: true, diagnostico: qaSyndi.diagnosticarFila(qaSyndi.AGCONFERENCIA) });
         } catch (err) {
             enviarJson(res, 500, { ok: false, error: err.message });
         }
@@ -595,15 +612,7 @@ const server = http.createServer((req, res) => {
     // alimenta a tela de configuracao. Pasta sem .git ou sem rede cai no catch e
     // devolve ok:false. Mesmo endpoint que o sphoto ja usa (server.js dele).
     if (req.method === 'GET' && req.url === '/api/atualizacao/verificar') {
-        try {
-            execSync('git fetch origin main --tags', { cwd: BASE_PATH, stdio: 'pipe' });
-            const commitsAtras = parseInt(execSync('git rev-list HEAD..origin/main --count', { cwd: BASE_PATH }).toString().trim(), 10) || 0;
-            const versaoAtual = execSync('git describe --tags --always', { cwd: BASE_PATH }).toString().trim();
-            const versaoDisponivel = execSync('git describe --tags --always origin/main', { cwd: BASE_PATH }).toString().trim();
-            enviarJson(res, 200, { ok: true, versaoAtual, versaoDisponivel, temAtualizacao: commitsAtras > 0 });
-        } catch (err) {
-            enviarJson(res, 200, { ok: false, error: 'Nao foi possivel consultar atualizacoes (sem rede, sem remoto configurado, ou esta pasta nao e um repositorio git)' });
-        }
+        enviarJson(res, 200, versionamento.verificarAtualizacao(BASE_PATH));
         return;
     }
 
@@ -611,23 +620,7 @@ const server = http.createServer((req, res) => {
     // sozinho, entao se a pasta tiver alteracao local nao commitada ou o historico
     // tiver divergido, aborta e devolve erro em vez de arriscar quebrar a pasta.
     if (req.method === 'POST' && req.url === '/api/atualizacao/aplicar') {
-        try {
-            const statusSujo = execSync('git status --porcelain', { cwd: BASE_PATH }).toString().trim();
-            if (statusSujo) {
-                enviarJson(res, 200, { ok: false, error: 'Ha alteracoes locais nao commitadas nesta pasta - resolva manualmente (git status) antes de atualizar' });
-                return;
-            }
-            const antes = execSync('git rev-parse HEAD', { cwd: BASE_PATH }).toString().trim();
-            execSync('git pull --ff-only origin main', { cwd: BASE_PATH, stdio: 'pipe' });
-            const depois = execSync('git rev-parse HEAD', { cwd: BASE_PATH }).toString().trim();
-            const arquivosMudados = antes === depois ? [] : execSync('git diff --name-only ' + antes + ' ' + depois, { cwd: BASE_PATH })
-                .toString().trim().split('\n').filter(Boolean);
-            const precisaReiniciar = arquivosMudados.some((f) => f === 'server.js' || f.startsWith('lib/'));
-            const versaoAtual = execSync('git describe --tags --always', { cwd: BASE_PATH }).toString().trim();
-            enviarJson(res, 200, { ok: true, jaEstavaAtualizado: antes === depois, versaoAtual, arquivosMudados, precisaReiniciar });
-        } catch (err) {
-            enviarJson(res, 200, { ok: false, error: 'git pull falhou: ' + (err.message || String(err)).slice(0, 500) });
-        }
+        enviarJson(res, 200, versionamento.aplicarAtualizacao(BASE_PATH));
         return;
     }
 
@@ -673,8 +666,14 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
+    const diagnosticoFila = qaSyndi.diagnosticarFila(qaSyndi.AGCONFERENCIA);
     console.log(`\n========================================`);
     console.log(`  Syndi_qa rodando em:`);
     console.log(`  http://localhost:${PORT}`);
+    console.log(`  AgConferencia: ${diagnosticoFila.agConferenciaDir}`);
+    console.log(`  Existe: ${diagnosticoFila.existe ? 'sim' : 'nao'}`);
+    console.log(`  OS reconhecidas: ${diagnosticoFila.pastasOsReconhecidas.length}`);
+    if (diagnosticoFila.mensagem) console.log(`  Diagnostico: ${diagnosticoFila.mensagem}`);
+    if (diagnosticoFila.pastasIgnoradas.length) console.log(`  Pastas ignoradas: ${diagnosticoFila.pastasIgnoradas.slice(0, 5).join(', ')}`);
     console.log(`========================================\n`);
 });
