@@ -91,9 +91,17 @@ createApp({
         const mockupsFiltrados = computed(() => {
             if (!formEnvio.numeroMockup.trim()) return catalogoMockups.value.slice(0, 10);
             const filtro = formEnvio.numeroMockup.toLowerCase();
-            return catalogoMockups.value.filter(m =>
-                m.id.toLowerCase().includes(filtro) || m.nome.toLowerCase().includes(filtro)
-            ).slice(0, 15);
+            return catalogoMockups.value
+                .filter(m => m.id.toLowerCase().includes(filtro) || m.nome.toLowerCase().includes(filtro))
+                .sort((a, b) => {
+                    // Prioriza matches que começam com o filtro
+                    const aStartsWith = a.nome.toLowerCase().startsWith(filtro);
+                    const bStartsWith = b.nome.toLowerCase().startsWith(filtro);
+                    if (aStartsWith && !bStartsWith) return -1;
+                    if (!aStartsWith && bStartsWith) return 1;
+                    return 0;
+                })
+                .slice(0, 15);
         });
 
         // Controla se a lista de checkboxes de motivos/orientacoes esta expandida

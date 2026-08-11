@@ -641,7 +641,8 @@
     cursor: pointer;
     border-bottom: 1px solid var(--border);
     font-size: 0.75rem;
-    color: var(--text);
+    color: #000;
+    background-color: #fff;
     transition: background-color 0.15s;
 }
 

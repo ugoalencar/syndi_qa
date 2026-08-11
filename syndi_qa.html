@@ -292,17 +292,16 @@
                                 <template v-if="detalhe.imagens.destino === 'Mockup'">
                                     <div class="qa-campo-linha" style="position: relative;">
                                         <span class="qa-campo-label">Número do Mockup</span>
-                                        <input type="text" class="form-control form-control-sm" style="width:160px"
+                                        <input type="text" class="form-control form-control-sm" style="width:100%"
                                             v-model="formEnvio.numeroMockup"
                                             @focus="mostrarDropdownMockup = true"
                                             @blur="setTimeout(() => mostrarDropdownMockup = false, 200)"
-                                            placeholder="ex.: MK-042">
-                                        <div v-if="mostrarDropdownMockup && mockupsFiltrados.length" class="qa-dropdown-mockup" style="position: absolute; top: 100%; left: 0; right: 0; max-height: 200px; overflow-y: auto; background: white; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); z-index: 1000;">
+                                            placeholder="ex.: 0197 - Absorvente Intimus...">
+                                        <div v-if="mostrarDropdownMockup && mockupsFiltrados.length" class="qa-dropdown-mockup" style="position: absolute; top: 100%; left: 0; right: 0; max-height: 200px; overflow-y: auto; z-index: 1000; margin-top: 2px;">
                                             <div v-for="mockup in mockupsFiltrados" :key="mockup.id"
                                                 class="qa-mockup-item"
-                                                @click="formEnvio.numeroMockup = mockup.id; mostrarDropdownMockup = false"
-                                                style="padding: 8px 12px; cursor: pointer; border-bottom: 1px solid #f0f0f0; font-size: 0.85rem;">
-                                                <strong>{{ mockup.id }}</strong> — {{ mockup.nome }}
+                                                @click="formEnvio.numeroMockup = mockup.nome; mostrarDropdownMockup = false">
+                                                {{ mockup.nome }}
                                             </div>
                                         </div>
                                     </div>
