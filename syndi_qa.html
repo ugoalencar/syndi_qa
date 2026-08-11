@@ -295,12 +295,13 @@
                                         <input type="text" class="form-control form-control-sm" style="width:100%"
                                             v-model="formEnvio.numeroMockup"
                                             @focus="mostrarDropdownMockup = true"
-                                            @blur="setTimeout(() => mostrarDropdownMockup = false, 200)"
+                                            @blur="mostrarDropdownMockup = false"
+                                            @keydown.escape="mostrarDropdownMockup = false"
                                             placeholder="ex.: 0197 - Absorvente Intimus...">
                                         <div v-if="mostrarDropdownMockup && mockupsFiltrados.length" class="qa-dropdown-mockup" style="position: absolute; top: 100%; left: 0; right: 0; max-height: 200px; overflow-y: auto; z-index: 1000; margin-top: 2px;">
                                             <div v-for="mockup in mockupsFiltrados" :key="mockup.id"
                                                 class="qa-mockup-item"
-                                                @click="formEnvio.numeroMockup = mockup.nome; mostrarDropdownMockup = false">
+                                                @mousedown.prevent="formEnvio.numeroMockup = mockup.nome; mostrarDropdownMockup = false">
                                                 {{ mockup.nome }}
                                             </div>
                                         </div>
