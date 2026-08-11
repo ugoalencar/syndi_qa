@@ -305,6 +305,7 @@
                                                 <input type="checkbox" :checked="formEnvio.orientacoesMockup.includes(orientacao)" @change="togglarOrientacaoMockup(orientacao)"> {{ orientacao }}
                                             </label>
                                         </div>
+                                        <textarea class="form-control form-control-sm mt-2" v-model="formEnvio.observacoesMockup" placeholder="Observações customizadas..." style="resize: vertical; height: 60px;"></textarea>
                                     </div>
                                 </template>
                                 <template v-if="detalhe.imagens.destino === 'Recorte'">
@@ -319,6 +320,7 @@
                                                 <input type="checkbox" :checked="formEnvio.orientacoesRecorte.includes(orientacao)" @change="togglarOrientacaoRecorte(orientacao)"> {{ orientacao }}
                                             </label>
                                         </div>
+                                        <textarea class="form-control form-control-sm mt-2" v-model="formEnvio.observacoesRecorte" placeholder="Observações customizadas..." style="resize: vertical; height: 60px;"></textarea>
                                     </div>
                                 </template>
                                 <button type="button" class="btn btn-primary btn-sm" :disabled="aprovando || !!mensagem" @click="aprovarGtin">

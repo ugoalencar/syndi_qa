@@ -80,7 +80,7 @@ createApp({
         // e o robo SyncIMGSend, nunca o Syndi_qa.
         const painelEnvio = ref(null); // { destino, motivo } aberto, null fechado
         const preparandoEnvio = ref(false);
-        const formEnvio = reactive({ responsavel: '', qtdRecorte: '', qtdMockup: '', numeroMockup: '', orientacoesMockup: [], orientacoesRecorte: [], responsavelQaImagem: '', responsavel3Check: '' });
+        const formEnvio = reactive({ responsavel: '', qtdRecorte: '', qtdMockup: '', numeroMockup: '', orientacoesMockup: [], orientacoesRecorte: [], observacoesMockup: '', observacoesRecorte: '', responsavelQaImagem: '', responsavel3Check: '' });
         const opcoesResponsavel = ref({});
         const opcoesResponsavelQaImagem = ref({});
         const opcoesResponsavel3Check = ref({});
