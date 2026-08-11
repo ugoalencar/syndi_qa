@@ -88,6 +88,14 @@ createApp({
         const orientacoesRecorte = ref([]);
         const catalogoMockups = ref([]);
 
+        const mockupsFiltrados = computed(() => {
+            if (!formEnvio.numeroMockup.trim()) return catalogoMockups.value.slice(0, 10);
+            const filtro = formEnvio.numeroMockup.toLowerCase();
+            return catalogoMockups.value.filter(m =>
+                m.id.toLowerCase().includes(filtro) || m.nome.toLowerCase().includes(filtro)
+            ).slice(0, 15);
+        });
+
         // Controla se a lista de checkboxes de motivos/orientacoes esta expandida
         // (dropdown inline, nao overlay - ver docs/superpowers/specs/
         // 2026-07-29-syndi-qa-dropdown-checkboxes-design.md). Fecham sozinhos ao trocar
@@ -96,6 +104,7 @@ createApp({
         const mostrarDropdownMotivos = ref(false);
         const mostrarDropdownOrientacoesMockup = ref(false);
         const mostrarDropdownOrientacoesRecorte = ref(false);
+        const mostrarDropdownMockup = ref(false);
 
         // Aba "QA para Edicao" - fixa dentro do detalhe do GTIN, independente do Aprovar/
         // painelEnvio acima. Mostra e deixa editar os 6 campos do Redmine, Situacao incluida
@@ -909,8 +918,8 @@ createApp({
             carregarFila, selecionarGtin, urlImagem, selecionarFoto, togglarMotivoAtivo, temMarcacao, todasMarcacoesTemMotivo,
             aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao, deletarFoto,
             painelEnvio, preparandoEnvio, formEnvio, opcoesResponsavel, abrirPainelEnvio, fecharPainelEnvio,
-            orientacoesMockup, orientacoesRecorte, catalogoMockups, togglarOrientacaoMockup, togglarOrientacaoRecorte,
-            mostrarDropdownMotivos, mostrarDropdownOrientacoesMockup, mostrarDropdownOrientacoesRecorte,
+            orientacoesMockup, orientacoesRecorte, catalogoMockups, mockupsFiltrados, togglarOrientacaoMockup, togglarOrientacaoRecorte,
+            mostrarDropdownMotivos, mostrarDropdownOrientacoesMockup, mostrarDropdownOrientacoesRecorte, mostrarDropdownMockup,
             toggleDropdownMotivos, toggleDropdownOrientacoesMockup, toggleDropdownOrientacoesRecorte,
             viewAtiva, mudarParaAgenda, agenda, carregandoAgenda, erroAgenda, carregarAgenda,
             filtroResponsavel, filtroPeriodoDe, filtroPeriodoAte, agendaFiltrada,

@@ -628,6 +628,31 @@
     margin-left: 6px;
 }
 
+/* Dropdown de mockups com filtro */
+.qa-dropdown-mockup {
+    background-color: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.qa-mockup-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.75rem;
+    color: var(--text);
+    transition: background-color 0.15s;
+}
+
+.qa-mockup-item:hover {
+    background-color: rgba(25, 118, 210, 0.1);
+}
+
+.qa-mockup-item:last-child {
+    border-bottom: none;
+}
+
 /* Barra de progresso semaforo ate a previsao de entrega - ver
    docs/superpowers/specs/2026-07-23-syndi-qa-agenda-edicao-design.md secao 3. */
 .qa-progresso-barra {
