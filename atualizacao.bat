@@ -1,6 +1,7 @@
 @echo off
-REM Atualiza Syndi_qa do terminal a partir de Y:\Syndi_qa
-REM Este script para o servidor, copia arquivos novos e reinicia
+REM Atualiza Syndi_qa via Git (GitHub)
+REM Terminal executa: atualizacao.bat
+REM Parar servidor, fazer git pull e reiniciar
 
 setlocal enabledelayedexpansion
 cd /d %~dp0
@@ -12,25 +13,21 @@ echo ====================================
 echo.
 
 REM Para o servidor se estiver rodando
-echo [1/4] Parando servidor...
+echo [1/3] Parando servidor...
 taskkill /F /IM node.exe >nul 2>&1
 timeout /t 2 >nul
 
-REM Copia arquivos da Y: para c:
-echo [2/4] Copiando arquivos de Y:\Syndi_qa para c:\syndi_qa...
-robocopy Y:\Syndi_qa c:\syndi_qa /MIR /NFL /NDL /NJH /NJS /nc /ns /np >nul
-
-REM Verifica se copiou
-if %errorlevel% leq 3 (
-    echo [3/4] Arquivos copiados com sucesso!
-) else (
-    echo [ERRO] Falha ao copiar arquivos
+REM Faz git pull
+echo [2/3] Atualizando via Git...
+git pull origin main
+if %errorlevel% neq 0 (
+    echo [ERRO] Falha ao fazer git pull
     pause
     exit /b 1
 )
 
 REM Reinicia o servidor
-echo [4/4] Iniciando servidor...
+echo [3/3] Iniciando servidor...
 cd c:\syndi_qa
 if exist iniciar-server.bat (
     call iniciar-server.bat
