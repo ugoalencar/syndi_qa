@@ -188,6 +188,7 @@
                                         <button type="button" class="qa-acao-mini rt" title="Mover para Rótulo" @click="toggleSubpasta(img.nome, 'RT')">RT</button>
                                         <button type="button" class="qa-acao-mini is" title="Mover para Insumos" @click="toggleSubpasta(img.nome, 'IS')">IS</button>
                                         <button type="button" class="qa-acao-mini ap" title="Mover para Apoio" @click="toggleSubpasta(img.nome, 'AP')">AP</button>
+                                        <button type="button" class="qa-acao-mini excluir" title="Deletar foto" @click="deletarFoto(img.nome)"><i class="bi bi-trash"></i></button>
                                         <button type="button" class="qa-acao-mini zoom" title="Ampliar" @click="ampliarImagem(img.nome, detalhe.imagens.raiz.map(i => i.nome))"><i class="bi bi-zoom-in"></i></button>
                                     </div>
                                 </div>
@@ -209,6 +210,7 @@
                                             <div class="qa-acoes-mini">
                                                 <input type="checkbox" class="qa-checkbox-retrabalho" title="Selecionar para retrabalho" :checked="fotoAtiva === (tag + '/' + img.nome)" @change="selecionarFoto(tag + '/' + img.nome)">
                                                 <button type="button" class="qa-acao-mini voltar" title="Tirar da subpasta" @click="toggleSubpasta(img.nome, tag)">Voltar p/ raiz</button>
+                                                <button type="button" class="qa-acao-mini excluir" title="Deletar foto" @click="deletarFoto(tag + '/' + img.nome)"><i class="bi bi-trash"></i></button>
                                                 <button type="button" class="qa-acao-mini zoom" title="Ampliar" @click="ampliarImagem(tag + '/' + img.nome, detalhe.imagens.subpastas[tag].map(i => tag + '/' + i.nome))"><i class="bi bi-zoom-in"></i></button>
                                             </div>
                                         </div>

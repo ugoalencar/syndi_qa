@@ -460,6 +460,24 @@ createApp({
             }
         }
 
+        async function deletarFoto(nome) {
+            if (!selecionado.value) return;
+            if (!confirm('Tem certeza que deseja deletar ' + nome + '? Esta acao nao pode ser desfeita.')) return;
+            try {
+                const resp = await fetch(API + '/api/deletar-foto', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ os: selecionado.value.os, gtin: selecionado.value.gtin, nome })
+                });
+                const dados = await resp.json();
+                if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
+                await recarregarDetalheAtual();
+                invalidarSugestaoEdicao();
+            } catch (err) {
+                alert('Erro ao deletar foto: ' + err.message);
+            }
+        }
+
         async function marcarDestinoManual(tipo) {
             if (!selecionado.value || marcandoDestino.value) return;
             const jaAtivo = detalhe.value && detalhe.value.imagens.destino === tipo;
@@ -875,7 +893,7 @@ createApp({
             resetarZoomImagem, alternarZoomImagem, ajustarZoomImagem,
             iniciarArrastoZoom, moverArrastoZoom, finalizarArrastoZoom,
             carregarFila, selecionarGtin, urlImagem, selecionarFoto, togglarMotivoAtivo, temMarcacao, todasMarcacoesTemMotivo,
-            aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao,
+            aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao, deletarFoto,
             painelEnvio, preparandoEnvio, formEnvio, opcoesResponsavel, abrirPainelEnvio, fecharPainelEnvio,
             orientacoesMockup, orientacoesRecorte, togglarOrientacaoMockup, togglarOrientacaoRecorte,
             mostrarDropdownMotivos, mostrarDropdownOrientacoesMockup, mostrarDropdownOrientacoesRecorte,

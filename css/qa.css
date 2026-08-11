@@ -306,6 +306,7 @@
 .qa-acao-mini.ap { border-color: #9c27b0; color: #9c27b0; }
 
 .qa-acao-mini.zoom { border-color: var(--primary); color: var(--primary); }
+.qa-acao-mini.excluir { border-color: var(--danger); color: var(--danger); }
 
 .qa-acao-mini.voltar {
     flex: 1;
