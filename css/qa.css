@@ -233,7 +233,7 @@
     flex-wrap: wrap;
 }
 
-/* Grid de miniaturas 100x100 - bem mais leve que os 150x150 da captura */
+/* Grid de miniaturas 140x140 - botoes mais confortaveis */
 .qa-grid {
     display: flex;
     flex-wrap: wrap;
@@ -241,12 +241,12 @@
     margin-bottom: 16px;
 }
 
-.qa-miniatura-wrap { width: 104px; }
+.qa-miniatura-wrap { width: 150px; }
 
 .qa-miniatura {
     position: relative;
-    width: 100px;
-    height: 100px;
+    width: 140px;
+    height: 140px;
     border-radius: 6px;
     overflow: hidden;
     border: 2px solid transparent;
@@ -262,10 +262,10 @@
 }
 
 .qa-miniatura-nome {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     color: var(--text-muted);
     text-align: center;
-    margin-top: 3px;
+    margin-top: 4px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -273,8 +273,8 @@
 
 .qa-acoes-mini {
     display: flex;
-    gap: 2px;
-    margin-top: 3px;
+    gap: 3px;
+    margin-top: 4px;
 }
 
 .qa-checkbox-retrabalho {
@@ -284,10 +284,10 @@
 
 .qa-acao-mini {
     flex: 1;
-    padding: 3px 0;
-    font-size: 0.62rem;
+    padding: 5px 0;
+    font-size: 0.75rem;
     font-weight: 700;
-    line-height: 1;
+    line-height: 1.2;
     text-align: center;
     border-radius: 3px;
     border: 1px solid var(--border);
