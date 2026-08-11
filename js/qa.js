@@ -717,7 +717,9 @@ createApp({
                         userId: analistaId.value,
                         numeroMockup: formEnvio.numeroMockup.trim(),
                         orientacoesMockup: formEnvio.orientacoesMockup,
+                        observacoesMockup: formEnvio.observacoesMockup,
                         orientacoesRecorte: formEnvio.orientacoesRecorte,
+                        observacoesRecorte: formEnvio.observacoesRecorte,
                         responsavelQaImagem: String(formEnvio.responsavelQaImagem || ''),
                         responsavel3Check: String(formEnvio.responsavel3Check || '')
                     })

@@ -447,13 +447,15 @@ const server = http.createServer((req, res) => {
                 const orientacoesMockup = Array.isArray(dados.orientacoesMockup)
                     ? dados.orientacoesMockup.filter(o => typeof o === 'string')
                     : [];
-                mockupInfo = { gtin, numero: numeroMockup, orientacoes: orientacoesMockup };
+                const observacoesMockup = typeof dados.observacoesMockup === 'string' ? dados.observacoesMockup.trim() : '';
+                mockupInfo = { gtin, numero: numeroMockup, orientacoes: orientacoesMockup, observacoes: observacoesMockup };
             }
             if (destinoAtual === 'Recorte') {
                 const orientacoesRecorte = Array.isArray(dados.orientacoesRecorte)
                     ? dados.orientacoesRecorte.filter(o => typeof o === 'string')
                     : [];
-                recorteInfo = { gtin, orientacoes: orientacoesRecorte };
+                const observacoesRecorte = typeof dados.observacoesRecorte === 'string' ? dados.observacoesRecorte.trim() : '';
+                recorteInfo = { gtin, orientacoes: orientacoesRecorte, observacoes: observacoesRecorte };
             }
             // Grava Responsavel/Quantidades/Responsaveis QA ANTES de mover - falha aqui IMPEDE
             // o aprovar (diferente do retrabalho, que segue com aviso): sem esses campos o
