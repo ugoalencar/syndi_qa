@@ -233,20 +233,20 @@
     flex-wrap: wrap;
 }
 
-/* Grid de miniaturas 140x140 - botoes mais confortaveis */
+/* Grid de miniaturas 160x160 - botoes bem confortaveis */
 .qa-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 12px;
     margin-bottom: 16px;
 }
 
-.qa-miniatura-wrap { width: 150px; }
+.qa-miniatura-wrap { width: 170px; }
 
 .qa-miniatura {
     position: relative;
-    width: 140px;
-    height: 140px;
+    width: 160px;
+    height: 160px;
     border-radius: 6px;
     overflow: hidden;
     border: 2px solid transparent;
@@ -304,6 +304,7 @@
 .qa-acao-mini.rt { border-color: #fd7e14; color: #fd7e14; }
 .qa-acao-mini.is { border-color: var(--info); color: var(--info); }
 .qa-acao-mini.ap { border-color: #9c27b0; color: #9c27b0; }
+.qa-acao-mini.apl { border-color: #17a2b8; color: #17a2b8; }
 
 .qa-acao-mini.zoom { border-color: var(--primary); color: var(--primary); }
 .qa-acao-mini.excluir { border-color: var(--danger); color: var(--danger); }
