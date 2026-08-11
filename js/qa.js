@@ -86,6 +86,7 @@ createApp({
         const opcoesResponsavel3Check = ref({});
         const orientacoesMockup = ref([]);
         const orientacoesRecorte = ref([]);
+        const catalogoMockups = ref([]);
 
         // Controla se a lista de checkboxes de motivos/orientacoes esta expandida
         // (dropdown inline, nao overlay - ver docs/superpowers/specs/
@@ -169,6 +170,16 @@ createApp({
                 if (dados.ok) orientacoesRecorte.value = dados.orientacoes;
             } catch (err) {
                 console.error('Erro ao carregar orientacoes de recorte:', err);
+            }
+        }
+
+        async function carregarCatalogoMockups() {
+            try {
+                const resp = await fetch(API + '/api/mockup-catalogo');
+                const dados = await resp.json();
+                if (dados.ok) catalogoMockups.value = dados.mockups;
+            } catch (err) {
+                console.error('Erro ao carregar catalogo de mockups:', err);
             }
         }
 
@@ -878,6 +889,7 @@ createApp({
         carregarMotivosDisponiveis();
         carregarOrientacoesMockupDisponiveis();
         carregarOrientacoesRecorteDisponiveis();
+        carregarCatalogoMockups();
         carregarOpcoesResponsavel();
         carregarVersaoSistema();
 
@@ -897,7 +909,7 @@ createApp({
             carregarFila, selecionarGtin, urlImagem, selecionarFoto, togglarMotivoAtivo, temMarcacao, todasMarcacoesTemMotivo,
             aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao, deletarFoto,
             painelEnvio, preparandoEnvio, formEnvio, opcoesResponsavel, abrirPainelEnvio, fecharPainelEnvio,
-            orientacoesMockup, orientacoesRecorte, togglarOrientacaoMockup, togglarOrientacaoRecorte,
+            orientacoesMockup, orientacoesRecorte, catalogoMockups, togglarOrientacaoMockup, togglarOrientacaoRecorte,
             mostrarDropdownMotivos, mostrarDropdownOrientacoesMockup, mostrarDropdownOrientacoesRecorte,
             toggleDropdownMotivos, toggleDropdownOrientacoesMockup, toggleDropdownOrientacoesRecorte,
             viewAtiva, mudarParaAgenda, agenda, carregandoAgenda, erroAgenda, carregarAgenda,

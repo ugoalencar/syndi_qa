@@ -561,6 +561,16 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    if (req.method === 'GET' && req.url === '/api/mockup-catalogo') {
+        try {
+            const catalogo = JSON.parse(fs.readFileSync(path.join(BASE_PATH, 'mockup-catalogo.json'), 'utf8'));
+            enviarJson(res, 200, { ok: true, mockups: catalogo });
+        } catch (err) {
+            enviarJson(res, 500, { ok: false, error: 'Erro ao carregar catalogo de mockups: ' + err.message });
+        }
+        return;
+    }
+
     // Detalhe da aba "QA para Edicao" - situacao atual no Redmine (se houver ficha aberta)
     // + sugestoes locais de Responsavel/Quantidades (mesma inferencia do Aprovar). So
     // leitura, nada e gravado nem movido aqui.

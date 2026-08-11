@@ -292,7 +292,10 @@
                                 <template v-if="detalhe.imagens.destino === 'Mockup'">
                                     <div class="qa-campo-linha">
                                         <span class="qa-campo-label">Número do Mockup</span>
-                                        <input type="text" class="form-control form-control-sm" style="width:160px" v-model="formEnvio.numeroMockup" placeholder="ex.: MK-042">
+                                        <input type="text" class="form-control form-control-sm" style="width:160px" v-model="formEnvio.numeroMockup" list="mockup-lista" placeholder="ex.: MK-042">
+                                        <datalist id="mockup-lista">
+                                            <option v-for="mockup in catalogoMockups" :key="mockup.id" :value="mockup.id" :label="mockup.nome"></option>
+                                        </datalist>
                                     </div>
                                     <div class="qa-motivos-painel">
                                         <div class="qa-motivos-titulo">Orientações pro editor (opcional)</div>

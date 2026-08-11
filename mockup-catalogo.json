@@ -1,0 +1,4438 @@
+[
+  {
+    "id": "MK-17736",
+    "nome": "0197 - Absorvente Intimus 16 unidades - Glossy"
+  },
+  {
+    "id": "MK-17745",
+    "nome": "0197 - Absorvente Intimus 16 unidades - Matte"
+  },
+  {
+    "id": "MK-17755",
+    "nome": "0197 - Absorvente Intimus 16 unidades - Metallic"
+  },
+  {
+    "id": "MK-17765",
+    "nome": "0198 - Absorvente Intimus 8 unidades - Glossy"
+  },
+  {
+    "id": "MK-17772",
+    "nome": "0198 - Absorvente Intimus 8 unidades - Matte"
+  },
+  {
+    "id": "MK-17779",
+    "nome": "0198 - Absorvente Intimus 8 unidades - Metallic"
+  },
+  {
+    "id": "MK-17787",
+    "nome": "0199 - Absorvente Mili 32 unidades - Glossy"
+  },
+  {
+    "id": "MK-17794",
+    "nome": "0199 - Absorvente Mili 32 unidades - Matte"
+  },
+  {
+    "id": "MK-17801",
+    "nome": "0199 - Absorvente Mili 32 unidades - Metallic"
+  },
+  {
+    "id": "MK-17809",
+    "nome": "0202 - Absorvente Mili 16 unidades - Glossy"
+  },
+  {
+    "id": "MK-17817",
+    "nome": "0202 - Absorvente Mili 16 unidades - Matte"
+  },
+  {
+    "id": "MK-17825",
+    "nome": "0202 - Absorvente Mili 16 unidades - Metallic"
+  },
+  {
+    "id": "MK-17834",
+    "nome": "0203 - Absorvente Mili 16 unidades Noturno - Glossy"
+  },
+  {
+    "id": "MK-17842",
+    "nome": "0203 - Absorvente Mili 16 unidades Noturno - Matte"
+  },
+  {
+    "id": "MK-17850",
+    "nome": "0203 - Absorvente Mili 16 unidades Noturno - Metallic"
+  },
+  {
+    "id": "MK-17859",
+    "nome": "0204 - Glossy"
+  },
+  {
+    "id": "MK-17868",
+    "nome": "0204 - Mili Protetor Diario 80 Unidades - Matte"
+  },
+  {
+    "id": "MK-17877",
+    "nome": "0204 - Mili Protetor Diario 80 Unidades - Metallic"
+  },
+  {
+    "id": "MK-17888",
+    "nome": "0017 - Escondidinho de batata congelada"
+  },
+  {
+    "id": "MK-17892",
+    "nome": "0084 - Bolo de chocolate"
+  },
+  {
+    "id": "MK-17898",
+    "nome": "0131 - Bandeja de frango v1"
+  },
+  {
+    "id": "MK-17913",
+    "nome": "0131 - Bandeja de frango v2"
+  },
+  {
+    "id": "MK-17928",
+    "nome": "0131 - Bandeja de frango v3"
+  },
+  {
+    "id": "MK-17937",
+    "nome": "0176 - Bandeja - Glossy"
+  },
+  {
+    "id": "MK-17947",
+    "nome": "0176 - Bandeja - Matte"
+  },
+  {
+    "id": "MK-17957",
+    "nome": "0176 - Bandeja - Metallic"
+  },
+  {
+    "id": "MK-17967",
+    "nome": "0176 - Bandeja ADAPTADA Jasmine"
+  },
+  {
+    "id": "MK-17972",
+    "nome": "0265 - PLASTICO BANDEJA - Glossy"
+  },
+  {
+    "id": "MK-17979",
+    "nome": "0265 - PLASTICO BANDEJA - Matte"
+  },
+  {
+    "id": "MK-17987",
+    "nome": "0001 - Bolacha maisena retangular"
+  },
+  {
+    "id": "MK-17998",
+    "nome": "0006 - Bolacha Redonda"
+  },
+  {
+    "id": "MK-18003",
+    "nome": "0011 - Bolacha Quadrada"
+  },
+  {
+    "id": "MK-18010",
+    "nome": "0012 - Pack 2 Bolachas Redondas"
+  },
+  {
+    "id": "MK-18017",
+    "nome": "0013 - Pack 4 Bolachas Redondas"
+  },
+  {
+    "id": "MK-18024",
+    "nome": "0015 - Bolacha Maizena Redonda"
+  },
+  {
+    "id": "MK-18031",
+    "nome": "0075 - Bolacha Maizena"
+  },
+  {
+    "id": "MK-18037",
+    "nome": "0076 - Bolacha Cream Cracker"
+  },
+  {
+    "id": "MK-18046",
+    "nome": "0080 - Wafer pack"
+  },
+  {
+    "id": "MK-18050",
+    "nome": "0099 - Cream cracker unitário"
+  },
+  {
+    "id": "MK-18057",
+    "nome": "0119 - Wafer unitário"
+  },
+  {
+    "id": "MK-18061",
+    "nome": "0150 - Bolacha Cantos Arredondados"
+  },
+  {
+    "id": "MK-18097",
+    "nome": "0152 - Biscoitos Agua e Sal - Glossy"
+  },
+  {
+    "id": "MK-18117",
+    "nome": "0152 - Biscoitos Agua e Sal - Matte"
+  },
+  {
+    "id": "MK-18134",
+    "nome": "0152 - Biscoitos Agua e Sal - Metallic"
+  },
+  {
+    "id": "MK-18152",
+    "nome": "0156 - Pack de bolacha - Glossy"
+  },
+  {
+    "id": "MK-18170",
+    "nome": "0156 - Pack de bolacha - Matte"
+  },
+  {
+    "id": "MK-18188",
+    "nome": "0156 - Pack de bolacha - Metallic"
+  },
+  {
+    "id": "MK-18207",
+    "nome": "0191 - Biscoito de Arroz - Glossy"
+  },
+  {
+    "id": "MK-18214",
+    "nome": "0191 - Biscoito de Arroz - Matte"
+  },
+  {
+    "id": "MK-18221",
+    "nome": "0191 - Biscoito de Arroz - Metallic"
+  },
+  {
+    "id": "MK-18229",
+    "nome": "0251 - Wafer com lacre - Glossy"
+  },
+  {
+    "id": "MK-18234",
+    "nome": "0251 - Wafer com lacre - Matte"
+  },
+  {
+    "id": "MK-18239",
+    "nome": "0251 - Wafer com lacre - Metallic"
+  },
+  {
+    "id": "MK-18245",
+    "nome": "0253 - Bolacha Pit Stop - Glossy"
+  },
+  {
+    "id": "MK-18250",
+    "nome": "0253 - Bolacha Pit Stop - Matte"
+  },
+  {
+    "id": "MK-18255",
+    "nome": "0253 - Bolacha Pit Stop - Metallic"
+  },
+  {
+    "id": "MK-18262",
+    "nome": "0141- Pacote de café sentado - Glossy"
+  },
+  {
+    "id": "MK-18272",
+    "nome": "0141- Pacote de café sentado - Matte"
+  },
+  {
+    "id": "MK-18282",
+    "nome": "0141- Pacote de café sentado - Metallic"
+  },
+  {
+    "id": "MK-18293",
+    "nome": "0200 - Pacote de Cafe Sentado - 1kg - Glossy"
+  },
+  {
+    "id": "MK-18303",
+    "nome": "0200 - Pacote de Cafe Sentado - 1kg - Matte"
+  },
+  {
+    "id": "MK-18313",
+    "nome": "0200 - Pacote de Cafe Sentado - 1kg - Metallic"
+  },
+  {
+    "id": "MK-18324",
+    "nome": "0249 - Café a vácuo com lacre - Glossy"
+  },
+  {
+    "id": "MK-18333",
+    "nome": "0249 - Café a vácuo com lacre - Matte"
+  },
+  {
+    "id": "MK-18342",
+    "nome": "0249 - Café a vácuo com lacre - Metallic"
+  },
+  {
+    "id": "MK-18352",
+    "nome": "0262 - Pacote café com válvula - Glossy"
+  },
+  {
+    "id": "MK-18359",
+    "nome": "0262 - Pacote café com válvula - Matte"
+  },
+  {
+    "id": "MK-18366",
+    "nome": "0262 - Pacote café com válvula - Metallic"
+  },
+  {
+    "id": "MK-18374",
+    "nome": "0263 - Café a vácuo - Glossy"
+  },
+  {
+    "id": "MK-18379",
+    "nome": "0263 - Café a vácuo - Matte"
+  },
+  {
+    "id": "MK-18384",
+    "nome": "0263 - Café a vácuo - Metallic"
+  },
+  {
+    "id": "MK-18390",
+    "nome": "0264 - Café a vácuo - canto arredondado - Glossy"
+  },
+  {
+    "id": "MK-18395",
+    "nome": "0264 - Café a vácuo - canto arredondado - Matte"
+  },
+  {
+    "id": "MK-18400",
+    "nome": "0264 - Café a vácuo - canto arredondado - Metallic"
+  },
+  {
+    "id": "MK-18406",
+    "nome": "0020 - Caixa Vapza"
+  },
+  {
+    "id": "MK-18417",
+    "nome": "0038 - Bebida Láctea"
+  },
+  {
+    "id": "MK-18424",
+    "nome": "0048 - Caixa de Trident"
+  },
+  {
+    "id": "MK-18436",
+    "nome": "0095 - Caixa de Suco com Tampa 1l"
+  },
+  {
+    "id": "MK-18443",
+    "nome": "0096 - Caixa de Leite"
+  },
+  {
+    "id": "MK-18450",
+    "nome": "0109 - Caixa Tetra Pak 1l"
+  },
+  {
+    "id": "MK-18457",
+    "nome": "0111 - Toddynho"
+  },
+  {
+    "id": "MK-18468",
+    "nome": "0112 - Caixinha de Cappuccino"
+  },
+  {
+    "id": "MK-18479",
+    "nome": "0116 - Bebida láctea"
+  },
+  {
+    "id": "MK-18490",
+    "nome": "0118 - Caixa de leite com tampa"
+  },
+  {
+    "id": "MK-18501",
+    "nome": "0120 - Caixa de Leite Sextavada"
+  },
+  {
+    "id": "MK-18510",
+    "nome": "0123 - Caixa pack"
+  },
+  {
+    "id": "MK-18517",
+    "nome": "0157 - Caixinha de Suco com Tampa no Canto"
+  },
+  {
+    "id": "MK-18549",
+    "nome": "0170 - Caixa de Hamburguer - Glossy"
+  },
+  {
+    "id": "MK-18558",
+    "nome": "0170 - Caixa de Hamburguer - Matte"
+  },
+  {
+    "id": "MK-18567",
+    "nome": "0170 - Caixa de Hamburguer - Metallic"
+  },
+  {
+    "id": "MK-18578",
+    "nome": "0171 - Mistura para Bolo - Glossy"
+  },
+  {
+    "id": "MK-18587",
+    "nome": "0171 - Mistura para Bolo - Matte"
+  },
+  {
+    "id": "MK-18596",
+    "nome": "0171 - Mistura para Bolo - Metallic"
+  },
+  {
+    "id": "MK-18606",
+    "nome": "0173 - Caixa estreita com tampa - Glossy"
+  },
+  {
+    "id": "MK-18617",
+    "nome": "0173 - Caixa estreita com tampa - Matte"
+  },
+  {
+    "id": "MK-18628",
+    "nome": "0173 - Caixa estreita com tampa - Metallic"
+  },
+  {
+    "id": "MK-18641",
+    "nome": "0179 - Caixa de leite com lacre - Glossy"
+  },
+  {
+    "id": "MK-18651",
+    "nome": "0179 - Caixa de leite com lacre - Matte"
+  },
+  {
+    "id": "MK-18661",
+    "nome": "0179 - Caixa de leite com lacre - Metallic"
+  },
+  {
+    "id": "MK-18672",
+    "nome": "0184 - Caixa retangular horizontal - Glossy"
+  },
+  {
+    "id": "MK-18683",
+    "nome": "0184 - Caixa retangular horizontal - Matte"
+  },
+  {
+    "id": "MK-18694",
+    "nome": "0184 - Caixa retangular horizontal - Metallic"
+  },
+  {
+    "id": "MK-18705",
+    "nome": "0184 - Caixa retangular horizontal ADAPTADA Lola"
+  },
+  {
+    "id": "MK-18710",
+    "nome": "0185 - Caixa de biscoitos - Glossy"
+  },
+  {
+    "id": "MK-18722",
+    "nome": "0185 - Caixa de biscoitos - Matte"
+  },
+  {
+    "id": "MK-18734",
+    "nome": "0185 - Caixa de biscoitos - Metallic"
+  },
+  {
+    "id": "MK-18747",
+    "nome": "0210 - Caixinha de suco - Glossy"
+  },
+  {
+    "id": "MK-18755",
+    "nome": "0210 - Caixinha de suco - Matte"
+  },
+  {
+    "id": "MK-18763",
+    "nome": "0210 - Caixinha de suco - Metallic"
+  },
+  {
+    "id": "MK-18772",
+    "nome": "0215 - Caixa retangular fina - Glossy"
+  },
+  {
+    "id": "MK-18781",
+    "nome": "0215 - Caixa retangular fina - Matte"
+  },
+  {
+    "id": "MK-18790",
+    "nome": "0215 - Caixa retangular fina - Metallic"
+  },
+  {
+    "id": "MK-18800",
+    "nome": "0215 - Caixa retangular fina v2 - Glossy"
+  },
+  {
+    "id": "MK-18807",
+    "nome": "0215 - Caixa retangular fina v2 - Matte"
+  },
+  {
+    "id": "MK-18814",
+    "nome": "0215 - Caixa retangular fina v2 - Metallic"
+  },
+  {
+    "id": "MK-18822",
+    "nome": "0247 - Água de Coco - Glossy"
+  },
+  {
+    "id": "MK-18829",
+    "nome": "0247 - Água de Coco - Matte"
+  },
+  {
+    "id": "MK-18836",
+    "nome": "0247 - Água de Coco - Metallic"
+  },
+  {
+    "id": "MK-18844",
+    "nome": "0266 - Caixa Papelao - Glossy"
+  },
+  {
+    "id": "MK-18850",
+    "nome": "0266 - Caixa Papelao - Matte"
+  },
+  {
+    "id": "MK-18856",
+    "nome": "0266 - Caixa Papelao - Papelao"
+  },
+  {
+    "id": "MK-18863",
+    "nome": "0267 - Caixa - Glossy"
+  },
+  {
+    "id": "MK-18869",
+    "nome": "0267 - Caixa - Matte"
+  },
+  {
+    "id": "MK-18875",
+    "nome": "0267 - Caixa - Papelao"
+  },
+  {
+    "id": "MK-18882",
+    "nome": "0268 - Caixa de leite padrão - Glossy"
+  },
+  {
+    "id": "MK-18889",
+    "nome": "0268 - Caixa de leite padrão - Matte"
+  },
+  {
+    "id": "MK-18897",
+    "nome": "0122 - Pernil Sulita"
+  },
+  {
+    "id": "MK-18903",
+    "nome": "0161 - Frango Congelado - Glossy"
+  },
+  {
+    "id": "MK-18913",
+    "nome": "0161 - Frango Congelado - Matte"
+  },
+  {
+    "id": "MK-18923",
+    "nome": "0161 - Frango Congelado - Metallic"
+  },
+  {
+    "id": "MK-18934",
+    "nome": "Carne1.tif"
+  },
+  {
+    "id": "MK-18935",
+    "nome": "Carne2.tif"
+  },
+  {
+    "id": "MK-18936",
+    "nome": "Vacuo 1.tif"
+  },
+  {
+    "id": "MK-18939",
+    "nome": "0058 - Bombom v1"
+  },
+  {
+    "id": "MK-18946",
+    "nome": "0058 - Bombom v2"
+  },
+  {
+    "id": "MK-18953",
+    "nome": "0064 - Barras Hersheys"
+  },
+  {
+    "id": "MK-18960",
+    "nome": "0073 - Barra de Cereal"
+  },
+  {
+    "id": "MK-18977",
+    "nome": "0087 - Minibolo"
+  },
+  {
+    "id": "MK-18986",
+    "nome": "0151 - Chocolate - Baci - Glossy"
+  },
+  {
+    "id": "MK-18992",
+    "nome": "0151 - Chocolate - Baci- Matte"
+  },
+  {
+    "id": "MK-19009",
+    "nome": "0151 - Chocolate - Baci- Metallic"
+  },
+  {
+    "id": "MK-19027",
+    "nome": "0180 - Bolinho Renata - Glossy"
+  },
+  {
+    "id": "MK-19040",
+    "nome": "0180 - Bolinho Renata - Matte"
+  },
+  {
+    "id": "MK-19053",
+    "nome": "0180 - Bolinho Renata - Metallic"
+  },
+  {
+    "id": "MK-19067",
+    "nome": "0227 - Pacote de chocolate - Glossy"
+  },
+  {
+    "id": "MK-19077",
+    "nome": "0227 - Pacote de chocolate - Matte"
+  },
+  {
+    "id": "MK-19087",
+    "nome": "0227 - Pacote de chocolate - Metallic"
+  },
+  {
+    "id": "MK-19098",
+    "nome": "0254 - Pacote arredondado para chocolates tipo Trento"
+  },
+  {
+    "id": "MK-19103",
+    "nome": "Baci"
+  },
+  {
+    "id": "MK-19155",
+    "nome": "Bunge"
+  },
+  {
+    "id": "MK-19158",
+    "nome": "Cottonbaby"
+  },
+  {
+    "id": "MK-19160",
+    "nome": "Cup Noodles"
+  },
+  {
+    "id": "MK-19167",
+    "nome": "Doble"
+  },
+  {
+    "id": "MK-19171",
+    "nome": "Duetto"
+  },
+  {
+    "id": "MK-19175",
+    "nome": "Jasmine"
+  },
+  {
+    "id": "MK-19179",
+    "nome": "Lola Cosmetics"
+  },
+  {
+    "id": "MK-19184",
+    "nome": "0031 - Natural One"
+  },
+  {
+    "id": "MK-19196",
+    "nome": "0237 - Papel Higienico 24 Rolos ADAPTADA Neve"
+  },
+  {
+    "id": "MK-19202",
+    "nome": "032 - Papel higiênico Paloma 16 rolos"
+  },
+  {
+    "id": "MK-19206",
+    "nome": "032 - Papel higiênico Paloma 8 rolos"
+  },
+  {
+    "id": "MK-19211",
+    "nome": "Papel 3 Rolos"
+  },
+  {
+    "id": "MK-19215",
+    "nome": "Stella d_Oro"
+  },
+  {
+    "id": "MK-19219",
+    "nome": "Trident"
+  },
+  {
+    "id": "MK-19232",
+    "nome": "0039 - Sachê Vale Fértil 00.tif"
+  },
+  {
+    "id": "MK-19233",
+    "nome": "0039 - Sachê Vale Fértil 02.tif"
+  },
+  {
+    "id": "MK-19234",
+    "nome": "0039 - Sachê Vale Fértil 03.tif"
+  },
+  {
+    "id": "MK-19235",
+    "nome": "0039 - Sachê Vale Fértil"
+  },
+  {
+    "id": "MK-19239",
+    "nome": "sache_vale_fértil.tif"
+  },
+  {
+    "id": "MK-19240",
+    "nome": "sachê_vale_fértil_v2.tif"
+  },
+  {
+    "id": "MK-19241",
+    "nome": "Vale do Sol"
+  },
+  {
+    "id": "MK-19247",
+    "nome": "0207 - Esponja para Banheiro Scotch-Brite - Glossy"
+  },
+  {
+    "id": "MK-19254",
+    "nome": "0207 - Esponja para Banheiro Scotch-Brite - Matte"
+  },
+  {
+    "id": "MK-19261",
+    "nome": "0207 - Esponja para Banheiro Scotch-Brite - Metallic"
+  },
+  {
+    "id": "MK-19269",
+    "nome": "0221 - Esponja Scotch Brite Louças Delicadas - Glossy"
+  },
+  {
+    "id": "MK-19278",
+    "nome": "0221 - Esponja Scotch Brite Louças Delicadas - Matte"
+  },
+  {
+    "id": "MK-19287",
+    "nome": "0221 - Esponja Scotch Brite Louças Delicadas - Metallic"
+  },
+  {
+    "id": "MK-19297",
+    "nome": "0222 - Esponja Limpeza Pesada - Tinindo - Glossy"
+  },
+  {
+    "id": "MK-19308",
+    "nome": "0222 - Esponja Limpeza Pesada - Tinindo - Matte"
+  },
+  {
+    "id": "MK-19319",
+    "nome": "0222 - Esponja Limpeza Pesada - Tinindo - Metallic"
+  },
+  {
+    "id": "MK-19331",
+    "nome": "0014 - Fraldas"
+  },
+  {
+    "id": "MK-19338",
+    "nome": "0042 - Pacote com alça - 64 fraldas"
+  },
+  {
+    "id": "MK-19345",
+    "nome": "0043 - Pacote com alça - 112 fraldas"
+  },
+  {
+    "id": "MK-19352",
+    "nome": "0044 - Pacote com alça - 112 fraldas XXG"
+  },
+  {
+    "id": "MK-19360",
+    "nome": "0045 - Pacote com alça - 136 fraldas  ADAPTADA"
+  },
+  {
+    "id": "MK-19366",
+    "nome": "Fraldas - 136 G - Baixo.tif"
+  },
+  {
+    "id": "MK-19367",
+    "nome": "Fraldas - 136 G - Direita.tif"
+  },
+  {
+    "id": "MK-19368",
+    "nome": "Fraldas - 136 G - Esquerda.tif"
+  },
+  {
+    "id": "MK-19369",
+    "nome": "Fraldas - 136 G - Frente.tif"
+  },
+  {
+    "id": "MK-19370",
+    "nome": "Fraldas - 136 G - Perspectiva Direita.tif"
+  },
+  {
+    "id": "MK-19371",
+    "nome": "Fraldas - 136 G - Perspectiva Esquerda.tif"
+  },
+  {
+    "id": "MK-19373",
+    "nome": "0045 - Pacote Grande de Fraldas - Glossy"
+  },
+  {
+    "id": "MK-19381",
+    "nome": "0045 - Pacote Grande de Fraldas - Matte"
+  },
+  {
+    "id": "MK-19387",
+    "nome": "0045 - Pacote Grande de Fraldas - Metallic"
+  },
+  {
+    "id": "MK-19394",
+    "nome": "0069 - Fralda Laterais Finas v2"
+  },
+  {
+    "id": "MK-19403",
+    "nome": "0069 - Fralda Laterais Finas"
+  },
+  {
+    "id": "MK-19413",
+    "nome": "0166 - Toalhas Umedecidas - Glossy"
+  },
+  {
+    "id": "MK-19421",
+    "nome": "0166 - Toalhas Umedecidas - Matte"
+  },
+  {
+    "id": "MK-19429",
+    "nome": "0166 - Toalhas Umedecidas - Metallic"
+  },
+  {
+    "id": "MK-19438",
+    "nome": "0193 - Personal Baby - 70 Fraldas - Glossy"
+  },
+  {
+    "id": "MK-19447",
+    "nome": "0193 - Personal Baby - 70 Fraldas - Matte"
+  },
+  {
+    "id": "MK-19456",
+    "nome": "0193 - Personal Baby - 70 Fraldas - Metallic"
+  },
+  {
+    "id": "MK-19466",
+    "nome": "0194 - Confort Master 10 fraldas ADAPTADA 000.tif"
+  },
+  {
+    "id": "MK-19467",
+    "nome": "0194 - Confort Master 10 fraldas ADAPTADA 001.tif"
+  },
+  {
+    "id": "MK-19468",
+    "nome": "0194 - Confort Master 10 fraldas ADAPTADA.tif"
+  },
+  {
+    "id": "MK-19469",
+    "nome": "0194 - Personal Baby - 60 Fraldas Grandes - Glossy"
+  },
+  {
+    "id": "MK-19478",
+    "nome": "0194 - Personal Baby - 60 Fraldas Grandes - Matte"
+  },
+  {
+    "id": "MK-19487",
+    "nome": "0194 - Personal Baby - 60 Fraldas Grandes - Metallic"
+  },
+  {
+    "id": "MK-19497",
+    "nome": "0195 - Personal Baby - 18 Fraldas XG - Glossy"
+  },
+  {
+    "id": "MK-19506",
+    "nome": "0195 - Personal Baby - 18 Fraldas XG - Matte"
+  },
+  {
+    "id": "MK-19515",
+    "nome": "0195 - Personal Baby - 18 Fraldas XG - Metallic"
+  },
+  {
+    "id": "MK-19525",
+    "nome": "0196 - Personal Baby - 40 Fraldas - Glossy"
+  },
+  {
+    "id": "MK-19534",
+    "nome": "0196 - Personal Baby - 40 Fraldas - Matte"
+  },
+  {
+    "id": "MK-19543",
+    "nome": "0196 - Personal Baby - 40 Fraldas - Metallic"
+  },
+  {
+    "id": "MK-19553",
+    "nome": "0007 - Garrafa de Vinho"
+  },
+  {
+    "id": "MK-19556",
+    "nome": "0029 - Iogurte"
+  },
+  {
+    "id": "MK-19558",
+    "nome": "0030 - Copo de Iogurte"
+  },
+  {
+    "id": "MK-19563",
+    "nome": "0031 - Natural One"
+  },
+  {
+    "id": "MK-19574",
+    "nome": "0041 - Iogurte Garrafa"
+  },
+  {
+    "id": "MK-19576",
+    "nome": "0068 - Amaciante"
+  },
+  {
+    "id": "MK-19583",
+    "nome": "0071 - Pantene"
+  },
+  {
+    "id": "MK-19588",
+    "nome": "0090 - Pasta de Dentes"
+  },
+  {
+    "id": "MK-19590",
+    "nome": "0091- Frasco pump"
+  },
+  {
+    "id": "MK-19595",
+    "nome": "0115 - Requeijão Potinho"
+  },
+  {
+    "id": "MK-19598",
+    "nome": "0125 - Catchup Predilecta"
+  },
+  {
+    "id": "MK-19609",
+    "nome": "0129 - Amaciante Aqua Fast"
+  },
+  {
+    "id": "MK-19622",
+    "nome": "0139 - Shampoo e Condicionador Ox Plants - Glossy"
+  },
+  {
+    "id": "MK-19627",
+    "nome": "0139 - Shampoo e Condicionador Ox Plants - Matte"
+  },
+  {
+    "id": "MK-19633",
+    "nome": "0140 - Tempero Sabor de Casa - Glossy"
+  },
+  {
+    "id": "MK-19639",
+    "nome": "0140 - Tempero Sabor de Casa - Matte"
+  },
+  {
+    "id": "MK-19646",
+    "nome": "0142 - Garrafa PET - Glossy"
+  },
+  {
+    "id": "MK-19649",
+    "nome": "0142 - Garrafa PET - Matte"
+  },
+  {
+    "id": "MK-19652",
+    "nome": "0142 - Garrafa PET - Metallic"
+  },
+  {
+    "id": "MK-19655",
+    "nome": "140625 - Fardo de Garrafa Pet 2L"
+  },
+  {
+    "id": "MK-19658",
+    "nome": "160625 - Fardo de Garrafa Pet 350ml"
+  },
+  {
+    "id": "MK-19662",
+    "nome": "0026 - Lata Mucilon"
+  },
+  {
+    "id": "MK-19666",
+    "nome": "0033 - Pack de 4 latas"
+  },
+  {
+    "id": "MK-19673",
+    "nome": "0258 - Lata 350ml Slim - Glossy"
+  },
+  {
+    "id": "MK-19676",
+    "nome": "0258 - Lata 350ml Slim - Matte"
+  },
+  {
+    "id": "MK-19679",
+    "nome": "0258 - Lata 350ml Slim - Metallic"
+  },
+  {
+    "id": "MK-19683",
+    "nome": "0259 - Lata 350ml - Glossy"
+  },
+  {
+    "id": "MK-19686",
+    "nome": "0259 - Lata 350ml - Matte"
+  },
+  {
+    "id": "MK-19689",
+    "nome": "0259 - Lata 350ml - Metallic"
+  },
+  {
+    "id": "MK-19693",
+    "nome": "0065 - Manteiga"
+  },
+  {
+    "id": "MK-19701",
+    "nome": "0243 - Manteiga La Serenissima - Glossy"
+  },
+  {
+    "id": "MK-19711",
+    "nome": "0243 - Manteiga La Serenissima - Matte"
+  },
+  {
+    "id": "MK-19721",
+    "nome": "0243 - Manteiga La Serenissima - Metallic"
+  },
+  {
+    "id": "MK-19732",
+    "nome": "Fecho de arame - pacote de pão"
+  },
+  {
+    "id": "MK-19734",
+    "nome": "Lacre posterior - pacotes"
+  },
+  {
+    "id": "MK-19736",
+    "nome": "Plástico vácuo - luz e sombra"
+  },
+  {
+    "id": "MK-19739",
+    "nome": "Recorte pendurável"
+  },
+  {
+    "id": "MK-19741",
+    "nome": "Textura Tetra Pak"
+  },
+  {
+    "id": "MK-19744",
+    "nome": "0114 - Cup Noodles"
+  },
+  {
+    "id": "MK-19751",
+    "nome": "0128 - Pack de Miojo"
+  },
+  {
+    "id": "MK-19756",
+    "nome": "0134 - Miojo"
+  },
+  {
+    "id": "MK-19763",
+    "nome": "0240 - Nissan Yakissoba - Glossy"
+  },
+  {
+    "id": "MK-19770",
+    "nome": "0240 - Nissan Yakissoba - Matte"
+  },
+  {
+    "id": "MK-19777",
+    "nome": "0240 - Nissan Yakissoba - Metallic"
+  },
+  {
+    "id": "MK-19784",
+    "nome": "0240 - Nissan Yakissoba Pote - Glossy"
+  },
+  {
+    "id": "MK-19791",
+    "nome": "0240 - Nissan Yakissoba Pote - Matte"
+  },
+  {
+    "id": "MK-19798",
+    "nome": "0240 - Nissan Yakissoba Pote - Metallic"
+  },
+  {
+    "id": "MK-19806",
+    "nome": "0001 - Bolacha Maizena Retangular"
+  },
+  {
+    "id": "MK-19812",
+    "nome": "0002 - Snack Blend4Web"
+  },
+  {
+    "id": "MK-19817",
+    "nome": "0003 - Snack Solda"
+  },
+  {
+    "id": "MK-19822",
+    "nome": "0004 - Snack Solda Vertical"
+  },
+  {
+    "id": "MK-19827",
+    "nome": "0005 - Papel Higiênico"
+  },
+  {
+    "id": "MK-19834",
+    "nome": "0006 - Bolacha Redonda"
+  },
+  {
+    "id": "MK-19839",
+    "nome": "0007 - Garrafa de Vinho"
+  },
+  {
+    "id": "MK-19841",
+    "nome": "0008 - Saco de Chocolate"
+  },
+  {
+    "id": "MK-19850",
+    "nome": "0009 - Sabonete - Glossy"
+  },
+  {
+    "id": "MK-19856",
+    "nome": "0009 - Sabonete - Matte"
+  },
+  {
+    "id": "MK-19862",
+    "nome": "0011 - Bolacha Quadrada"
+  },
+  {
+    "id": "MK-19869",
+    "nome": "0012 - Pack 2 Bolachas Redondas"
+  },
+  {
+    "id": "MK-19876",
+    "nome": "0013 - Pack 4 Bolachas Redondas"
+  },
+  {
+    "id": "MK-19883",
+    "nome": "0014 - Fraldas"
+  },
+  {
+    "id": "MK-19890",
+    "nome": "0015 - Bolacha Maizena Redonda"
+  },
+  {
+    "id": "MK-19897",
+    "nome": "0016 - Papel Higiênico 8 Rolos (4 embaixo e 4 em cima)"
+  },
+  {
+    "id": "MK-19904",
+    "nome": "0016 - Papel Higiênico 8 Rolos"
+  },
+  {
+    "id": "MK-19911",
+    "nome": "0017 - Escondidinho de Batata Congelado (Snack)"
+  },
+  {
+    "id": "MK-19915",
+    "nome": "0018 - Bisnaga de catupiry e requeijão"
+  },
+  {
+    "id": "MK-19924",
+    "nome": "0020 - Caixa Vapza"
+  },
+  {
+    "id": "MK-19935",
+    "nome": "0021 - Display Vapza"
+  },
+  {
+    "id": "MK-19940",
+    "nome": "0022 - Queijo a Vacuo"
+  },
+  {
+    "id": "MK-19950",
+    "nome": "0023 - Goiabada"
+  },
+  {
+    "id": "MK-19965",
+    "nome": "0024 - Guardanapo"
+  },
+  {
+    "id": "MK-19970",
+    "nome": "0025 - Arroz"
+  },
+  {
+    "id": "MK-19972",
+    "nome": "0026 - Lata de Aluminio (Nestle)"
+  },
+  {
+    "id": "MK-19975",
+    "nome": "0026 - Lata de Aço (Nestle)"
+  },
+  {
+    "id": "MK-19977",
+    "nome": "0029 - Iogurte"
+  },
+  {
+    "id": "MK-19979",
+    "nome": "0030 - Copo de Iogurte"
+  },
+  {
+    "id": "MK-19984",
+    "nome": "0033 - Pack de Latas TNT"
+  },
+  {
+    "id": "MK-19990",
+    "nome": "0034 - Sache de Maionese"
+  },
+  {
+    "id": "MK-19997",
+    "nome": "0035 - Bisnaga de Maionese (Cepera)"
+  },
+  {
+    "id": "MK-20002",
+    "nome": "0036 - Sabonete (Nivea)"
+  },
+  {
+    "id": "MK-20004",
+    "nome": "0037 - Preservativo"
+  },
+  {
+    "id": "MK-20011",
+    "nome": "0038 - Bebida Láctea"
+  },
+  {
+    "id": "MK-20018",
+    "nome": "0041 - Iogurte Garrafa (Tirol)"
+  },
+  {
+    "id": "MK-20020",
+    "nome": "0042 - Pacote Grande de Fraldas - 64 G"
+  },
+  {
+    "id": "MK-20027",
+    "nome": "0043 - Pacote Grande de Fraldas - 112 XG"
+  },
+  {
+    "id": "MK-20034",
+    "nome": "0044 - Pacote Grande de Fraldas - 112 XXG"
+  },
+  {
+    "id": "MK-20041",
+    "nome": "0045 - Pacote Grande de Fraldas - 136 G"
+  },
+  {
+    "id": "MK-20049",
+    "nome": "0045 - Pacote Grande de Fraldas - Glossy"
+  },
+  {
+    "id": "MK-20063",
+    "nome": "0045 - Pacote Grande de Fraldas - Matte"
+  },
+  {
+    "id": "MK-20077",
+    "nome": "0045 - Pacote Grande de Fraldas - Metallic"
+  },
+  {
+    "id": "MK-20091",
+    "nome": "0048 - Trident"
+  },
+  {
+    "id": "MK-20103",
+    "nome": "0049 - Queijo Coalho"
+  },
+  {
+    "id": "MK-20110",
+    "nome": "0050 - Peça de Presunto"
+  },
+  {
+    "id": "MK-20116",
+    "nome": "0053 - Queijo Gorgonzola - Peça Inteira"
+  },
+  {
+    "id": "MK-20120",
+    "nome": "0054 - Queijo Gorgonzola - Fracionado"
+  },
+  {
+    "id": "MK-20126",
+    "nome": "0055 - Queijo Casa Negra Tipo Grana - Fracionado"
+  },
+  {
+    "id": "MK-20130",
+    "nome": "0056 - Queijo Casca Negra tipo Parmesão Fracionado"
+  },
+  {
+    "id": "MK-20134",
+    "nome": "0057 - Queijo Casca Negra tipo Parmesão Inteiro"
+  },
+  {
+    "id": "MK-20139",
+    "nome": "0058 - Bombom v1"
+  },
+  {
+    "id": "MK-20146",
+    "nome": "0058 - Bombom v2"
+  },
+  {
+    "id": "MK-20153",
+    "nome": "0059 - Queijo Caccio Cavallo Fresco"
+  },
+  {
+    "id": "MK-20164",
+    "nome": "0060 - Queijo Prima Donna Fino"
+  },
+  {
+    "id": "MK-20172",
+    "nome": "0061 - Maionese Hemmer Premium"
+  },
+  {
+    "id": "MK-20175",
+    "nome": "0062 - Pre - Mescla Pão Francês"
+  },
+  {
+    "id": "MK-20188",
+    "nome": "0063 - Pre - Mescla Pão Doce"
+  },
+  {
+    "id": "MK-20192",
+    "nome": "0064 - Barras Hersheys"
+  },
+  {
+    "id": "MK-20199",
+    "nome": "0065 - Manteiga"
+  },
+  {
+    "id": "MK-20206",
+    "nome": "0066 - Saco de Farinha de Papelão"
+  },
+  {
+    "id": "MK-20217",
+    "nome": "0067 - Sabão em Pedra"
+  },
+  {
+    "id": "MK-20226",
+    "nome": "0068 - Amaciante"
+  },
+  {
+    "id": "MK-20234",
+    "nome": "0069 - Fralda Laterais Finas v2"
+  },
+  {
+    "id": "MK-20243",
+    "nome": "0069 - Fralda Laterais Finas"
+  },
+  {
+    "id": "MK-20252",
+    "nome": "0070 - Sache Lava Roupas"
+  },
+  {
+    "id": "MK-20265",
+    "nome": "0071 - Pantene"
+  },
+  {
+    "id": "MK-20270",
+    "nome": "0072 - Mistura de Queijos"
+  },
+  {
+    "id": "MK-20274",
+    "nome": "0073 - Barra de Cereal Granofibra"
+  },
+  {
+    "id": "MK-20291",
+    "nome": "0074 - Jujubas"
+  },
+  {
+    "id": "MK-20294",
+    "nome": "0075 - Bolacha Maizena"
+  },
+  {
+    "id": "MK-20300",
+    "nome": "0076 - Bolacha Cream Cracker"
+  },
+  {
+    "id": "MK-20309",
+    "nome": "0077 - Bolacha Pit Stop"
+  },
+  {
+    "id": "MK-20314",
+    "nome": "0080 - Wafer"
+  },
+  {
+    "id": "MK-20321",
+    "nome": "0081 - Biscoito de Arroz"
+  },
+  {
+    "id": "MK-20323",
+    "nome": "0082 - Rolo de Papel Aluminio"
+  },
+  {
+    "id": "MK-20329",
+    "nome": "0083 - Pão de Forma Schar"
+  },
+  {
+    "id": "MK-20334",
+    "nome": "0084 - Bolo de Chocolate"
+  },
+  {
+    "id": "MK-20339",
+    "nome": "0086 - Pacote barra Sache"
+  },
+  {
+    "id": "MK-20344",
+    "nome": "0087 - Minibolo"
+  },
+  {
+    "id": "MK-20352",
+    "nome": "0090 - Pasta de Dentes"
+  },
+  {
+    "id": "MK-20354",
+    "nome": "0091- Hand Sanitizer"
+  },
+  {
+    "id": "MK-20359",
+    "nome": "0092 - Sache Doce de Leite"
+  },
+  {
+    "id": "MK-20363",
+    "nome": "0095 - Caixa de Suco com Tampa 1l"
+  },
+  {
+    "id": "MK-20370",
+    "nome": "0096 - Caixa de Leite"
+  },
+  {
+    "id": "MK-20377",
+    "nome": "0097 - Caixa de Suco com Tampa 200ml"
+  },
+  {
+    "id": "MK-20388",
+    "nome": "0098 - Pack de Esponjas"
+  },
+  {
+    "id": "MK-20391",
+    "nome": "0099 - Bolacha Maizena Renata"
+  },
+  {
+    "id": "MK-20398",
+    "nome": "0101 - Sorvete Garoto Cone"
+  },
+  {
+    "id": "MK-20419",
+    "nome": "0104 - Bisnaga de Requeijão"
+  },
+  {
+    "id": "MK-20426",
+    "nome": "0108 - Papel Higienico 16 Rolos"
+  },
+  {
+    "id": "MK-20439",
+    "nome": "0109 - Garrafa de Suco Tetra Pak 1L"
+  },
+  {
+    "id": "MK-20446",
+    "nome": "0110 - Embalagem de Salame"
+  },
+  {
+    "id": "MK-20453",
+    "nome": "0111 - Toddynho"
+  },
+  {
+    "id": "MK-20464",
+    "nome": "0112 - Caixinha de Cappuccino"
+  },
+  {
+    "id": "MK-20475",
+    "nome": "0113 - Sache de Cappuccino"
+  },
+  {
+    "id": "MK-20479",
+    "nome": "0114 - Cup Noodles"
+  },
+  {
+    "id": "MK-20486",
+    "nome": "0115 - Requeijão Potinho"
+  },
+  {
+    "id": "MK-20489",
+    "nome": "0116 - Bebida Lactea com Cereais"
+  },
+  {
+    "id": "MK-20500",
+    "nome": "0117 - Iogurte Bat Gut"
+  },
+  {
+    "id": "MK-20505",
+    "nome": "0118 - Caixinha de Leite Maior"
+  },
+  {
+    "id": "MK-20516",
+    "nome": "0119 - Pacote de Bolacha Wafer"
+  },
+  {
+    "id": "MK-20522",
+    "nome": "0120 - Caixa de Leite Sextavada"
+  },
+  {
+    "id": "MK-20531",
+    "nome": "0121 - Sabonete Liquido"
+  },
+  {
+    "id": "MK-20538",
+    "nome": "0122 - Pernil Sulita"
+  },
+  {
+    "id": "MK-20543",
+    "nome": "0123 - Caixa (Maionese)"
+  },
+  {
+    "id": "MK-20550",
+    "nome": "0124 - Mortadela Seara"
+  },
+  {
+    "id": "MK-20552",
+    "nome": "0125 - Catchup Predilecta"
+  },
+  {
+    "id": "MK-20564",
+    "nome": "0127 - Papel Higienico 8 Rolos 1 camada - 0000.tif"
+  },
+  {
+    "id": "MK-20565",
+    "nome": "0127 - Papel Higienico 8 Rolos 1 camada - 0001.tif"
+  },
+  {
+    "id": "MK-20566",
+    "nome": "0127 - Papel Higienico 8 Rolos 1 camada - 0002.tif"
+  },
+  {
+    "id": "MK-20567",
+    "nome": "0127 - Papel Higienico 8 Rolos 1 camada - 0003.tif"
+  },
+  {
+    "id": "MK-20568",
+    "nome": "0127 - Papel Higienico 8 Rolos 1 camada - 0004.tif"
+  },
+  {
+    "id": "MK-20569",
+    "nome": "0127 - Papel Higienico 8 Rolos 1 camada - 0005.tif"
+  },
+  {
+    "id": "MK-20570",
+    "nome": "0127 - Papel Higienico 8 Rolos 1 camada - 0006.tif"
+  },
+  {
+    "id": "MK-20571",
+    "nome": "0127 - Papel Higienico 8 Rolos 1 camada - 0007.tif"
+  },
+  {
+    "id": "MK-20572",
+    "nome": "0127 - Papel Higienico 8 Rolos 1 camada v2"
+  },
+  {
+    "id": "MK-20586",
+    "nome": "0128 - Pack de Miojo_1 (1).tif"
+  },
+  {
+    "id": "MK-20587",
+    "nome": "0128 - Pack de Miojo_1 (2).tif"
+  },
+  {
+    "id": "MK-20588",
+    "nome": "0128 - Pack de Miojo_1 (3).tif"
+  },
+  {
+    "id": "MK-20589",
+    "nome": "0128 - Pack de Miojo_1 (4).tif"
+  },
+  {
+    "id": "MK-20590",
+    "nome": "0128 - Pack de Miojo_1 (5).tif"
+  },
+  {
+    "id": "MK-20591",
+    "nome": "0128 - Pack de Miojo_2"
+  },
+  {
+    "id": "MK-20597",
+    "nome": "0128 - Pack de Miojo_3"
+  },
+  {
+    "id": "MK-20602",
+    "nome": "0128 - Pack de Miojo_4"
+  },
+  {
+    "id": "MK-20607",
+    "nome": "0128 - Pack de Miojos - 0000.tif"
+  },
+  {
+    "id": "MK-20608",
+    "nome": "0128 - Pack de Miojos - 0001.tif"
+  },
+  {
+    "id": "MK-20609",
+    "nome": "0128 - Pack de Miojos - 0002.tif"
+  },
+  {
+    "id": "MK-20610",
+    "nome": "0128 - Pack de Miojos - 0003.tif"
+  },
+  {
+    "id": "MK-20611",
+    "nome": "0128 - Pack de Miojos - 0004.tif"
+  },
+  {
+    "id": "MK-20612",
+    "nome": "0129 - Amaciante Aqua Fast"
+  },
+  {
+    "id": "MK-20625",
+    "nome": "0130 - Massa de Soja Laterais Retas"
+  },
+  {
+    "id": "MK-20632",
+    "nome": "0130 - Massa de Soja"
+  },
+  {
+    "id": "MK-20638",
+    "nome": "0131 - Bandeja de Frango - 0000"
+  },
+  {
+    "id": "MK-20653",
+    "nome": "0131 - Bandeja de Frango v2 - 0000"
+  },
+  {
+    "id": "MK-20668",
+    "nome": "0131 - Bandeja de Frango v3 - 0000"
+  },
+  {
+    "id": "MK-20676",
+    "nome": "0132 - Cani Jumbo"
+  },
+  {
+    "id": "MK-20707",
+    "nome": "0133 - Sache com Ziper"
+  },
+  {
+    "id": "MK-20725",
+    "nome": "0134 - Miojo"
+  },
+  {
+    "id": "MK-20731",
+    "nome": "0136 - Red Bull"
+  },
+  {
+    "id": "MK-20738",
+    "nome": "0140 - Tempero Sabor de Casa - Glossy"
+  },
+  {
+    "id": "MK-20744",
+    "nome": "0140 - Tempero Sabor de Casa - Matte"
+  },
+  {
+    "id": "MK-20751",
+    "nome": "0141- Pacote Sentado Cafe - Glossy"
+  },
+  {
+    "id": "MK-20761",
+    "nome": "0141- Pacote Sentado Cafe - Matte"
+  },
+  {
+    "id": "MK-20771",
+    "nome": "0141- Pacote Sentado Cafe - Metallic"
+  },
+  {
+    "id": "MK-20782",
+    "nome": "0142 - Garrafa Energetico - Glossy"
+  },
+  {
+    "id": "MK-20785",
+    "nome": "0142 - Garrafa Energetico - Matte"
+  },
+  {
+    "id": "MK-20788",
+    "nome": "0142 - Garrafa Energetico - Metallic"
+  },
+  {
+    "id": "MK-20792",
+    "nome": "0143 - Pacote de Queijo - Glossy - 0000"
+  },
+  {
+    "id": "MK-20798",
+    "nome": "0143 - Pacote de Queijo - Matte - 0000"
+  },
+  {
+    "id": "MK-20804",
+    "nome": "0143 - Pacote de Queijo - Metallic - 0000"
+  },
+  {
+    "id": "MK-20811",
+    "nome": "0146 - Panetone - Glossy"
+  },
+  {
+    "id": "MK-20817",
+    "nome": "0146 - Panetone - Matte"
+  },
+  {
+    "id": "MK-20823",
+    "nome": "0146 - Panetone - Metallic"
+  },
+  {
+    "id": "MK-20830",
+    "nome": "0147 - Sache de Maionese - Glossy"
+  },
+  {
+    "id": "MK-20837",
+    "nome": "0147 - Sache de Maionese - Matte"
+  },
+  {
+    "id": "MK-20844",
+    "nome": "0147 - Sache de Maionese - Metallic"
+  },
+  {
+    "id": "MK-20852",
+    "nome": "0148 - Sache de Goiabada - Glossy"
+  },
+  {
+    "id": "MK-20859",
+    "nome": "0148 - Sache de Goiabada - Matte"
+  },
+  {
+    "id": "MK-20866",
+    "nome": "0148 - Sache de Goiabada - Metallic"
+  },
+  {
+    "id": "MK-20873",
+    "nome": "0149 - Pack de Maca"
+  },
+  {
+    "id": "MK-20905",
+    "nome": "0150 - Bolacha Cantos Arredondados"
+  },
+  {
+    "id": "MK-20941",
+    "nome": "0151 - Chocolate - Baci - Glossy"
+  },
+  {
+    "id": "MK-20959",
+    "nome": "0151 - Chocolate - Baci - Matte"
+  },
+  {
+    "id": "MK-20976",
+    "nome": "0151 - Chocolate - Baci - Metallic"
+  },
+  {
+    "id": "MK-20993",
+    "nome": "0152 - Biscoitos Agua e Sal"
+  },
+  {
+    "id": "MK-21046",
+    "nome": "0154 - Pacote de Oregano"
+  },
+  {
+    "id": "MK-21100",
+    "nome": "0155 - Pano Multiuso - Glossy"
+  },
+  {
+    "id": "MK-21117",
+    "nome": "0155 - Pano Multiuso - Matte"
+  },
+  {
+    "id": "MK-21134",
+    "nome": "0155 - Pano Multiuso - Metallic"
+  },
+  {
+    "id": "MK-21154",
+    "nome": "0156 - Bolacha Cream Cracker Selo Lateral - Glossy"
+  },
+  {
+    "id": "MK-21172",
+    "nome": "0156 - Bolacha Cream Cracker Selo Lateral - Matte"
+  },
+  {
+    "id": "MK-21190",
+    "nome": "0156 - Bolacha Cream Cracker Selo Lateral - Metallic"
+  },
+  {
+    "id": "MK-21209",
+    "nome": "0157 - Caixinha de Suco com Tampa no Canto"
+  },
+  {
+    "id": "MK-21242",
+    "nome": "0158 - Papel Toalha 1 - Glossy"
+  },
+  {
+    "id": "MK-21253",
+    "nome": "0158 - Papel Toalha 1 - Matte"
+  },
+  {
+    "id": "MK-21264",
+    "nome": "0158 - Papel Toalha 1 - Metallic"
+  },
+  {
+    "id": "MK-21277",
+    "nome": "0158 - Papel Toalha 2 - Glossy"
+  },
+  {
+    "id": "MK-21285",
+    "nome": "0158 - Papel Toalha 2 - Matte"
+  },
+  {
+    "id": "MK-21293",
+    "nome": "0158 - Papel Toalha 2 - Metallic"
+  },
+  {
+    "id": "MK-21303",
+    "nome": "0159 - Bisnaga de Doce de Leite - Glossy"
+  },
+  {
+    "id": "MK-21313",
+    "nome": "0159 - Bisnaga de Doce de Leite - Matte"
+  },
+  {
+    "id": "MK-21323",
+    "nome": "0159 - Bisnaga de Doce de Leite - Metallic"
+  },
+  {
+    "id": "MK-21335",
+    "nome": "0160 - Sacos Plasticos - Glossy"
+  },
+  {
+    "id": "MK-21345",
+    "nome": "0160 - Sacos Plasticos - Matte"
+  },
+  {
+    "id": "MK-21355",
+    "nome": "0160 - Sacos Plasticos - Metallic"
+  },
+  {
+    "id": "MK-21367",
+    "nome": "0161 - Frango Congelado - Glossy"
+  },
+  {
+    "id": "MK-21377",
+    "nome": "0161 - Frango Congelado - Matte"
+  },
+  {
+    "id": "MK-21387",
+    "nome": "0161 - Frango Congelado - Metallic"
+  },
+  {
+    "id": "MK-21399",
+    "nome": "0162 - Polpa de Graviola - Glossy"
+  },
+  {
+    "id": "MK-21405",
+    "nome": "0162 - Polpa de Graviola - Matte"
+  },
+  {
+    "id": "MK-21411",
+    "nome": "0162 - Polpa de Graviola - Metallic"
+  },
+  {
+    "id": "MK-21419",
+    "nome": "0163 - Queijo Minas - Crioulo - Glossy"
+  },
+  {
+    "id": "MK-21432",
+    "nome": "0163 - Queijo Minas - Crioulo - Matte"
+  },
+  {
+    "id": "MK-21445",
+    "nome": "0163 - Queijo Minas - Crioulo - Metallic"
+  },
+  {
+    "id": "MK-21460",
+    "nome": "0165 - Papel Higienico 12 Rolos Com Alca - Glossy"
+  },
+  {
+    "id": "MK-21467",
+    "nome": "0165 - Papel Higienico 12 Rolos Com Alca - Matte"
+  },
+  {
+    "id": "MK-21474",
+    "nome": "0165 - Papel Higienico 12 Rolos Com Alca - Metallic"
+  },
+  {
+    "id": "MK-21482",
+    "nome": "0165 - Papel Higienico 12 Rolos - Glossy"
+  },
+  {
+    "id": "MK-21489",
+    "nome": "0165 - Papel Higienico 12 Rolos - Matte"
+  },
+  {
+    "id": "MK-21496",
+    "nome": "0165 - Papel Higienico 12 Rolos - Metallic"
+  },
+  {
+    "id": "MK-21505",
+    "nome": "0166 - Toalhas Umedecidas - Glossy"
+  },
+  {
+    "id": "MK-21513",
+    "nome": "0166 - Toalhas Umedecidas - Matte"
+  },
+  {
+    "id": "MK-21521",
+    "nome": "0166 - Toalhas Umedecidas - Metallic"
+  },
+  {
+    "id": "MK-21530",
+    "nome": "0167 - Feliz Pascoa - Glossy"
+  },
+  {
+    "id": "MK-21536",
+    "nome": "0167 - Feliz Pascoa - Matte"
+  },
+  {
+    "id": "MK-21542",
+    "nome": "0167 - Feliz Pascoa - Metallic"
+  },
+  {
+    "id": "MK-21548",
+    "nome": "0168 - Pacote de Papel"
+  },
+  {
+    "id": "MK-21555",
+    "nome": "0169 - Rosca Polvilho - Glossy"
+  },
+  {
+    "id": "MK-21561",
+    "nome": "0169 - Rosca Polvilho - Matte"
+  },
+  {
+    "id": "MK-21567",
+    "nome": "0169 - Rosca Polvilho - Metallic"
+  },
+  {
+    "id": "MK-21575",
+    "nome": "0170 - Caixa de Hamburguer - Glossy"
+  },
+  {
+    "id": "MK-21584",
+    "nome": "0170 - Caixa de Hamburguer - Matte"
+  },
+  {
+    "id": "MK-21593",
+    "nome": "0170 - Caixa de Hamburguer - Metallic"
+  },
+  {
+    "id": "MK-21604",
+    "nome": "0171 - Mistura para Bolo - Glossy"
+  },
+  {
+    "id": "MK-21613",
+    "nome": "0171 - Mistura para Bolo - Matte"
+  },
+  {
+    "id": "MK-21622",
+    "nome": "0171 - Mistura para Bolo - Metallic"
+  },
+  {
+    "id": "MK-21633",
+    "nome": "0172 - Noz Moscada Moida - Glossy"
+  },
+  {
+    "id": "MK-21643",
+    "nome": "0172 - Noz Moscada Moida - Matte"
+  },
+  {
+    "id": "MK-21653",
+    "nome": "0172 - Noz Moscada Moida - Metallic"
+  },
+  {
+    "id": "MK-21665",
+    "nome": "0173 - Garrafa de Acai - Glossy"
+  },
+  {
+    "id": "MK-21676",
+    "nome": "0173 - Garrafa de Acai - Matte"
+  },
+  {
+    "id": "MK-21687",
+    "nome": "0173 - Garrafa de Acai - Metallic"
+  },
+  {
+    "id": "MK-21700",
+    "nome": "0174 - Doogs - Glossy"
+  },
+  {
+    "id": "MK-21713",
+    "nome": "0174 - Doogs - Matte"
+  },
+  {
+    "id": "MK-21726",
+    "nome": "0174 - Doogs - Metallic"
+  },
+  {
+    "id": "MK-21741",
+    "nome": "0175 - Sache - Salsinha e Cebolinha - Glossy"
+  },
+  {
+    "id": "MK-21752",
+    "nome": "0175 - Sache - Salsinha e Cebolinha - Matte"
+  },
+  {
+    "id": "MK-21763",
+    "nome": "0175 - Sache - Salsinha e Cebolinha - Metallic"
+  },
+  {
+    "id": "MK-21776",
+    "nome": "0176 - DeCecco - Gnocchi di Patate - Glossy"
+  },
+  {
+    "id": "MK-21786",
+    "nome": "0176 - DeCecco - Gnocchi di Patate - Matte"
+  },
+  {
+    "id": "MK-21796",
+    "nome": "0176 - DeCecco - Gnocchi di Patate - Metallic"
+  },
+  {
+    "id": "MK-21807",
+    "nome": "0177 - Pao de Hot Dog - Glossy"
+  },
+  {
+    "id": "MK-21816",
+    "nome": "0177 - Pao de Hot Dog - Matte"
+  },
+  {
+    "id": "MK-21825",
+    "nome": "0177 - Pao de Hot Dog - Metallic"
+  },
+  {
+    "id": "MK-21835",
+    "nome": "0178 - DeCecco - Farfalle - Glossy"
+  },
+  {
+    "id": "MK-21847",
+    "nome": "0178 - DeCecco - Farfalle - Matte"
+  },
+  {
+    "id": "MK-21859",
+    "nome": "0178 - DeCecco - Farfalle - Metallic"
+  },
+  {
+    "id": "MK-21873",
+    "nome": "0179 - Garrafa de Leite de Coco - Glossy"
+  },
+  {
+    "id": "MK-21883",
+    "nome": "0179 - Garrafa de Leite de Coco - Matte"
+  },
+  {
+    "id": "MK-21892",
+    "nome": "0179 - Garrafa de Leite de Coco - Metallic"
+  },
+  {
+    "id": "MK-21903",
+    "nome": "0180 - Bolinho Renata - Glossy"
+  },
+  {
+    "id": "MK-21916",
+    "nome": "0180 - Bolinho Renata - Matte"
+  },
+  {
+    "id": "MK-21929",
+    "nome": "0180 - Bolinho Renata - Metallic"
+  },
+  {
+    "id": "MK-21944",
+    "nome": "0181 - Sache de Feijao Carioca Fugini - Glossy"
+  },
+  {
+    "id": "MK-21957",
+    "nome": "0181 - Sache de Feijao Carioca Fugini - Matte"
+  },
+  {
+    "id": "MK-21970",
+    "nome": "0181 - Sache de Feijao Carioca Fugini - Metallic"
+  },
+  {
+    "id": "MK-21984",
+    "nome": "0182 - Discos de Algodao - Glossy"
+  },
+  {
+    "id": "MK-21994",
+    "nome": "0182 - Discos de Algodao - Matte"
+  },
+  {
+    "id": "MK-22004",
+    "nome": "0182 - Discos de Algodao - Metallic"
+  },
+  {
+    "id": "MK-22015",
+    "nome": "0183 - Sache Aruba Kids - Glossy"
+  },
+  {
+    "id": "MK-22024",
+    "nome": "0183 - Sache Aruba Kids - Matte"
+  },
+  {
+    "id": "MK-22033",
+    "nome": "0183 - Sache Aruba Kids - Metallic"
+  },
+  {
+    "id": "MK-22043",
+    "nome": "0184 - Caixa de Burgers Fininhos - Glossy"
+  },
+  {
+    "id": "MK-22054",
+    "nome": "0184 - Caixa de Burgers Fininhos - Matte"
+  },
+  {
+    "id": "MK-22064",
+    "nome": "0184 - Caixa de Burgers Fininhos - Metallic"
+  },
+  {
+    "id": "MK-22076",
+    "nome": "0185 - Roka Gouda - Cheese - Glossy"
+  },
+  {
+    "id": "MK-22088",
+    "nome": "0185 - Roka Gouda - Cheese - Matte"
+  },
+  {
+    "id": "MK-22100",
+    "nome": "0185 - Roka Gouda - Cheese - Metallic"
+  },
+  {
+    "id": "MK-22113",
+    "nome": "0186 - Saco de Pao de Forma - Glossy"
+  },
+  {
+    "id": "MK-22120",
+    "nome": "0186 - Saco de Pao de Forma - Matte"
+  },
+  {
+    "id": "MK-22127",
+    "nome": "0186 - Saco de Pao de Forma - Metallic"
+  },
+  {
+    "id": "MK-22135",
+    "nome": "0187 - Saco de Pao de Hamburguer  - Glossy"
+  },
+  {
+    "id": "MK-22144",
+    "nome": "0187 - Saco de Pao de Hamburguer - Matte"
+  },
+  {
+    "id": "MK-22153",
+    "nome": "0187 - Saco de Pao de Hamburguer - Metallic"
+  },
+  {
+    "id": "MK-22163",
+    "nome": "0188 - Filtro para Ar Condicionado - Glossy"
+  },
+  {
+    "id": "MK-22171",
+    "nome": "0188 - Filtro para Ar Condicionado - Matte"
+  },
+  {
+    "id": "MK-22179",
+    "nome": "0188 - Filtro para Ar Condicionado - Metallic"
+  },
+  {
+    "id": "MK-22188",
+    "nome": "0189 - Pack de Preservativos - Glossy"
+  },
+  {
+    "id": "MK-22196",
+    "nome": "0189 - Pack de Preservativos - Matte"
+  },
+  {
+    "id": "MK-22204",
+    "nome": "0189 - Pack de Preservativos - Metallic"
+  },
+  {
+    "id": "MK-22213",
+    "nome": "0190 - Rolo de Pano Multiuso - Glossy"
+  },
+  {
+    "id": "MK-22223",
+    "nome": "0190 - Rolo de Pano Multiuso - Matte"
+  },
+  {
+    "id": "MK-22233",
+    "nome": "0190 - Rolo de Pano Multiuso - Metallic"
+  },
+  {
+    "id": "MK-22244",
+    "nome": "0191 - Biscoito de Arroz - Glossy"
+  },
+  {
+    "id": "MK-22251",
+    "nome": "0191 - Biscoito de Arroz - Matte"
+  },
+  {
+    "id": "MK-22258",
+    "nome": "0191 - Biscoito de Arroz - Metallic"
+  },
+  {
+    "id": "MK-22266",
+    "nome": "0192 - Mini Pao de Aipim - Glossy"
+  },
+  {
+    "id": "MK-22278",
+    "nome": "0192 - Mini Pao de Aipim - Matte"
+  },
+  {
+    "id": "MK-22290",
+    "nome": "0192 - Mini Pao de Aipim - Metallic"
+  },
+  {
+    "id": "MK-22303",
+    "nome": "0193 - Personal Baby - 70 Fraldas - Glossy"
+  },
+  {
+    "id": "MK-22312",
+    "nome": "0193 - Personal Baby - 70 Fraldas - Matte"
+  },
+  {
+    "id": "MK-22321",
+    "nome": "0193 - Personal Baby - 70 Fraldas - Metallic"
+  },
+  {
+    "id": "MK-22331",
+    "nome": "0194 - Personal Baby - 60 Fraldas Grandes - Glossy"
+  },
+  {
+    "id": "MK-22340",
+    "nome": "0194 - Personal Baby - 60 Fraldas Grandes - Matte"
+  },
+  {
+    "id": "MK-22349",
+    "nome": "0194 - Personal Baby - 60 Fraldas Grandes - Metallic"
+  },
+  {
+    "id": "MK-22359",
+    "nome": "0195 - Personal Baby - 18 Fraldas XG - Glossy"
+  },
+  {
+    "id": "MK-22368",
+    "nome": "0195 - Personal Baby - 18 Fraldas XG - Matte"
+  },
+  {
+    "id": "MK-22377",
+    "nome": "0195 - Personal Baby - 18 Fraldas XG - Metallic"
+  },
+  {
+    "id": "MK-22387",
+    "nome": "0196 - Personal Baby - 40 Fraldas - Glossy"
+  },
+  {
+    "id": "MK-22396",
+    "nome": "0196 - Personal Baby - 40 Fraldas - Matte"
+  },
+  {
+    "id": "MK-22405",
+    "nome": "0196 - Personal Baby - 40 Fraldas - Metallic"
+  },
+  {
+    "id": "MK-22415",
+    "nome": "0197 - Absorvente Intimus 16 unidades - Glossy"
+  },
+  {
+    "id": "MK-22424",
+    "nome": "0197 - Absorvente Intimus 16 unidades - Matte"
+  },
+  {
+    "id": "MK-22435",
+    "nome": "0197 - Absorvente Intimus 16 unidades - Metallic"
+  },
+  {
+    "id": "MK-22445",
+    "nome": "0198 - Absorvente Intimus 8 unidades - Glossy"
+  },
+  {
+    "id": "MK-22452",
+    "nome": "0198 - Absorvente Intimus 8 unidades - Matte"
+  },
+  {
+    "id": "MK-22459",
+    "nome": "0198 - Absorvente Intimus 8 unidades - Metallic"
+  },
+  {
+    "id": "MK-22467",
+    "nome": "0199 - Absorvente Mili 32 unidades - Glossy"
+  },
+  {
+    "id": "MK-22474",
+    "nome": "0199 - Absorvente Mili 32 unidades - Matte"
+  },
+  {
+    "id": "MK-22481",
+    "nome": "0199 - Absorvente Mili 32 unidades - Metallic"
+  },
+  {
+    "id": "MK-22489",
+    "nome": "0200 - Pacote de Cafe Sentado - 1kg - Glossy"
+  },
+  {
+    "id": "MK-22499",
+    "nome": "0200 - Pacote de Cafe Sentado - 1kg - Matte"
+  },
+  {
+    "id": "MK-22509",
+    "nome": "0200 - Pacote de Cafe Sentado - 1kg - Metallic"
+  },
+  {
+    "id": "MK-22520",
+    "nome": "0201 - Pasta Di Semola - Glossy"
+  },
+  {
+    "id": "MK-22532",
+    "nome": "0201 - Pasta Di Semola - Matte"
+  },
+  {
+    "id": "MK-22544",
+    "nome": "0201 - Pasta Di Semola - Metallic"
+  },
+  {
+    "id": "MK-22557",
+    "nome": "0202 - Absorvente Mili 16 unidades - Glossy"
+  },
+  {
+    "id": "MK-22565",
+    "nome": "0202 - Absorvente Mili 16 unidades - Matte"
+  },
+  {
+    "id": "MK-22573",
+    "nome": "0202 - Absorvente Mili 16 unidades - Metallic"
+  },
+  {
+    "id": "MK-22583",
+    "nome": "0203 - Absorvente Mili 16 unidades Noturno - Glossy"
+  },
+  {
+    "id": "MK-22591",
+    "nome": "0203 - Absorvente Mili 16 unidades Noturno - Matte"
+  },
+  {
+    "id": "MK-22599",
+    "nome": "0203 - Absorvente Mili 16 unidades Noturno - Metallic"
+  },
+  {
+    "id": "MK-22608",
+    "nome": "0204 - Mili Protetor Diario 80 Unidades - Glossy"
+  },
+  {
+    "id": "MK-22617",
+    "nome": "0204 - Mili Protetor Diario 80 Unidades - Matte"
+  },
+  {
+    "id": "MK-22626",
+    "nome": "0204 - Mili Protetor Diario 80 Unidades - Metallic"
+  },
+  {
+    "id": "MK-22636",
+    "nome": "0205 - Sache Maionese Hemmer 400g - Glossy"
+  },
+  {
+    "id": "MK-22644",
+    "nome": "0205 - Sache Maionese Hemmer 400g - Matte"
+  },
+  {
+    "id": "MK-22652",
+    "nome": "0205 - Sache Maionese Hemmer 400g - Metallic"
+  },
+  {
+    "id": "MK-22661",
+    "nome": "0206 - Sache Maionese Hemmer 1kg - Glossy"
+  },
+  {
+    "id": "MK-22669",
+    "nome": "0206 - Sache Maionese Hemmer 1kg - Matte"
+  },
+  {
+    "id": "MK-22677",
+    "nome": "0206 - Sache Maionese Hemmer 1kg - Metallic"
+  },
+  {
+    "id": "MK-22686",
+    "nome": "0207 - Esponja para Banheiro Scotch-Brite - Glossy"
+  },
+  {
+    "id": "MK-22693",
+    "nome": "0207 - Esponja para Banheiro Scotch-Brite - Matte"
+  },
+  {
+    "id": "MK-22700",
+    "nome": "0207 - Esponja para Banheiro Scotch-Brite - Metallic"
+  },
+  {
+    "id": "MK-22708",
+    "nome": "0208 - Billa Freezer Bag - Glossy"
+  },
+  {
+    "id": "MK-22716",
+    "nome": "0208 - Billa Freezer Bag - Matte"
+  },
+  {
+    "id": "MK-22724",
+    "nome": "0208 - Billa Freezer Bag - Metallic"
+  },
+  {
+    "id": "MK-22733",
+    "nome": "0209 - Folha de Aluminio - Glossy"
+  },
+  {
+    "id": "MK-22741",
+    "nome": "0209 - Folha de Aluminio - Matte"
+  },
+  {
+    "id": "MK-22749",
+    "nome": "0209 - Folha de Aluminio - Metallic"
+  },
+  {
+    "id": "MK-22758",
+    "nome": "0210 - Deleitinho Naveia - Glossy"
+  },
+  {
+    "id": "MK-22765",
+    "nome": "0210 - Deleitinho Naveia - Matte"
+  },
+  {
+    "id": "MK-22772",
+    "nome": "0210 - Deleitinho Naveia - Metallic"
+  },
+  {
+    "id": "MK-22781",
+    "nome": "0211 - Queijo Coalho - Glossy"
+  },
+  {
+    "id": "MK-22787",
+    "nome": "0211 - Queijo Coalho - Matte"
+  },
+  {
+    "id": "MK-22793",
+    "nome": "0211 - Queijo Coalho - Metallic"
+  },
+  {
+    "id": "MK-22801",
+    "nome": "0212 - Sorvete Paviloche - Glossy"
+  },
+  {
+    "id": "MK-22811",
+    "nome": "0212 - Sorvete Paviloche - Matte"
+  },
+  {
+    "id": "MK-22821",
+    "nome": "0212 - Sorvete Paviloche - Metallic"
+  },
+  {
+    "id": "MK-22833",
+    "nome": "0213 - Bananinha Saude da Terra - Glossy"
+  },
+  {
+    "id": "MK-22843",
+    "nome": "0213 - Bananinha Saude da Terra - Matte"
+  },
+  {
+    "id": "MK-22853",
+    "nome": "0213 - Bananinha Saude da Terra - Metallic"
+  },
+  {
+    "id": "MK-22865",
+    "nome": "0214 - Cuscuz Torrado - Glossy"
+  },
+  {
+    "id": "MK-22875",
+    "nome": "0214 - Cuscuz Torrado - Matte"
+  },
+  {
+    "id": "MK-22885",
+    "nome": "0214 - Cuscuz Torrado - Metallic"
+  },
+  {
+    "id": "MK-22897",
+    "nome": "0215 - Caixa Jasmine Sou Sweet Vegan - Glossy"
+  },
+  {
+    "id": "MK-22906",
+    "nome": "0215 - Caixa Jasmine Sou Sweet Vegan - Matte"
+  },
+  {
+    "id": "MK-22915",
+    "nome": "0215 - Caixa Jasmine Sou Sweet Vegan - Metallic"
+  },
+  {
+    "id": "MK-22925",
+    "nome": "0216 - Snack Bag Jasmine Cookies Integrais - Glossy"
+  },
+  {
+    "id": "MK-22935",
+    "nome": "0216 - Snack Bag Jasmine Cookies Integrais - Matte"
+  },
+  {
+    "id": "MK-22945",
+    "nome": "0216 - Snack Bag Jasmine Cookies Integrais - Metallic"
+  },
+  {
+    "id": "MK-22956",
+    "nome": "0217 - Snack Bag Jasmine Mini Cookies - Glossy"
+  },
+  {
+    "id": "MK-22966",
+    "nome": "0217 - Snack Bag Jasmine Mini Cookies - Matte"
+  },
+  {
+    "id": "MK-22976",
+    "nome": "0217 - Snack Bag Jasmine Mini Cookies - Metallic"
+  },
+  {
+    "id": "MK-22987",
+    "nome": "0218 - Pack Famastil Pulverizador Manual - Glossy"
+  },
+  {
+    "id": "MK-22996",
+    "nome": "0218 - Pack Famastil Pulverizador Manual - Matte"
+  },
+  {
+    "id": "MK-23005",
+    "nome": "0218 - Pack Famastil Pulverizador Manual - Metallic"
+  },
+  {
+    "id": "MK-23015",
+    "nome": "0219 - Pack Queijo Mussarela 2kg - Holandes - Glossy"
+  },
+  {
+    "id": "MK-23022",
+    "nome": "0219 - Pack Queijo Mussarela 2kg - Holandes - Matte"
+  },
+  {
+    "id": "MK-23029",
+    "nome": "0219 - Pack Queijo Mussarela 2kg - Holandes - Metallic"
+  },
+  {
+    "id": "MK-23037",
+    "nome": "0220 - Pack Rolo Massa para Pastel - Glossy"
+  },
+  {
+    "id": "MK-23045",
+    "nome": "0220 - Pack Rolo Massa para Pastel - Matte"
+  },
+  {
+    "id": "MK-23053",
+    "nome": "0220 - Pack Rolo Massa para Pastel - Metallic"
+  },
+  {
+    "id": "MK-23062",
+    "nome": "0221 - Esponja Scotch Brite Loucas Delicadas - Glossy"
+  },
+  {
+    "id": "MK-23071",
+    "nome": "0221 - Esponja Scotch Brite Loucas Delicadas - Matte"
+  },
+  {
+    "id": "MK-23080",
+    "nome": "0221 - Esponja Scotch Brite Loucas Delicadas - Metallic"
+  },
+  {
+    "id": "MK-23090",
+    "nome": "0222 - Esponja Limpeza Pesada - Tinindo - Glossy"
+  },
+  {
+    "id": "MK-23101",
+    "nome": "0222 - Esponja Limpeza Pesada - Tinindo - Matte"
+  },
+  {
+    "id": "MK-23112",
+    "nome": "0222 - Esponja Limpeza Pesada - Tinindo - Metallic"
+  },
+  {
+    "id": "MK-23124",
+    "nome": "0223 - Coxinha da Asa - Aurora - Glossy"
+  },
+  {
+    "id": "MK-23131",
+    "nome": "0223 - Coxinha da Asa - Aurora - Matte"
+  },
+  {
+    "id": "MK-23138",
+    "nome": "0223 - Coxinha da Asa - Aurora - Metallic"
+  },
+  {
+    "id": "MK-23147",
+    "nome": "0224 - Pacote de Salmao - Glossy"
+  },
+  {
+    "id": "MK-23153",
+    "nome": "0224 - Pacote de Salmao - Matte"
+  },
+  {
+    "id": "MK-23159",
+    "nome": "0224 - Pacote de Salmao - Metallic"
+  },
+  {
+    "id": "MK-23166",
+    "nome": "0225 - Pacote de Cebolas - Glossy"
+  },
+  {
+    "id": "MK-23174",
+    "nome": "0225 - Pacote de Cebolas - Matte"
+  },
+  {
+    "id": "MK-23182",
+    "nome": "0225 - Pacote de Cebolas - Metallic"
+  },
+  {
+    "id": "MK-23191",
+    "nome": "0226 - Burger a Base de Vegetais - Glossy"
+  },
+  {
+    "id": "MK-23198",
+    "nome": "0226 - Burger a Base de Vegetais - Matte"
+  },
+  {
+    "id": "MK-23205",
+    "nome": "0226 - Burger a Base de Vegetais - Metallic"
+  },
+  {
+    "id": "MK-23213",
+    "nome": "0227 - Chocolate Zero Acucar - Glossy"
+  },
+  {
+    "id": "MK-23223",
+    "nome": "0227 - Chocolate Zero Acucar - Matte"
+  },
+  {
+    "id": "MK-23233",
+    "nome": "0227 - Chocolate Zero Acucar - Metallic"
+  },
+  {
+    "id": "MK-23245",
+    "nome": "0228 - PACOTE_SENTADO_9 - Glossy"
+  },
+  {
+    "id": "MK-23253",
+    "nome": "0228 - PACOTE_SENTADO_9 - Matte"
+  },
+  {
+    "id": "MK-23261",
+    "nome": "0228 - PACOTE_SENTADO_9 - Metallic"
+  },
+  {
+    "id": "MK-23270",
+    "nome": "0229 - PACOTE_SENTADO_10 - Glossy"
+  },
+  {
+    "id": "MK-23278",
+    "nome": "0229 - PACOTE_SENTADO_10 - Matte"
+  },
+  {
+    "id": "MK-23286",
+    "nome": "0229 - PACOTE_SENTADO_10 - Metallic"
+  },
+  {
+    "id": "MK-23295",
+    "nome": "0230 - PACOTE_SENTADO_11 - Glossy"
+  },
+  {
+    "id": "MK-23303",
+    "nome": "0230 - PACOTE_SENTADO_11 - Matte"
+  },
+  {
+    "id": "MK-23311",
+    "nome": "0230 - PACOTE_SENTADO_11 - Metallic"
+  },
+  {
+    "id": "MK-23320",
+    "nome": "0231 - Biscoito tipo Manteguitas - Glossy"
+  },
+  {
+    "id": "MK-23328",
+    "nome": "0231 - Biscoito tipo Manteguitas - Matte"
+  },
+  {
+    "id": "MK-23336",
+    "nome": "0231 - Biscoito tipo Manteguitas - Metallic"
+  },
+  {
+    "id": "MK-23345",
+    "nome": "0232 - Queijo Prata - Scala - Glossy"
+  },
+  {
+    "id": "MK-23352",
+    "nome": "0232 - Queijo Prata - Scala - Matte"
+  },
+  {
+    "id": "MK-23359",
+    "nome": "0232 - Queijo Prata - Scala - Metallic"
+  },
+  {
+    "id": "MK-23367",
+    "nome": "0233 - Queijo de Coalho em Barra - Glossy"
+  },
+  {
+    "id": "MK-23374",
+    "nome": "0233 - Queijo de Coalho em Barra - Matte"
+  },
+  {
+    "id": "MK-23381",
+    "nome": "0233 - Queijo de Coalho em Barra - Metallic"
+  },
+  {
+    "id": "MK-23389",
+    "nome": "0234 - Rosca de Polvilho Doce Panine - Glossy"
+  },
+  {
+    "id": "MK-23397",
+    "nome": "0234 - Rosca de Polvilho Doce Panine - Matte"
+  },
+  {
+    "id": "MK-23405",
+    "nome": "0234 - Rosca de Polvilho Doce Panine - Metallic"
+  },
+  {
+    "id": "MK-23414",
+    "nome": "0235 - Merengue Caseiro - Panine - Glossy"
+  },
+  {
+    "id": "MK-23422",
+    "nome": "0235 - Merengue Caseiro - Panine - Matte"
+  },
+  {
+    "id": "MK-23430",
+    "nome": "0235 - Merengue Caseiro - Panine - Metallic"
+  },
+  {
+    "id": "MK-23439",
+    "nome": "0236 - Papel Higienico Fofinho 8 Rolos - Glossy"
+  },
+  {
+    "id": "MK-23446",
+    "nome": "0236 - Papel Higienico Fofinho 8 Rolos - Matte"
+  },
+  {
+    "id": "MK-23453",
+    "nome": "0236 - Papel Higienico Fofinho 8 Rolos - Metallic"
+  },
+  {
+    "id": "MK-23460",
+    "nome": "0236 - Papel Higienico Fofinho 8 Rolos v2"
+  },
+  {
+    "id": "MK-23474",
+    "nome": "0237 - Papel Higienico Fofinho 24 Rolos - Glossy v2"
+  },
+  {
+    "id": "MK-23480",
+    "nome": "0237 - Papel Higienico Fofinho 24 Rolos - Glossy"
+  },
+  {
+    "id": "MK-23487",
+    "nome": "0237 - Papel Higienico Fofinho 24 Rolos - Matte v2"
+  },
+  {
+    "id": "MK-23493",
+    "nome": "0237 - Papel Higienico Fofinho 24 Rolos - Matte"
+  },
+  {
+    "id": "MK-23500",
+    "nome": "0237 - Papel Higienico Fofinho 24 Rolos - Metallic"
+  },
+  {
+    "id": "MK-23508",
+    "nome": "0238 - Papel Higienico Fofinho 32 Rolos - Glossy"
+  },
+  {
+    "id": "MK-23515",
+    "nome": "0238 - Papel Higienico Fofinho 32 Rolos - Matte"
+  },
+  {
+    "id": "MK-23522",
+    "nome": "0238 - Papel Higienico Fofinho 32 Rolos - Metallic"
+  },
+  {
+    "id": "MK-23530",
+    "nome": "0239 - Papel Higienico Fofinho 40 Rolos - Glossy"
+  },
+  {
+    "id": "MK-23536",
+    "nome": "0239 - Papel Higienico Fofinho 40 Rolos - Matte"
+  },
+  {
+    "id": "MK-23542",
+    "nome": "0239 - Papel Higienico Fofinho 40 Rolos - Metallic"
+  },
+  {
+    "id": "MK-23549",
+    "nome": "0240 - Nissan Yakissoba - Glossy"
+  },
+  {
+    "id": "MK-23556",
+    "nome": "0240 - Nissan Yakissoba - Matte"
+  },
+  {
+    "id": "MK-23563",
+    "nome": "0240 - Nissan Yakissoba - Metallic"
+  },
+  {
+    "id": "MK-23570",
+    "nome": "0240 - Nissan Yakissoba Pote - Glossy"
+  },
+  {
+    "id": "MK-23577",
+    "nome": "0240 - Nissan Yakissoba Pote - Matte"
+  },
+  {
+    "id": "MK-23584",
+    "nome": "0240 - Nissan Yakissoba Pote - Metallic"
+  },
+  {
+    "id": "MK-23592",
+    "nome": "0241 - Kids Flossers - Glossy"
+  },
+  {
+    "id": "MK-23597",
+    "nome": "0241 - Kids Flossers - Matte"
+  },
+  {
+    "id": "MK-23602",
+    "nome": "0241 - Kids Flossers - Metallic"
+  },
+  {
+    "id": "MK-23608",
+    "nome": "0242 - Sabonetes Pack - Glossy"
+  },
+  {
+    "id": "MK-23614",
+    "nome": "0242 - Sabonetes Pack - Matte"
+  },
+  {
+    "id": "MK-23620",
+    "nome": "0242 - Sabonetes Pack - Metallic"
+  },
+  {
+    "id": "MK-23627",
+    "nome": "0243 - Manteiga La Serenissima - Glossy"
+  },
+  {
+    "id": "MK-23637",
+    "nome": "0243 - Manteiga La Serenissima - Matte"
+  },
+  {
+    "id": "MK-23647",
+    "nome": "0243 - Manteiga La Serenissima - Metallic"
+  },
+  {
+    "id": "MK-23658",
+    "nome": "0244 - Sacos para Lixo - Glossy"
+  },
+  {
+    "id": "MK-23663",
+    "nome": "0244 - Sacos para Lixo - Matte"
+  },
+  {
+    "id": "MK-23668",
+    "nome": "0244 - Sacos para Lixo - Metallic"
+  },
+  {
+    "id": "MK-23674",
+    "nome": "0245 - Queijo de Bufala - Glossy"
+  },
+  {
+    "id": "MK-23679",
+    "nome": "0245 - Queijo de Bufala - Matte"
+  },
+  {
+    "id": "MK-23684",
+    "nome": "0245 - Queijo de Bufala - Metallic"
+  },
+  {
+    "id": "MK-23690",
+    "nome": "0246 - Sachê Molho - Glossy"
+  },
+  {
+    "id": "MK-23695",
+    "nome": "0246 - Sachê Molho - Matte"
+  },
+  {
+    "id": "MK-23700",
+    "nome": "0246 - Sachê Molho - Metallic"
+  },
+  {
+    "id": "MK-23706",
+    "nome": "0247 - Água de Coco - Glossy"
+  },
+  {
+    "id": "MK-23713",
+    "nome": "0247 - Água de Coco - Matte"
+  },
+  {
+    "id": "MK-23720",
+    "nome": "0247 - Água de Coco - Metallic"
+  },
+  {
+    "id": "MK-23728",
+    "nome": "0248 - Sachê Queijo de Bufala - Glossy"
+  },
+  {
+    "id": "MK-23733",
+    "nome": "0248 - Sachê Queijo de Bufala - Matte"
+  },
+  {
+    "id": "MK-23738",
+    "nome": "0248 - Sachê Queijo de Bufala - Metallic"
+  },
+  {
+    "id": "MK-23744",
+    "nome": "0249 - Pacote Sentado de Café - Glossy"
+  },
+  {
+    "id": "MK-23753",
+    "nome": "0249 - Pacote Sentado de Café - Matte"
+  },
+  {
+    "id": "MK-23762",
+    "nome": "0249 - Pacote Sentado de Café - Metallic"
+  },
+  {
+    "id": "MK-23772",
+    "nome": "0250 - Carne Moida Congelada - Glossy"
+  },
+  {
+    "id": "MK-23778",
+    "nome": "0250 - Carne Moida Congelada - Matte"
+  },
+  {
+    "id": "MK-23784",
+    "nome": "0250 - Carne Moida Congelada - Metallic"
+  },
+  {
+    "id": "MK-23791",
+    "nome": "0251 - Biscoito Wafer - Glossy"
+  },
+  {
+    "id": "MK-23796",
+    "nome": "0251 - Biscoito Wafer - Matte"
+  },
+  {
+    "id": "MK-23801",
+    "nome": "0251 - Biscoito Wafer - Metallic"
+  },
+  {
+    "id": "MK-23807",
+    "nome": "0252 - Sachê Suplemento Alimentar - Glossy"
+  },
+  {
+    "id": "MK-23812",
+    "nome": "0252 - Sachê Suplemento Alimentar - Matte"
+  },
+  {
+    "id": "MK-23817",
+    "nome": "0252 - Sachê Suplemento Alimentar - Metallic"
+  },
+  {
+    "id": "MK-23823",
+    "nome": "0253 - Bolacha Pit Stop - Glossy"
+  },
+  {
+    "id": "MK-23828",
+    "nome": "0253 - Bolacha Pit Stop - Matte"
+  },
+  {
+    "id": "MK-23833",
+    "nome": "0253 - Bolacha Pit Stop - Metallic"
+  },
+  {
+    "id": "MK-23840",
+    "nome": "0255 - Feijao Carioca - Glossy"
+  },
+  {
+    "id": "MK-23845",
+    "nome": "0255 - Feijao Carioca - Matte"
+  },
+  {
+    "id": "MK-23850",
+    "nome": "0255 - Feijao Carioca - Metallic"
+  },
+  {
+    "id": "MK-23856",
+    "nome": "0256 - Macarrao Divella - Horizontal - Glossy"
+  },
+  {
+    "id": "MK-23861",
+    "nome": "0256 - Macarrao Divella - Horizontal - Matte"
+  },
+  {
+    "id": "MK-23866",
+    "nome": "0256 - Macarrao Divella - Horizontal - Metallic"
+  },
+  {
+    "id": "MK-23871",
+    "nome": "0256 - Macarrao Divella - Vertical - Glossy"
+  },
+  {
+    "id": "MK-23876",
+    "nome": "0256 - Macarrao Divella - Vertical - Matte"
+  },
+  {
+    "id": "MK-23881",
+    "nome": "0256 - Macarrao Divella - Vertical - Metallic"
+  },
+  {
+    "id": "MK-23887",
+    "nome": "0257 - Nuggets Aurora - Glossy"
+  },
+  {
+    "id": "MK-23894",
+    "nome": "0257 - Nuggets Aurora - Matte"
+  },
+  {
+    "id": "MK-23901",
+    "nome": "0257 - Nuggets Aurora - Metallic"
+  },
+  {
+    "id": "MK-23909",
+    "nome": "0258 - Cerveja Estrella Galicia - 350ml Slim - Glossy"
+  },
+  {
+    "id": "MK-23912",
+    "nome": "0258 - Cerveja Estrella Galicia - 350ml Slim - Matte"
+  },
+  {
+    "id": "MK-23915",
+    "nome": "0258 - Cerveja Estrella Galicia - 350ml Slim - Metallic"
+  },
+  {
+    "id": "MK-23919",
+    "nome": "0259 - Lata refrigerante 350 ml - Glossy"
+  },
+  {
+    "id": "MK-23922",
+    "nome": "0259 - Lata refrigerante 350 ml - Matte"
+  },
+  {
+    "id": "MK-23925",
+    "nome": "0259 - Lata refrigerante 350 ml - Metallic"
+  },
+  {
+    "id": "MK-23929",
+    "nome": "0260 - Snack Zooreta - Mae Terra - Glossy"
+  },
+  {
+    "id": "MK-23938",
+    "nome": "0260 - Snack Zooreta - Mae Terra - Matte"
+  },
+  {
+    "id": "MK-23947",
+    "nome": "0260 - Snack Zooreta - Mae Terra - Metallic"
+  },
+  {
+    "id": "MK-23957",
+    "nome": "0261 - Espaguete Integral Orquidea - Glossy"
+  },
+  {
+    "id": "MK-23966",
+    "nome": "0261 - Espaguete Integral Orquidea - Matte"
+  },
+  {
+    "id": "MK-23975",
+    "nome": "0261 - Espaguete Integral Orquidea - Metallic"
+  },
+  {
+    "id": "MK-23985",
+    "nome": "0262 - Cafe - Glossy"
+  },
+  {
+    "id": "MK-23992",
+    "nome": "0262 - Cafe - Matte"
+  },
+  {
+    "id": "MK-23999",
+    "nome": "0262 - Cafe - Metallic"
+  },
+  {
+    "id": "MK-24007",
+    "nome": "Glossy - 0263 - Vacuo 2"
+  },
+  {
+    "id": "MK-24012",
+    "nome": "Matte - 0263 - Vacuo 2"
+  },
+  {
+    "id": "MK-24017",
+    "nome": "Metallic - 0263 - Vacuo 2"
+  },
+  {
+    "id": "MK-24023",
+    "nome": "Glossy - 0264 - Vacuo Canto Arredondado"
+  },
+  {
+    "id": "MK-24028",
+    "nome": "Matte - 0264 - Vacuo Canto Arredondado"
+  },
+  {
+    "id": "MK-24033",
+    "nome": "Metallic - 0264 - Vacuo Canto Arredondado"
+  },
+  {
+    "id": "MK-24039",
+    "nome": "0265 - PLASTICO BANDEJA - Glossy"
+  },
+  {
+    "id": "MK-24046",
+    "nome": "0265 - PLASTICO BANDEJA - Matte"
+  },
+  {
+    "id": "MK-24054",
+    "nome": "0266 - Caixa Papelao - Glossy"
+  },
+  {
+    "id": "MK-24060",
+    "nome": "0266 - Caixa Papelao - Matte"
+  },
+  {
+    "id": "MK-24066",
+    "nome": "0266 - Caixa Papelao - Papelao"
+  },
+  {
+    "id": "MK-24073",
+    "nome": "0267 - Caixa - Glossy"
+  },
+  {
+    "id": "MK-24079",
+    "nome": "0267 - Caixa - Matte"
+  },
+  {
+    "id": "MK-24085",
+    "nome": "0267 - Caixa - Papelao"
+  },
+  {
+    "id": "MK-24092",
+    "nome": "0268 - Leite Caixa - Glossy"
+  },
+  {
+    "id": "MK-24099",
+    "nome": "0268 - Leite Caixa - Matte"
+  },
+  {
+    "id": "MK-24107",
+    "nome": "0269 - Pacote - Glossy"
+  },
+  {
+    "id": "MK-24116",
+    "nome": "0269 - Pacote - Matte"
+  },
+  {
+    "id": "MK-24126",
+    "nome": "0270 - Pacote_9 - Glossy - ADAPTADO - lacre serrilhado"
+  },
+  {
+    "id": "MK-24131",
+    "nome": "0270 - Pacote_9 - Glossy"
+  },
+  {
+    "id": "MK-24136",
+    "nome": "0270 - Pacote_9 - Matte -ADAPTADO - lacre serrilhado"
+  },
+  {
+    "id": "MK-24141",
+    "nome": "0270 - Pacote_9 - Matte"
+  },
+  {
+    "id": "MK-24147",
+    "nome": "0271 - Pacote_12 - Glossy - lacre serrilhado"
+  },
+  {
+    "id": "MK-24152",
+    "nome": "0271 - Pacote_12 - Matte - lacre serrilhado"
+  },
+  {
+    "id": "MK-24157",
+    "nome": "0271 - Pacote_12 - Matte"
+  },
+  {
+    "id": "MK-24162",
+    "nome": "0271 - Pendurável - Glossy"
+  },
+  {
+    "id": "MK-24168",
+    "nome": "0272 - Sachê pendurável - Glossy"
+  },
+  {
+    "id": "MK-24173",
+    "nome": "0272 - Sachê pendurável - Matte"
+  },
+  {
+    "id": "MK-24179",
+    "nome": "0273 - Pacote cebolinha - Glossy"
+  },
+  {
+    "id": "MK-24184",
+    "nome": "0273 - Pacote cebolinha - Matte"
+  },
+  {
+    "id": "MK-24190",
+    "nome": "0274 - Sachê retangular - Glossy"
+  },
+  {
+    "id": "MK-24195",
+    "nome": "0274 - Sachê retangular - Matte"
+  },
+  {
+    "id": "MK-24201",
+    "nome": "0275 - Sachê Vale Fértil v1 - Glossy"
+  },
+  {
+    "id": "MK-24205",
+    "nome": "0275 - Sachê Vale Fértil v1 - Matte"
+  },
+  {
+    "id": "MK-24211",
+    "nome": "0276 - Sachê Vale Fértil v2.1 - Glossy"
+  },
+  {
+    "id": "MK-24215",
+    "nome": "0276 - Sachê Vale Fértil v2.1 - Matte"
+  },
+  {
+    "id": "MK-24220",
+    "nome": "0276 - Sachê Vale Fértil v2.2 - Glossy"
+  },
+  {
+    "id": "MK-24224",
+    "nome": "0276 - Sachê Vale Fértil v2.2 - Matte"
+  },
+  {
+    "id": "MK-24229",
+    "nome": "0277 - Pacote leite em pó - Glossy"
+  },
+  {
+    "id": "MK-24234",
+    "nome": "0277 - Pacote leite em pó - Matte"
+  },
+  {
+    "id": "MK-24240",
+    "nome": "0278 - Sabonete quadrado - Glossy"
+  },
+  {
+    "id": "MK-24245",
+    "nome": "0278 - Sabonete quadrado - Matte"
+  },
+  {
+    "id": "MK-24250",
+    "nome": "0279 - PÃO_3"
+  },
+  {
+    "id": "MK-24260",
+    "nome": "0281 - TRIGO - Glossy"
+  },
+  {
+    "id": "MK-24265",
+    "nome": "0281 - TRIGO - Matte"
+  },
+  {
+    "id": "MK-24271",
+    "nome": "Solicitação de mockup - fralda Wellness XG"
+  },
+  {
+    "id": "MK-24274",
+    "nome": "0027 - Farinha Bunge"
+  },
+  {
+    "id": "MK-24278",
+    "nome": "0028 - Pacote algodão"
+  },
+  {
+    "id": "MK-24281",
+    "nome": "0172 - Noz Moscada Moida - Glossy"
+  },
+  {
+    "id": "MK-24291",
+    "nome": "0172 - Noz Moscada Moida - Matte"
+  },
+  {
+    "id": "MK-24301",
+    "nome": "0172 - Noz Moscada Moida - Metallic"
+  },
+  {
+    "id": "MK-24313",
+    "nome": "0174 - Pacote sentado com alça - Glossy"
+  },
+  {
+    "id": "MK-24326",
+    "nome": "0174 - Pacote sentado com alça - Matte"
+  },
+  {
+    "id": "MK-24339",
+    "nome": "0174 - Pacote sentado com alça - Metallic"
+  },
+  {
+    "id": "MK-24354",
+    "nome": "0178 - Pacote DeCecco - Glossy"
+  },
+  {
+    "id": "MK-24366",
+    "nome": "0178 - Pacote DeCecco - Matte"
+  },
+  {
+    "id": "MK-24378",
+    "nome": "0178 - Pacote DeCecco - Metallic"
+  },
+  {
+    "id": "MK-24392",
+    "nome": "0201 - Pasta Di Semola - Glossy"
+  },
+  {
+    "id": "MK-24404",
+    "nome": "0201 - Pasta Di Semola - Matte"
+  },
+  {
+    "id": "MK-24416",
+    "nome": "0201 - Pasta Di Semola - Metallic"
+  },
+  {
+    "id": "MK-24429",
+    "nome": "0228 - Pacote sentado - Glossy"
+  },
+  {
+    "id": "MK-24437",
+    "nome": "0228 - Pacote sentado - Matte"
+  },
+  {
+    "id": "MK-24445",
+    "nome": "0228 - Pacote sentado - Metallic"
+  },
+  {
+    "id": "MK-24454",
+    "nome": "0229 - Pacote sentado largo - Glossy ADAPTADO"
+  },
+  {
+    "id": "MK-24457",
+    "nome": "0229 - Pacote sentado largo - Glossy"
+  },
+  {
+    "id": "MK-24465",
+    "nome": "0229 - Pacote sentado largo - Matte"
+  },
+  {
+    "id": "MK-24473",
+    "nome": "0229 - Pacote sentado largo - Metallic"
+  },
+  {
+    "id": "MK-24482",
+    "nome": "0230 - Pacote sentado estreito - Glossy"
+  },
+  {
+    "id": "MK-24490",
+    "nome": "0230 - Pacote sentado estreito - Matte"
+  },
+  {
+    "id": "MK-24498",
+    "nome": "0230 - Pacote sentado estreito - Metallic"
+  },
+  {
+    "id": "MK-24507",
+    "nome": "0231 - Biscoito tipo Manteguitas - Glossy"
+  },
+  {
+    "id": "MK-24515",
+    "nome": "0231 - Biscoito tipo Manteguitas - Matte"
+  },
+  {
+    "id": "MK-24523",
+    "nome": "0231 - Biscoito tipo Manteguitas - Metallic"
+  },
+  {
+    "id": "MK-24532",
+    "nome": "0234 - Rosca de Polvilho Doce Panine - Glossy"
+  },
+  {
+    "id": "MK-24540",
+    "nome": "0234 - Rosca de Polvilho Doce Panine - Matte"
+  },
+  {
+    "id": "MK-24548",
+    "nome": "0234 - Rosca de Polvilho Doce Panine - Metallic"
+  },
+  {
+    "id": "MK-24557",
+    "nome": "0235 - Merengue Caseiro - Panine - Glossy"
+  },
+  {
+    "id": "MK-24565",
+    "nome": "0235 - Merengue Caseiro - Panine - Matte"
+  },
+  {
+    "id": "MK-24573",
+    "nome": "0235 - Merengue Caseiro - Panine - Metallic"
+  },
+  {
+    "id": "MK-24582",
+    "nome": "0257 - Nuggets Aurora - Glossy"
+  },
+  {
+    "id": "MK-24589",
+    "nome": "0257 - Nuggets Aurora - Matte"
+  },
+  {
+    "id": "MK-24596",
+    "nome": "0257 - Nuggets Aurora - Metallic"
+  },
+  {
+    "id": "MK-24604",
+    "nome": "0273 - Pacote cebolinha - Glossy"
+  },
+  {
+    "id": "MK-24609",
+    "nome": "0273 - Pacote cebolinha - Matte"
+  },
+  {
+    "id": "MK-24615",
+    "nome": "0277 - Pacote leite em pó - Glossy"
+  },
+  {
+    "id": "MK-24621",
+    "nome": "0277 - Pacote leite em pó - Matte"
+  },
+  {
+    "id": "MK-24627",
+    "nome": "0281 - TRIGO - Glossy"
+  },
+  {
+    "id": "MK-24632",
+    "nome": "0281 - TRIGO - Matte"
+  },
+  {
+    "id": "MK-24638",
+    "nome": "0002 - Snack Blend4Web"
+  },
+  {
+    "id": "MK-24643",
+    "nome": "0003 - Snack Solda"
+  },
+  {
+    "id": "MK-24648",
+    "nome": "0004 - Snack Solda Vertical"
+  },
+  {
+    "id": "MK-24653",
+    "nome": "0010 - Pacote fino"
+  },
+  {
+    "id": "MK-24658",
+    "nome": "0023A - Goiabada - Back_enrugado.tif"
+  },
+  {
+    "id": "MK-24659",
+    "nome": "0023A - Goiabada - Front_enrugado.tif"
+  },
+  {
+    "id": "MK-24660",
+    "nome": "0023A - Goiabada - Left Perspective_enrugado.tif"
+  },
+  {
+    "id": "MK-24661",
+    "nome": "0023A - Goiabada - Left_enrugado.tif"
+  },
+  {
+    "id": "MK-24662",
+    "nome": "0023A - Goiabada - Right Perspective_enrugado.tif"
+  },
+  {
+    "id": "MK-24663",
+    "nome": "0023A - Goiabada - Right_enrugado.tif"
+  },
+  {
+    "id": "MK-24664",
+    "nome": "Versão 2 (textura)"
+  },
+  {
+    "id": "MK-24673",
+    "nome": "0037 - Preservativo"
+  },
+  {
+    "id": "MK-24681",
+    "nome": "0062 - Pre - Mescla Pão Francês 20000.tif"
+  },
+  {
+    "id": "MK-24682",
+    "nome": "0062 - Pre - Mescla Pão Francês 20001.tif"
+  },
+  {
+    "id": "MK-24683",
+    "nome": "0062 - Pre - Mescla Pão Francês 20002.tif"
+  },
+  {
+    "id": "MK-24684",
+    "nome": "0062 - Pre - Mescla Pão Francês 20003.tif"
+  },
+  {
+    "id": "MK-24685",
+    "nome": "0062 - Pre - Mescla Pão Francês 20004.tif"
+  },
+  {
+    "id": "MK-24686",
+    "nome": "0062 - Pre - Mescla Pão Francês 20005.tif"
+  },
+  {
+    "id": "MK-24687",
+    "nome": "Versão 2 (textura)"
+  },
+  {
+    "id": "MK-24694",
+    "nome": "0063 - Pré - Mescla Pão Doce"
+  },
+  {
+    "id": "MK-24698",
+    "nome": "0066 - Saco de Farinha de Papelão"
+  },
+  {
+    "id": "MK-24710",
+    "nome": "0130 - Massa de Soja Laterais Retas"
+  },
+  {
+    "id": "MK-24717",
+    "nome": "0130 - Massa de Soja"
+  },
+  {
+    "id": "MK-24722",
+    "nome": "0154 - Pacote de Orégano"
+  },
+  {
+    "id": "MK-24776",
+    "nome": "0155 - Pano Multiuso - Glossy"
+  },
+  {
+    "id": "MK-24793",
+    "nome": "0155 - Pano Multiuso - Matte"
+  },
+  {
+    "id": "MK-24810",
+    "nome": "0155 - Pano Multiuso - Metallic"
+  },
+  {
+    "id": "MK-24829",
+    "nome": "0159 - Bisnaga de Doce de Leite - Glossy"
+  },
+  {
+    "id": "MK-24839",
+    "nome": "0159 - Bisnaga de Doce de Leite - Matte"
+  },
+  {
+    "id": "MK-24849",
+    "nome": "0159 - Bisnaga de Doce de Leite - Metallic"
+  },
+  {
+    "id": "MK-24861",
+    "nome": "0160 - Sacos Plasticos - Glossy"
+  },
+  {
+    "id": "MK-24871",
+    "nome": "0160 - Sacos Plasticos - Matte"
+  },
+  {
+    "id": "MK-24881",
+    "nome": "0160 - Sacos Plasticos - Metallic"
+  },
+  {
+    "id": "MK-24893",
+    "nome": "0167 - Pacote cenoura (páscoa) - Glossy"
+  },
+  {
+    "id": "MK-24899",
+    "nome": "0167 - Pacote cenoura (páscoa) - Matte"
+  },
+  {
+    "id": "MK-24905",
+    "nome": "0167 - Pacote cenoura (páscoa) - Metallic"
+  },
+  {
+    "id": "MK-24912",
+    "nome": "0182 - Discos de Algodao - Glossy"
+  },
+  {
+    "id": "MK-24922",
+    "nome": "0182 - Discos de Algodao - Matte"
+  },
+  {
+    "id": "MK-24932",
+    "nome": "0182 - Discos de Algodao - Metallic"
+  },
+  {
+    "id": "MK-24943",
+    "nome": "0188 - Filtro para Ar Condicionado - Glossy"
+  },
+  {
+    "id": "MK-24951",
+    "nome": "0188 - Filtro para Ar Condicionado - Matte"
+  },
+  {
+    "id": "MK-24959",
+    "nome": "0188 - Filtro para Ar Condicionado - Metallic"
+  },
+  {
+    "id": "MK-24968",
+    "nome": "0189 - Pack de Preservativos - Glossy"
+  },
+  {
+    "id": "MK-24976",
+    "nome": "0189 - Pack de Preservativos - Matte"
+  },
+  {
+    "id": "MK-24984",
+    "nome": "0189 - Pack de Preservativos - Metallic"
+  },
+  {
+    "id": "MK-24993",
+    "nome": "0190 - Rolo de Pano Multiuso - Glossy"
+  },
+  {
+    "id": "MK-25003",
+    "nome": "0190 - Rolo de Pano Multiuso - Matte"
+  },
+  {
+    "id": "MK-25013",
+    "nome": "0190 - Rolo de Pano Multiuso - Metallic"
+  },
+  {
+    "id": "MK-25024",
+    "nome": "0209 - Folha de Aluminio - Glossy"
+  },
+  {
+    "id": "MK-25032",
+    "nome": "0209 - Folha de Aluminio - Matte"
+  },
+  {
+    "id": "MK-25040",
+    "nome": "0209 - Folha de Aluminio - Metallic"
+  },
+  {
+    "id": "MK-25049",
+    "nome": "0212 - Pacote picolé - Glossy"
+  },
+  {
+    "id": "MK-25059",
+    "nome": "0212 - Pacote picolé - Matte"
+  },
+  {
+    "id": "MK-25069",
+    "nome": "0212 - Pacote picolé - Metallic"
+  },
+  {
+    "id": "MK-25081",
+    "nome": "0213 - Pacote com lacre superior - Glossy"
+  },
+  {
+    "id": "MK-25090",
+    "nome": "0213 - Pacote com lacre superior - Matte"
+  },
+  {
+    "id": "MK-25099",
+    "nome": "0213 - Pacote com lacre superior - Metallic"
+  },
+  {
+    "id": "MK-25110",
+    "nome": "0214 - Pacote estreito com lacre superior - Glossy"
+  },
+  {
+    "id": "MK-25119",
+    "nome": "0214 - Pacote estreito com lacre superior - Matte"
+  },
+  {
+    "id": "MK-25129",
+    "nome": "0214 - Pacote estreito com lacre superior - Metallic"
+  },
+  {
+    "id": "MK-25140",
+    "nome": "0216 - Snack Bag Jasmine Cookies Integrais - Glossy"
+  },
+  {
+    "id": "MK-25150",
+    "nome": "0216 - Snack Bag Jasmine Cookies Integrais - Matte"
+  },
+  {
+    "id": "MK-25160",
+    "nome": "0216 - Snack Bag Jasmine Cookies Integrais - Metallic"
+  },
+  {
+    "id": "MK-25171",
+    "nome": "0217 - Snack Bag Jasmine Mini Cookies - Glossy"
+  },
+  {
+    "id": "MK-25181",
+    "nome": "0217 - Snack Bag Jasmine Mini Cookies - Matte"
+  },
+  {
+    "id": "MK-25191",
+    "nome": "0217 - Snack Bag Jasmine Mini Cookies - Metallic"
+  },
+  {
+    "id": "MK-25202",
+    "nome": "0220 - Pack Rolo Massa para Pastel - Glossy"
+  },
+  {
+    "id": "MK-25210",
+    "nome": "0220 - Pack Rolo Massa para Pastel - Matte"
+  },
+  {
+    "id": "MK-25218",
+    "nome": "0220 - Pack Rolo Massa para Pastel - Metallic"
+  },
+  {
+    "id": "MK-25227",
+    "nome": "0224 - Pacote de Salmao - Glossy"
+  },
+  {
+    "id": "MK-25233",
+    "nome": "0224 - Pacote de Salmao - Matte"
+  },
+  {
+    "id": "MK-25239",
+    "nome": "0224 - Pacote de Salmao - Metallic"
+  },
+  {
+    "id": "MK-25246",
+    "nome": "0241 - Kids Flossers - Glossy"
+  },
+  {
+    "id": "MK-25251",
+    "nome": "0241 - Kids Flossers - Matte"
+  },
+  {
+    "id": "MK-25256",
+    "nome": "0241 - Kids Flossers - Metallic"
+  },
+  {
+    "id": "MK-25262",
+    "nome": "0244 - Sacos para Lixo - Glossy"
+  },
+  {
+    "id": "MK-25267",
+    "nome": "0244 - Sacos para Lixo - Matte"
+  },
+  {
+    "id": "MK-25272",
+    "nome": "0244 - Sacos para Lixo - Metallic"
+  },
+  {
+    "id": "MK-25278",
+    "nome": "0245 - Queijo de Bufala - Glossy"
+  },
+  {
+    "id": "MK-25283",
+    "nome": "0245 - Queijo de Bufala - Matte"
+  },
+  {
+    "id": "MK-25288",
+    "nome": "0245 - Queijo de Bufala - Metallic"
+  },
+  {
+    "id": "MK-25294",
+    "nome": "0255 - Feijão - Glossy"
+  },
+  {
+    "id": "MK-25299",
+    "nome": "0255 - Feijão - Matte"
+  },
+  {
+    "id": "MK-25304",
+    "nome": "0255 - Feijão - Metallic"
+  },
+  {
+    "id": "MK-25310",
+    "nome": "0256 - Macarrao - Horizontal - Glossy"
+  },
+  {
+    "id": "MK-25315",
+    "nome": "0256 - Macarrao - Horizontal - Matte"
+  },
+  {
+    "id": "MK-25320",
+    "nome": "0256 - Macarrao - Horizontal - Metallic"
+  },
+  {
+    "id": "MK-25325",
+    "nome": "0256 - Macarrao - Vertical - Glossy"
+  },
+  {
+    "id": "MK-25330",
+    "nome": "0256 - Macarrao - Vertical - Matte"
+  },
+  {
+    "id": "MK-25335",
+    "nome": "0256 - Macarrao - Vertical - Metallic"
+  },
+  {
+    "id": "MK-25341",
+    "nome": "0260 - Snack Zooreta - Glossy"
+  },
+  {
+    "id": "MK-25350",
+    "nome": "0260 - Snack Zooreta - Matte"
+  },
+  {
+    "id": "MK-25359",
+    "nome": "0260 - Snack Zooreta - Metallic"
+  },
+  {
+    "id": "MK-25369",
+    "nome": "0261 - Espaguete  - Matte"
+  },
+  {
+    "id": "MK-25378",
+    "nome": "0261 - Espaguete - Glossy"
+  },
+  {
+    "id": "MK-25387",
+    "nome": "0261 - Espaguete - Metallic"
+  },
+  {
+    "id": "MK-25397",
+    "nome": "0269 - Pacote quadrado - Glossy"
+  },
+  {
+    "id": "MK-25406",
+    "nome": "0269 - Pacote quadrado - Matte"
+  },
+  {
+    "id": "MK-25416",
+    "nome": "0270 - Pacote estreito - Glossy ADAPTADO lacre liso"
+  },
+  {
+    "id": "MK-25420",
+    "nome": "0270 - Pacote estreito - Glossy ADAPTADO serrilhado"
+  },
+  {
+    "id": "MK-25425",
+    "nome": "0270 - Pacote estreito - Glossy"
+  },
+  {
+    "id": "MK-25433",
+    "nome": "0270 - Pacote estreito - Matte ADAPTADO serrilhado"
+  },
+  {
+    "id": "MK-25438",
+    "nome": "0270 - Pacote estreito - Matte"
+  },
+  {
+    "id": "MK-25444",
+    "nome": "0271 - Pendurável - Glossy ADAPTADO serrilhado"
+  },
+  {
+    "id": "MK-25449",
+    "nome": "0271 - Pendurável - Glossy"
+  },
+  {
+    "id": "MK-25454",
+    "nome": "0271 - Pendurável - Matte ADAPTADO serrilhado"
+  },
+  {
+    "id": "MK-25459",
+    "nome": "0271 - Pendurável - Matte"
+  },
+  {
+    "id": "MK-25465",
+    "nome": "0272 - Sachê pendurável - Glossy"
+  },
+  {
+    "id": "MK-25470",
+    "nome": "0272 - Sachê pendurável - Matte"
+  },
+  {
+    "id": "MK-25476",
+    "nome": "0005 - Papel Higiênico (4 rolos)"
+  },
+  {
+    "id": "MK-25484",
+    "nome": "0016 - Papel Higiênico 8 Rolos"
+  },
+  {
+    "id": "MK-25494",
+    "nome": "0024 - Guardanapo"
+  },
+  {
+    "id": "MK-25499",
+    "nome": "0108 - Papel Higiênico 16 Rolos"
+  },
+  {
+    "id": "MK-25515",
+    "nome": "0127 - Papel Higienico 8 Rolos 1 camada v2 - Glossy"
+  },
+  {
+    "id": "MK-25521",
+    "nome": "0127 - Papel Higienico 8 Rolos 1 camada v2 - Matte"
+  },
+  {
+    "id": "MK-25527",
+    "nome": "0127 - Papel Higienico 8 Rolos 1 camada"
+  },
+  {
+    "id": "MK-25535",
+    "nome": "0158 - Papel Toalha 1 - Glossy"
+  },
+  {
+    "id": "MK-25546",
+    "nome": "0158 - Papel Toalha 1 - Matte"
+  },
+  {
+    "id": "MK-25557",
+    "nome": "0158 - Papel Toalha 1 - Metallic"
+  },
+  {
+    "id": "MK-25570",
+    "nome": "0158 - Papel Toalha 2 - Glossy"
+  },
+  {
+    "id": "MK-25578",
+    "nome": "0158 - Papel Toalha 2 - Matte"
+  },
+  {
+    "id": "MK-25586",
+    "nome": "0158 - Papel Toalha 2 - Metallic"
+  },
+  {
+    "id": "MK-25596",
+    "nome": "0165 - 16 rolos Floral 000 ADAPTADA.tif"
+  },
+  {
+    "id": "MK-25597",
+    "nome": "0165 - Papel Higienico 12 Rolos - Glossy"
+  },
+  {
+    "id": "MK-25605",
+    "nome": "0165 - Papel Higienico 12 Rolos - Matte"
+  },
+  {
+    "id": "MK-25613",
+    "nome": "0165 - Papel Higienico 12 Rolos - Metallic"
+  },
+  {
+    "id": "MK-25621",
+    "nome": "0165 - Papel Higienico 12 Rolos Com Alca - Glossy"
+  },
+  {
+    "id": "MK-25628",
+    "nome": "0165 - Papel Higienico 12 Rolos Com Alca - Matte"
+  },
+  {
+    "id": "MK-25635",
+    "nome": "0165 - Papel Higienico 12 Rolos Com Alca - Metallic"
+  },
+  {
+    "id": "MK-25642",
+    "nome": "0165 - Papel Higienico ADAPTADA 30 rolos Doble"
+  },
+  {
+    "id": "MK-25647",
+    "nome": "_0165 -  24 rolos La Vie Blanc ADAPTADA.tif"
+  },
+  {
+    "id": "MK-25648",
+    "nome": "_0165 - 16 rolos Floral ADAPTADA.tif"
+  },
+  {
+    "id": "MK-25649",
+    "nome": "_0165 - 24 rolos La Vie Blanc 000 ADAPTADA.tif"
+  },
+  {
+    "id": "MK-25651",
+    "nome": "0236 - Papel Higienico Fofinho 8 Rolos - ADAPTADO Scott"
+  },
+  {
+    "id": "MK-25655",
+    "nome": "0236 - Papel Higienico Fofinho 8 Rolos - Glossy"
+  },
+  {
+    "id": "MK-25662",
+    "nome": "0236 - Papel Higienico Fofinho 8 Rolos - Matte"
+  },
+  {
+    "id": "MK-25669",
+    "nome": "0236 - Papel Higienico Fofinho 8 Rolos - Metallic"
+  },
+  {
+    "id": "MK-25676",
+    "nome": "0236 - Papel Higienico Fofinho 8 Rolos v2 - Glossy"
+  },
+  {
+    "id": "MK-25682",
+    "nome": "0236 - Papel Higienico Fofinho 8 Rolos v2 - Matte"
+  },
+  {
+    "id": "MK-25689",
+    "nome": "0237 - Papel Higienico 24 Rolos ADAPTADA Neve"
+  },
+  {
+    "id": "MK-25693",
+    "nome": "0237 - Papel Higienico Fofinho 24 Rolos - Glossy v2"
+  },
+  {
+    "id": "MK-25699",
+    "nome": "0237 - Papel Higienico Fofinho 24 Rolos - Glossy"
+  },
+  {
+    "id": "MK-25706",
+    "nome": "0237 - Papel Higienico Fofinho 24 Rolos - Matte v2"
+  },
+  {
+    "id": "MK-25712",
+    "nome": "0237 - Papel Higienico Fofinho 24 Rolos - Matte"
+  },
+  {
+    "id": "MK-25719",
+    "nome": "0237 - Papel Higienico Fofinho 24 Rolos - Metallic"
+  },
+  {
+    "id": "MK-25727",
+    "nome": "0238 - Papel Higienico - 32 Rolos ADAPTADA Duetto"
+  },
+  {
+    "id": "MK-25731",
+    "nome": "0238 - Papel Higienico Fofinho 32 Rolos - Glossy"
+  },
+  {
+    "id": "MK-25738",
+    "nome": "0238 - Papel Higienico Fofinho 32 Rolos - Matte"
+  },
+  {
+    "id": "MK-25745",
+    "nome": "0238 - Papel Higienico Fofinho 32 Rolos - Metallic"
+  },
+  {
+    "id": "MK-25752",
+    "nome": "0238 - Papel Higienico Fofinho 32 Rolos v2"
+  },
+  {
+    "id": "MK-25766",
+    "nome": "0239 - Papel Higienico Fofinho 40 Rolos - 2"
+  },
+  {
+    "id": "MK-25779",
+    "nome": "0239 - Papel Higienico Fofinho 40 Rolos - Glossy"
+  },
+  {
+    "id": "MK-25785",
+    "nome": "0239 - Papel Higienico Fofinho 40 Rolos - Matte"
+  },
+  {
+    "id": "MK-25791",
+    "nome": "0239 - Papel Higienico Fofinho 40 Rolos - Metallic"
+  },
+  {
+    "id": "MK-25798",
+    "nome": "032 - Papel higiênico Paloma 16 rolos"
+  },
+  {
+    "id": "MK-25802",
+    "nome": "032 - Papel higiênico Paloma 8 rolos"
+  },
+  {
+    "id": "MK-25807",
+    "nome": "0019 - Pão de forma"
+  },
+  {
+    "id": "MK-25812",
+    "nome": "0146 - Panetone - Glossy"
+  },
+  {
+    "id": "MK-25818",
+    "nome": "0146 - Panetone - Matte"
+  },
+  {
+    "id": "MK-25824",
+    "nome": "0146 - Panetone - Metallic"
+  },
+  {
+    "id": "MK-25831",
+    "nome": "0186 - Saco de Pao de Forma - Glossy"
+  },
+  {
+    "id": "MK-25838",
+    "nome": "0186 - Saco de Pao de Forma - Matte"
+  },
+  {
+    "id": "MK-25845",
+    "nome": "0186 - Saco de Pao de Forma - Metallic"
+  },
+  {
+    "id": "MK-25853",
+    "nome": "0187 - Pão de hambúrguer - Glossy"
+  },
+  {
+    "id": "MK-25862",
+    "nome": "0187 - Pão de hambúrguer - Matte"
+  },
+  {
+    "id": "MK-25871",
+    "nome": "0187 - Pão de hambúrguer - Metallic"
+  },
+  {
+    "id": "MK-25880",
+    "nome": "Lacre.tif"
+  },
+  {
+    "id": "MK-25882",
+    "nome": "0022 - Queijo a vácuo"
+  },
+  {
+    "id": "MK-25892",
+    "nome": "0050 - Peça de presunto"
+  },
+  {
+    "id": "MK-25898",
+    "nome": "0053 - Queijo gorgonzola - inteiro"
+  },
+  {
+    "id": "MK-25902",
+    "nome": "0054 - Queijo gorgonzola - fracionado"
+  },
+  {
+    "id": "MK-25908",
+    "nome": "0055 - Queijo Casa Negra Tipo Grana - Fracionado"
+  },
+  {
+    "id": "MK-25912",
+    "nome": "0056 - Queijo Casca Negra tipo Parmesão - Fracionado"
+  },
+  {
+    "id": "MK-25916",
+    "nome": "0057 - Queijo Casca Negra tipo Parmesão - Inteiro"
+  },
+  {
+    "id": "MK-25920",
+    "nome": "0059 - Queijo Caccio Cavallo Fresco"
+  },
+  {
+    "id": "MK-25931",
+    "nome": "0060 - Queijo Prima Donna Fino"
+  },
+  {
+    "id": "MK-25939",
+    "nome": "0072 - Mistura de Queijos"
+  },
+  {
+    "id": "MK-25943",
+    "nome": "0100 - Queijo em Pedaços Tirol"
+  },
+  {
+    "id": "MK-25947",
+    "nome": "0110 - Embalagem de Salame"
+  },
+  {
+    "id": "MK-25954",
+    "nome": "0124 - Mortadela Seara"
+  },
+  {
+    "id": "MK-25957",
+    "nome": "0143 - Pacote de Queijo - Glossy - 0000"
+  },
+  {
+    "id": "MK-25963",
+    "nome": "0143 - Pacote de Queijo - Matte - 0000"
+  },
+  {
+    "id": "MK-25969",
+    "nome": "0143 - Pacote de Queijo - Metallic - 0000"
+  },
+  {
+    "id": "MK-25976",
+    "nome": "0163 - Queijo Minas - Crioulo - Glossy"
+  },
+  {
+    "id": "MK-25983",
+    "nome": "0163 - Queijo Minas - Crioulo - Matte"
+  },
+  {
+    "id": "MK-25990",
+    "nome": "0163 - Queijo Minas - Crioulo - Metallic"
+  },
+  {
+    "id": "MK-25999",
+    "nome": "0211 - Queijo Coalho - Glossy"
+  },
+  {
+    "id": "MK-26005",
+    "nome": "0211 - Queijo Coalho - Matte"
+  },
+  {
+    "id": "MK-26011",
+    "nome": "0211 - Queijo Coalho - Metallic"
+  },
+  {
+    "id": "MK-26019",
+    "nome": "0223 - Coxinha da Asa - Aurora - Glossy"
+  },
+  {
+    "id": "MK-26026",
+    "nome": "0223 - Coxinha da Asa - Aurora - Matte"
+  },
+  {
+    "id": "MK-26033",
+    "nome": "0223 - Coxinha da Asa - Aurora - Metallic"
+  },
+  {
+    "id": "MK-26042",
+    "nome": "0232 - Queijo Prata - Scala - Glossy"
+  },
+  {
+    "id": "MK-26049",
+    "nome": "0232 - Queijo Prata - Scala - Matte"
+  },
+  {
+    "id": "MK-26056",
+    "nome": "0232 - Queijo Prata - Scala - Metallic"
+  },
+  {
+    "id": "MK-26064",
+    "nome": "0233 - Queijo de Coalho em Barra - Glossy"
+  },
+  {
+    "id": "MK-26071",
+    "nome": "0233 - Queijo de Coalho em Barra - Matte"
+  },
+  {
+    "id": "MK-26078",
+    "nome": "0233 - Queijo de Coalho em Barra - Metallic"
+  },
+  {
+    "id": "MK-26086",
+    "nome": "0250 - Carne Moida Congelada - Glossy"
+  },
+  {
+    "id": "MK-26092",
+    "nome": "0250 - Carne Moida Congelada - Matte"
+  },
+  {
+    "id": "MK-26098",
+    "nome": "0250 - Carne Moida Congelada - Metallic"
+  },
+  {
+    "id": "MK-26106",
+    "nome": "0009 - Sabonete - Glossy"
+  },
+  {
+    "id": "MK-26112",
+    "nome": "0009 - Sabonete - Matte"
+  },
+  {
+    "id": "MK-26119",
+    "nome": "0242 - Sabonetes Pack - Glossy"
+  },
+  {
+    "id": "MK-26125",
+    "nome": "0242 - Sabonetes Pack - Matte"
+  },
+  {
+    "id": "MK-26131",
+    "nome": "0242 - Sabonetes Pack - Metallic"
+  },
+  {
+    "id": "MK-26138",
+    "nome": "0278 - Sabonete quadrado - Glossy"
+  },
+  {
+    "id": "MK-26143",
+    "nome": "0278 - Sabonete quadrado - Matte"
+  },
+  {
+    "id": "MK-26149",
+    "nome": "0018 - Bisnaga Catupiry"
+  },
+  {
+    "id": "MK-26158",
+    "nome": "0034 - Sachê pequeno de Maionese"
+  },
+  {
+    "id": "MK-26165",
+    "nome": "0035 - Bisnaga de Maionese"
+  },
+  {
+    "id": "MK-26172",
+    "nome": "0039 - Sachê Vale Fértil"
+  },
+  {
+    "id": "MK-26176",
+    "nome": "0086 - Sachê com textura"
+  },
+  {
+    "id": "MK-26181",
+    "nome": "0092 - Sachê Doce de Leite"
+  },
+  {
+    "id": "MK-26185",
+    "nome": "0104 - Bisnaga triangular"
+  },
+  {
+    "id": "MK-26193",
+    "nome": "0147 - Sache de Maionese - Glossy"
+  },
+  {
+    "id": "MK-26200",
+    "nome": "0147 - Sache de Maionese - Matte"
+  },
+  {
+    "id": "MK-26207",
+    "nome": "0147 - Sache de Maionese - Metallic"
+  },
+  {
+    "id": "MK-26215",
+    "nome": "0148 - Sache de Goiabada - Glossy"
+  },
+  {
+    "id": "MK-26222",
+    "nome": "0148 - Sache de Goiabada - Matte"
+  },
+  {
+    "id": "MK-26229",
+    "nome": "0148 - Sache de Goiabada - Metallic"
+  },
+  {
+    "id": "MK-26237",
+    "nome": "0162 - Polpa de Graviola - Glossy"
+  },
+  {
+    "id": "MK-26243",
+    "nome": "0162 - Polpa de Graviola - Matte"
+  },
+  {
+    "id": "MK-26249",
+    "nome": "0162 - Polpa de Graviola - Metallic"
+  },
+  {
+    "id": "MK-26257",
+    "nome": "0175 - Sache - Salsinha e Cebolinha - Glossy"
+  },
+  {
+    "id": "MK-26268",
+    "nome": "0175 - Sache - Salsinha e Cebolinha - Matte"
+  },
+  {
+    "id": "MK-26279",
+    "nome": "0175 - Sache - Salsinha e Cebolinha - Metallic"
+  },
+  {
+    "id": "MK-26292",
+    "nome": "0181 - Sache de Feijao Carioca Fugini - Glossy - ADAPTADA lacre angular.tif"
+  },
+  {
+    "id": "MK-26293",
+    "nome": "0181 - Sache de Feijao Carioca Fugini - Glossy - ADAPTADA lacre.tif"
+  },
+  {
+    "id": "MK-26294",
+    "nome": "0181 - Sachê - Glossy"
+  },
+  {
+    "id": "MK-26307",
+    "nome": "0181 - Sachê - Matte"
+  },
+  {
+    "id": "MK-26320",
+    "nome": "0181 - Sachê - Metallic"
+  },
+  {
+    "id": "MK-26334",
+    "nome": "0183 - Sache Aruba Kids - Glossy"
+  },
+  {
+    "id": "MK-26343",
+    "nome": "0183 - Sache Aruba Kids - Matte"
+  },
+  {
+    "id": "MK-26352",
+    "nome": "0183 - Sache Aruba Kids - Metallic"
+  },
+  {
+    "id": "MK-26362",
+    "nome": "0205 - Sache Maionese Hemmer 400g - Glossy"
+  },
+  {
+    "id": "MK-26370",
+    "nome": "0205 - Sache Maionese Hemmer 400g - Matte"
+  },
+  {
+    "id": "MK-26378",
+    "nome": "0205 - Sache Maionese Hemmer 400g - Metallic"
+  },
+  {
+    "id": "MK-26387",
+    "nome": "0206 - Sache Maionese Hemmer 1kg - Glossy"
+  },
+  {
+    "id": "MK-26395",
+    "nome": "0206 - Sache Maionese Hemmer 1kg - Matte"
+  },
+  {
+    "id": "MK-26403",
+    "nome": "0206 - Sache Maionese Hemmer 1kg - Metallic"
+  },
+  {
+    "id": "MK-26412",
+    "nome": "0246 - Sachê Molho - Glossy"
+  },
+  {
+    "id": "MK-26417",
+    "nome": "0246 - Sachê Molho - Matte"
+  },
+  {
+    "id": "MK-26422",
+    "nome": "0246 - Sachê Molho - Metallic"
+  },
+  {
+    "id": "MK-26427",
+    "nome": "0246 - Sachê Molho v.2"
+  },
+  {
+    "id": "MK-26432",
+    "nome": "0248 - Sachê Queijo de Bufala - Glossy"
+  },
+  {
+    "id": "MK-26437",
+    "nome": "0248 - Sachê Queijo de Bufala - Matte"
+  },
+  {
+    "id": "MK-26442",
+    "nome": "0248 - Sachê Queijo de Bufala - Metallic"
+  },
+  {
+    "id": "MK-26448",
+    "nome": "0252 - Sachê Suplemento Alimentar - Glossy"
+  },
+  {
+    "id": "MK-26453",
+    "nome": "0252 - Sachê Suplemento Alimentar - Matte"
+  },
+  {
+    "id": "MK-26458",
+    "nome": "0252 - Sachê Suplemento Alimentar - Metallic"
+  },
+  {
+    "id": "MK-26463",
+    "nome": "0274 - Sachê retangular - Frios com Volume ADAPTADA"
+  },
+  {
+    "id": "MK-26468",
+    "nome": "0274 - Sachê retangular - Glossy"
+  },
+  {
+    "id": "MK-26473",
+    "nome": "0274 - Sachê retangular - Matte"
+  },
+  {
+    "id": "MK-26479",
+    "nome": "0275 - Sachê Vale Fértil v1 - Glossy"
+  },
+  {
+    "id": "MK-26483",
+    "nome": "0275 - Sachê Vale Fértil v1 - Matte"
+  },
+  {
+    "id": "MK-26489",
+    "nome": "0276 - Sachê Vale Fértil v2.1 - Glossy"
+  },
+  {
+    "id": "MK-26493",
+    "nome": "0276 - Sachê Vale Fértil v2.1 - Matte"
+  },
+  {
+    "id": "MK-26498",
+    "nome": "0276 - Sachê Vale Fértil v2.2 - Glossy"
+  },
+  {
+    "id": "MK-26502",
+    "nome": "0276 - Sachê Vale Fértil v2.2 - Matte"
+  },
+  {
+    "id": "MK-26518",
+    "nome": "m1"
+  },
+  {
+    "id": "MK-26520",
+    "nome": "abc"
+  },
+  {
+    "id": "MK-26526",
+    "nome": "0281 - Sachê Granado"
+  },
+  {
+    "id": "MK-26530",
+    "nome": "0282 - Sachê com Tampa"
+  },
+  {
+    "id": "MK-26535",
+    "nome": "0283 - Pack de 12 latas"
+  }
+]
