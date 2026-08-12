@@ -871,7 +871,10 @@ const server = http.createServer((req, res) => {
     // Retorna { ok, movidos, avisos, erros } com detalhes completos.
     if (req.method === 'POST' && req.url === '/api/verificar-os-none') {
         try {
-            const resultado = qaSyndi.verificarEOrganizarOsNone(qaSyndi.AGCONFERENCIA);
+            const resultado = await qaSyndi.verificarEOrganizarOsNone(qaSyndi.AGCONFERENCIA, undefined, {
+                redmine: redmine,
+                basePath: BASE_PATH
+            });
             enviarJson(res, 200, resultado);
         } catch (err) {
             enviarJson(res, 500, { ok: false, error: err.message });
