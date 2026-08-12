@@ -117,6 +117,63 @@
     gap: 6px;
 }
 
+.qa-os-titulo-destaque {
+    background-color: rgba(25, 118, 210, 0.08);
+    padding: 12px 10px;
+    border-left: 4px solid var(--primary);
+    border-radius: 4px;
+}
+
+.qa-os-nome-grande {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.qa-os-contador {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.qa-os-none-items {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.qa-os-none-items::-webkit-scrollbar {
+    width: 6px;
+}
+
+.qa-os-none-items::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.qa-os-none-items::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.qa-palco-os {
+    display: inline-block;
+    background-color: rgba(25, 118, 210, 0.15);
+    color: var(--primary);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin: 0 6px;
+}
+
+.qa-palco-fotografo {
+    display: inline-block;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-left: 4px;
+}
+
 .qa-os-enviar-btn {
     text-transform: none;
     letter-spacing: normal;

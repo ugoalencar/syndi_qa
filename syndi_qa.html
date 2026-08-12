@@ -143,12 +143,13 @@
                 <div v-else-if="fila.length === 0" class="qa-vazio">Nenhum GTIN aguardando conferência.</div>
                 <div v-else>
                     <div v-if="mostrarOsNone && (carregandoOsNone || osNone.length > 0)" class="qa-os-grupo">
-                        <div class="qa-os-titulo" @click="osExpandida = osExpandida === 'OS_NONE' ? null : 'OS_NONE'" style="cursor: pointer;">
+                        <div class="qa-os-titulo qa-os-titulo-destaque" @click="osExpandida = osExpandida === 'OS_NONE' ? null : 'OS_NONE'" style="cursor: pointer;">
                             <i :class="{ 'bi-chevron-down': osExpandida === 'OS_NONE', 'bi-chevron-right': osExpandida !== 'OS_NONE' }" class="bi me-2"></i>
-                            <span>OS_NONE ({{ osNone.length }} GTINs)</span>
+                            <span class="qa-os-nome-grande">OS_NONE</span>
+                            <span class="qa-os-contador">({{ osNone.length }} GTINs)</span>
                         </div>
                         <div v-if="osExpandida === 'OS_NONE' && carregandoOsNone" class="qa-vazio">Carregando OS_NONE...</div>
-                        <div v-if="osExpandida === 'OS_NONE' && !carregandoOsNone">
+                        <div v-if="osExpandida === 'OS_NONE' && !carregandoOsNone" class="qa-os-none-items">
                             <div v-for="item in osNone" :key="item.gtin"
                                 class="qa-gtin-item"
                                 :class="{ ativo: selecionado && selecionado.os === 'OS_NONE' && selecionado.gtin === item.gtin }"
@@ -186,9 +187,10 @@
                         </div>
                     </div>
                     <div class="qa-os-grupo" v-for="grupo in fila" :key="grupo.os">
-                        <div class="qa-os-titulo" @click="osExpandida = osExpandida === grupo.os ? null : grupo.os" style="cursor: pointer;">
+                        <div class="qa-os-titulo qa-os-titulo-destaque" @click="osExpandida = osExpandida === grupo.os ? null : grupo.os" style="cursor: pointer;">
                             <i :class="{ 'bi-chevron-down': osExpandida === grupo.os, 'bi-chevron-right': osExpandida !== grupo.os }" class="bi me-2"></i>
-                            <span>OS {{ grupo.os }} ({{ grupo.gtins.length }})</span>
+                            <span class="qa-os-nome-grande">OS {{ grupo.os }}</span>
+                            <span class="qa-os-contador">({{ grupo.gtins.length }})</span>
                         </div>
                         <div v-if="osExpandida === grupo.os">
                             <div
@@ -209,7 +211,11 @@
                 <div v-if="!selecionado" class="qa-vazio">Selecione um GTIN na lista ao lado.</div>
 
                 <div v-else>
-                    <h5 class="mb-3">GTIN {{ selecionado.gtin }} <small class="text-muted">- OS {{ selecionado.os }}</small></h5>
+                    <h5 class="mb-3">
+                        <span>{{ selecionado.gtin }}</span>
+                        <span class="qa-palco-os">OS {{ selecionado.os }}</span>
+                        <span v-if="fotografoSelecionado" class="qa-palco-fotografo">👤 {{ fotografoSelecionado }}</span>
+                    </h5>
 
                     <div class="qa-tabs">
                         <button type="button" class="qa-tab-btn" :class="{ ativa: abaDetalhe === 'foto' }" @click="abaDetalhe = 'foto'">QA de Foto</button>

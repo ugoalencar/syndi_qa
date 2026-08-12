@@ -16,6 +16,7 @@ createApp({
 
         const osExpandida = ref(null);
         const selecionado = ref(null);
+        const fotografoSelecionado = ref('');
         const detalhe = ref(null);
         const carregandoDetalhe = ref(false);
         const erroDetalhe = ref('');
@@ -416,6 +417,8 @@ createApp({
                 timeoutFecharDepoisDeConcluir = null;
             }
             selecionado.value = { os, gtin };
+            // OS_NONE sempre tem fotografo Flavio Demark (todas as fotos sao dele)
+            fotografoSelecionado.value = os === 'OS_NONE' ? 'Flavio Demark' : '';
             detalhe.value = null;
             erroDetalhe.value = '';
             Object.keys(marcadas).forEach(chave => delete marcadas[chave]);
@@ -1003,7 +1006,7 @@ createApp({
         return {
             fila, carregandoFila, erroFila,
             mostrarOsNone, osNone, carregandoOsNone, erroOsNone, carregarOsNone, verificandoOsNone, resultadoVerificacao, verificarOsNone,
-            osExpandida, selecionado, detalhe, carregandoDetalhe, erroDetalhe,
+            osExpandida, selecionado, fotografoSelecionado, detalhe, carregandoDetalhe, erroDetalhe,
             motivos, marcadas, marcadasOcr, fotoAtiva,
             aprovando, enviandoRetrabalho, mensagem, erro,
             analistaId, analistaNome, erroIdentidade, carregarArquivoIdentidade,
