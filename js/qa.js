@@ -14,6 +14,7 @@ createApp({
         const verificandoOsNone = ref(false);
         const resultadoVerificacao = ref(null);
 
+        const osExpandida = ref(null);
         const selecionado = ref(null);
         const detalhe = ref(null);
         const carregandoDetalhe = ref(false);
@@ -1002,7 +1003,7 @@ createApp({
         return {
             fila, carregandoFila, erroFila,
             mostrarOsNone, osNone, carregandoOsNone, erroOsNone, carregarOsNone, verificandoOsNone, resultadoVerificacao, verificarOsNone,
-            selecionado, detalhe, carregandoDetalhe, erroDetalhe,
+            osExpandida, selecionado, detalhe, carregandoDetalhe, erroDetalhe,
             motivos, marcadas, marcadasOcr, fotoAtiva,
             aprovando, enviandoRetrabalho, mensagem, erro,
             analistaId, analistaNome, erroIdentidade, carregarArquivoIdentidade,

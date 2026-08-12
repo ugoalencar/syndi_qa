@@ -143,16 +143,17 @@
                 <div v-else-if="fila.length === 0" class="qa-vazio">Nenhum GTIN aguardando conferência.</div>
                 <div v-else>
                     <div v-if="mostrarOsNone && (carregandoOsNone || osNone.length > 0)" class="qa-os-grupo">
-                        <div class="qa-os-titulo">
-                            <span>OS_NONE ({{ osNone.length }} GTINs, {{ osNone.reduce((sum, o) => sum + o.arquivos.length, 0) }} imagens)</span>
+                        <div class="qa-os-titulo" @click="osExpandida = osExpandida === 'OS_NONE' ? null : 'OS_NONE'" style="cursor: pointer;">
+                            <i :class="{ 'bi-chevron-down': osExpandida === 'OS_NONE', 'bi-chevron-right': osExpandida !== 'OS_NONE' }" class="bi me-2"></i>
+                            <span>OS_NONE ({{ osNone.length }} GTINs)</span>
                         </div>
-                        <div v-if="carregandoOsNone" class="qa-vazio">Carregando OS_NONE...</div>
-                        <div v-else>
+                        <div v-if="osExpandida === 'OS_NONE' && carregandoOsNone" class="qa-vazio">Carregando OS_NONE...</div>
+                        <div v-if="osExpandida === 'OS_NONE' && !carregandoOsNone">
                             <div v-for="item in osNone" :key="item.gtin"
                                 class="qa-gtin-item"
                                 :class="{ ativo: selecionado && selecionado.os === 'OS_NONE' && selecionado.gtin === item.gtin }"
                                 @click="selecionarGtin('OS_NONE', item.gtin)">
-                                <span>{{ item.gtin }} ({{ item.arquivos.length }} img)</span>
+                                <span>{{ item.gtin }}</span>
                             </div>
                             <div class="qa-os-none-aviso mt-3">
                                 <i class="bi bi-info-circle"></i>
@@ -182,29 +183,23 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div v-if="carregandoOsNone" class="qa-vazio">Carregando OS_NONE...</div>
-                            <div v-else>
-                                <div v-for="item in osNone" :key="item.gtin" class="qa-os-none-gtin">
-                                    <div class="qa-os-none-gtin-titulo">GTIN {{ item.gtin }} ({{ item.arquivos.length }})</div>
-                                    <div class="qa-os-none-arquivos">
-                                        <div v-for="arq in item.arquivos" :key="arq.nome" class="qa-os-none-arquivo">
-                                            {{ arq.nome }} {{ arq.subpasta ? '(' + arq.subpasta + ')' : '' }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="qa-os-grupo" v-for="grupo in fila" :key="grupo.os">
-                        <div class="qa-os-titulo"><span>OS {{ grupo.os }} ({{ grupo.gtins.length }})</span></div>
-                        <div
-                            class="qa-gtin-item"
-                            v-for="item in grupo.gtins"
-                            :key="item.gtin"
-                            :class="{ ativo: selecionado && selecionado.os === grupo.os && selecionado.gtin === item.gtin }"
-                            @click="selecionarGtin(grupo.os, item.gtin)"
-                        >
-                            <span>{{ item.gtin }}</span>
+                        <div class="qa-os-titulo" @click="osExpandida = osExpandida === grupo.os ? null : grupo.os" style="cursor: pointer;">
+                            <i :class="{ 'bi-chevron-down': osExpandida === grupo.os, 'bi-chevron-right': osExpandida !== grupo.os }" class="bi me-2"></i>
+                            <span>OS {{ grupo.os }} ({{ grupo.gtins.length }})</span>
+                        </div>
+                        <div v-if="osExpandida === grupo.os">
+                            <div
+                                class="qa-gtin-item"
+                                v-for="item in grupo.gtins"
+                                :key="item.gtin"
+                                :class="{ ativo: selecionado && selecionado.os === grupo.os && selecionado.gtin === item.gtin }"
+                                @click="selecionarGtin(grupo.os, item.gtin)"
+                            >
+                                <span>{{ item.gtin }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
