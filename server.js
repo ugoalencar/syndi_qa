@@ -124,6 +124,19 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    if (req.method === 'GET' && req.url === '/api/gtin-counts') {
+        try {
+            qaSyndi.obterContagemGtins(redmine).then(counts => {
+                enviarJson(res, 200, { ok: true, counts });
+            }).catch(err => {
+                enviarJson(res, 500, { ok: false, error: err.message });
+            });
+        } catch (err) {
+            enviarJson(res, 500, { ok: false, error: err.message });
+        }
+        return;
+    }
+
     if (req.method === 'GET' && req.url.startsWith('/api/gtin')) {
         const query = new URL(req.url, 'http://localhost').searchParams;
         const os = query.get('os') || '';
