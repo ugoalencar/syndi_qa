@@ -774,6 +774,19 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    // Verificacao e reorganizacao de OS_NONE: varre fotos marcadas com OCR,
+    // valida (minimo 2), localiza OS de destino, e copia arquivos pra C:\Cadastro\OCR.
+    // Retorna { ok, movidos, avisos, erros } com detalhes completos.
+    if (req.method === 'POST' && req.url === '/api/verificar-os-none') {
+        try {
+            const resultado = qaSyndi.verificarEOrganizarOsNone(qaSyndi.AGCONFERENCIA);
+            enviarJson(res, 200, resultado);
+        } catch (err) {
+            enviarJson(res, 500, { ok: false, error: err.message });
+        }
+        return;
+    }
+
     // Handler estatico - serve syndi_qa.html, css, js e qualquer outro arquivo da raiz
     // do projeto, exceto os bloqueados.
     const urlSemQuery = req.url.split('?')[0];

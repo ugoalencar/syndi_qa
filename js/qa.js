@@ -11,6 +11,8 @@ createApp({
         const osNone = ref([]);
         const carregandoOsNone = ref(false);
         const erroOsNone = ref('');
+        const verificandoOsNone = ref(false);
+        const resultadoVerificacao = ref(null);
 
         const selecionado = ref(null);
         const detalhe = ref(null);
@@ -860,6 +862,34 @@ createApp({
             }
         }
 
+        // Verifica e organiza OS_NONE: varre GTINs marcados com OCR (minimo 2),
+        // valida e move arquivos pra C:\Cadastro\OCR. Auto-atualiza fila e OS_NONE
+        // apos conclusao.
+        async function verificarOsNone() {
+            if (verificandoOsNone.value) return;
+            verificandoOsNone.value = true;
+            resultadoVerificacao.value = null;
+            try {
+                const resp = await fetch(API + '/api/verificar-os-none', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const dados = await resp.json();
+                resultadoVerificacao.value = dados;
+                if (dados.ok) {
+                    // Aguarda 1.5s pra usuario ver o resultado, depois atualiza listas
+                    setTimeout(() => {
+                        carregarFila();
+                        carregarOsNone();
+                    }, 1500);
+                }
+            } catch (err) {
+                resultadoVerificacao.value = { ok: false, error: 'Erro de conexao: ' + err.message };
+            } finally {
+                verificandoOsNone.value = false;
+            }
+        }
+
         // Le o arquivo JSON pessoal selecionado no modal da engrenagem, extrai userId/userName
         // e persiste em localStorage - mesmas chaves que o sphoto usa (regra/user_id/
         // nome_usuario), mesmo formato de arquivo (campos de roteamento de regra que o sphoto
@@ -971,7 +1001,7 @@ createApp({
 
         return {
             fila, carregandoFila, erroFila,
-            mostrarOsNone, osNone, carregandoOsNone, erroOsNone, carregarOsNone,
+            mostrarOsNone, osNone, carregandoOsNone, erroOsNone, carregarOsNone, verificandoOsNone, resultadoVerificacao, verificarOsNone,
             selecionado, detalhe, carregandoDetalhe, erroDetalhe,
             motivos, marcadas, marcadasOcr, fotoAtiva,
             aprovando, enviandoRetrabalho, mensagem, erro,
