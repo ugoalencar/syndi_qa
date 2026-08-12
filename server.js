@@ -870,15 +870,14 @@ const server = http.createServer((req, res) => {
     // valida (minimo 2), localiza OS de destino, e copia arquivos pra C:\Cadastro\OCR.
     // Retorna { ok, movidos, avisos, erros } com detalhes completos.
     if (req.method === 'POST' && req.url === '/api/verificar-os-none') {
-        try {
-            const resultado = await qaSyndi.verificarEOrganizarOsNone(qaSyndi.AGCONFERENCIA, undefined, {
-                redmine: redmine,
-                basePath: BASE_PATH
-            });
+        qaSyndi.verificarEOrganizarOsNone(qaSyndi.AGCONFERENCIA, undefined, {
+            redmine: redmine,
+            basePath: BASE_PATH
+        }).then(resultado => {
             enviarJson(res, 200, resultado);
-        } catch (err) {
+        }).catch(err => {
             enviarJson(res, 500, { ok: false, error: err.message });
-        }
+        });
         return;
     }
 
