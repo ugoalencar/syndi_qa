@@ -6,7 +6,6 @@ createApp({
         const fila = ref([]);
         const carregandoFila = ref(false);
         const erroFila = ref('');
-        const contagemGtins = ref({});
 
         const selecionado = ref(null);
         const detalhe = ref(null);
@@ -15,6 +14,7 @@ createApp({
 
         const motivos = ref([]);
         const marcadas = reactive({});
+        const marcadasOcr = reactive({});
         const fotoAtiva = ref(null);
 
         const aprovando = ref(false);
@@ -154,60 +154,12 @@ createApp({
                 const dados = await resp.json();
                 if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
                 fila.value = dados.fila;
-                // Carrega contagem de GTINs apos fila ser carregada
-                try {
-                    const respCounts = await fetch(API + '/api/gtin-counts');
-                    const dataCounts = await respCounts.json();
-                    if (dataCounts.ok && dataCounts.counts) {
-                        contagemGtins.value = dataCounts.counts;
-                    }
-                } catch (err) {
-                    console.warn('Erro ao carregar contagem de GTINs:', err);
-                }
             } catch (err) {
                 erroFila.value = 'Erro ao carregar fila: ' + err.message + ' (server.js rodando?)';
             } finally {
                 carregandoFila.value = false;
             }
         }
-
-        // Obtem os dados de contagem para uma OS especifica (chegou/esperado/falta)
-        // Retorna { chegou, esperado, falta, temContagem }
-        function obterContagemOs(os) {
-            const osKey = 'OS_' + os;
-            const contas = contagemGtins.value[osKey];
-            if (!contas) return null;
-
-            let totalChegou = 0;
-            let totalEsperado = 0;
-
-            Object.values(contas).forEach(gtin => {
-                if (typeof gtin.esperado === 'number') totalEsperado += gtin.esperado;
-                if (typeof gtin.chegou === 'number') totalChegou += gtin.chegou;
-            });
-
-            return {
-                chegou: totalChegou,
-                esperado: totalEsperado,
-                falta: totalEsperado - totalChegou,
-                temContagem: totalEsperado > 0
-            };
-        }
-
-        // Computed property que retorna display text pro titulo da OS
-        // Exemplo: "OS 49800 (4 de 10)" ou "OS 49800 (4)" se sem dados do Redmine
-        const osComContas = computed(() => {
-            return fila.value.map(grupo => {
-                const contagem = obterContagemOs(grupo.os);
-                let displayText = 'OS ' + grupo.os;
-                if (contagem && contagem.temContagem) {
-                    displayText += ' (' + contagem.chegou + ' de ' + contagem.esperado + ')';
-                } else {
-                    displayText += ' (' + grupo.gtins.length + ')';
-                }
-                return displayText;
-            });
-        });
 
         async function carregarMotivosDisponiveis() {
             try {
@@ -444,6 +396,7 @@ createApp({
             detalhe.value = null;
             erroDetalhe.value = '';
             Object.keys(marcadas).forEach(chave => delete marcadas[chave]);
+            Object.keys(marcadasOcr).forEach(chave => delete marcadasOcr[chave]);
             fotoAtiva.value = null;
             painelEnvio.value = null;
             abaDetalhe.value = 'foto';
@@ -464,6 +417,18 @@ createApp({
                 const dados = await resp.json();
                 if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
                 detalhe.value = dados;
+
+                // Carrega marcas de OCR apos detalhe estar pronto
+                try {
+                    const respOcr = await fetch(API + '/api/marcas-ocr?os=' + encodeURIComponent(os) + '&gtin=' + encodeURIComponent(gtin));
+                    const dadosOcr = await respOcr.json();
+                    if (dadosOcr.ok) {
+                        Object.keys(marcadasOcr).forEach(chave => delete marcadasOcr[chave]);
+                        Object.assign(marcadasOcr, dadosOcr.marcas || {});
+                    }
+                } catch (errOcr) {
+                    console.error('Erro ao carregar marcas de OCR:', errOcr);
+                }
             } catch (err) {
                 erroDetalhe.value = 'Erro ao carregar GTIN: ' + err.message;
             } finally {
@@ -517,6 +482,31 @@ createApp({
                 invalidarSugestaoEdicao();
             } catch (err) {
                 alert('Erro ao marcar _coding: ' + err.message);
+            }
+        }
+
+        async function toggleOcr(nome) {
+            if (!selecionado.value) return;
+            const marcado = !marcadasOcr[nome];
+            try {
+                const resp = await fetch(API + '/api/marcar-ocr', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ os: selecionado.value.os, gtin: selecionado.value.gtin, foto: nome, marcado })
+                });
+                const dados = await resp.json();
+                if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
+                if (marcado) {
+                    marcadasOcr[nome] = true;
+                    mensagem.value = 'Marcado para OCR';
+                } else {
+                    delete marcadasOcr[nome];
+                    mensagem.value = 'Desmarcado para OCR';
+                }
+                setTimeout(() => { mensagem.value = ''; }, 2000);
+            } catch (err) {
+                erro.value = 'Erro ao marcar OCR: ' + err.message;
+                setTimeout(() => { erro.value = ''; }, 3000);
             }
         }
 
@@ -960,13 +950,13 @@ createApp({
         carregarVersaoSistema();
 
         return {
-            fila, carregandoFila, erroFila, contagemGtins, osComContas, obterContagemOs,
+            fila, carregandoFila, erroFila,
             selecionado, detalhe, carregandoDetalhe, erroDetalhe,
-            motivos, marcadas, fotoAtiva,
+            motivos, marcadas, marcadasOcr, fotoAtiva,
             aprovando, enviandoRetrabalho, mensagem, erro,
             analistaId, analistaNome, erroIdentidade, carregarArquivoIdentidade,
             atualizacaoInfo, verificandoAtualizacao, resultadoAtualizacao, aplicandoAtualizacao, versaoSistema,
-            marcandoDestino, marcarDestinoManual, toggleCoding, toggleSubpasta,
+            marcandoDestino, marcarDestinoManual, toggleCoding, toggleOcr, toggleSubpasta,
             imagemAmpliada, listaAmpliada, ampliarImagem, navegarAmpliada,
             zoomEscala, zoomOffsetX, zoomOffsetY, zoomArrastando,
             estiloImagemAmpliada, classeImagemAmpliada,

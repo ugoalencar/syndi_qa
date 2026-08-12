@@ -182,7 +182,7 @@
                                 <div class="qa-miniatura-wrap" v-for="img in detalhe.imagens.raiz" :key="img.nome">
                                     <div
                                         class="qa-miniatura"
-                                        :class="{ ativa: fotoAtiva === img.nome, marcada: !!marcadas[img.nome], 'tem-coding': img.nome.includes('_coding') }"
+                                        :class="{ ativa: fotoAtiva === img.nome, marcada: !!marcadas[img.nome], 'tem-coding': img.nome.includes('_coding'), 'tem-ocr': marcadasOcr[img.nome] }"
                                         @click="ampliarImagem(img.nome, detalhe.imagens.raiz.map(i => i.nome))"
                                     >
                                         <img :src="urlImagem(img.nome)" :alt="img.nome" loading="lazy">
@@ -191,6 +191,7 @@
                                     <div class="qa-acoes-mini">
                                         <input type="checkbox" class="qa-checkbox-retrabalho" title="Selecionar para retrabalho" :checked="fotoAtiva === img.nome" @change="selecionarFoto(img.nome)">
                                         <button type="button" class="qa-acao-mini coding" :class="{ ativa: img.nome.includes('_coding') }" title="Marcar/desmarcar _coding" @click="toggleCoding(img.nome)">C</button>
+                                        <button type="button" class="qa-acao-mini ocr" :class="{ ativa: marcadasOcr[img.nome] }" title="Marcar/desmarcar OCR" @click="toggleOcr(img.nome)">OCR</button>
                                         <button type="button" class="qa-acao-mini rt" title="Mover para Rótulo" @click="toggleSubpasta(img.nome, 'RT')">RT</button>
                                         <button type="button" class="qa-acao-mini is" title="Mover para Insumos" @click="toggleSubpasta(img.nome, 'IS')">IS</button>
                                         <button type="button" class="qa-acao-mini ap" title="Mover para Apoio" @click="toggleSubpasta(img.nome, 'AP')">AP</button>
@@ -208,7 +209,7 @@
                                         <div class="qa-miniatura-wrap" v-for="img in detalhe.imagens.subpastas[tag]" :key="img.nome">
                                             <div
                                                 class="qa-miniatura"
-                                                :class="{ ativa: fotoAtiva === (tag + '/' + img.nome), marcada: !!marcadas[tag + '/' + img.nome], ['tem-' + tag.toLowerCase()]: true }"
+                                                :class="{ ativa: fotoAtiva === (tag + '/' + img.nome), marcada: !!marcadas[tag + '/' + img.nome], 'tem-ocr': marcadasOcr[tag + '/' + img.nome], ['tem-' + tag.toLowerCase()]: true }"
                                                 @click="ampliarImagem(tag + '/' + img.nome, detalhe.imagens.subpastas[tag].map(i => tag + '/' + i.nome))"
                                             >
                                                 <img :src="urlImagem(tag + '/' + img.nome)" :alt="img.nome" loading="lazy">
@@ -216,6 +217,7 @@
                                             <div class="qa-miniatura-nome">{{ img.nome }}</div>
                                             <div class="qa-acoes-mini">
                                                 <input type="checkbox" class="qa-checkbox-retrabalho" title="Selecionar para retrabalho" :checked="fotoAtiva === (tag + '/' + img.nome)" @change="selecionarFoto(tag + '/' + img.nome)">
+                                                <button type="button" class="qa-acao-mini ocr" :class="{ ativa: marcadasOcr[tag + '/' + img.nome] }" title="Marcar/desmarcar OCR" @click="toggleOcr(tag + '/' + img.nome)">OCR</button>
                                                 <button type="button" class="qa-acao-mini voltar" title="Tirar da subpasta" @click="toggleSubpasta(img.nome, tag)" style="flex: 1.5;">Voltar</button>
                                                 <button type="button" class="qa-acao-mini excluir" title="Deletar foto" @click="deletarFoto(tag + '/' + img.nome)"><i class="bi bi-trash"></i></button>
                                                 <button type="button" class="qa-acao-mini zoom" title="Ampliar" @click="ampliarImagem(tag + '/' + img.nome, detalhe.imagens.subpastas[tag].map(i => tag + '/' + i.nome))"><i class="bi bi-zoom-in"></i></button>

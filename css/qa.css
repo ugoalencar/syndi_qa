@@ -325,6 +325,9 @@
 .qa-acao-mini.coding { border-color: var(--warning); color: var(--warning); }
 .qa-acao-mini.coding.ativa { background-color: var(--warning); color: #1a1a1a; }
 
+.qa-acao-mini.ocr { border-color: #6f42c1; color: #6f42c1; font-weight: bold; }
+.qa-acao-mini.ocr.ativa { background-color: #ffc107; color: #1a1a1a; font-weight: bold; }
+
 .qa-acao-mini.rt { border-color: #fd7e14; color: #fd7e14; }
 .qa-acao-mini.is { border-color: var(--info); color: var(--info); }
 .qa-acao-mini.ap { border-color: #9c27b0; color: #9c27b0; }
@@ -363,6 +366,7 @@
 
 /* Cores de marcacao - mesma logica do .tem-coding do index (borda + glow) */
 .qa-miniatura.tem-coding { border-color: var(--warning); box-shadow: 0 0 0 2px var(--warning); }
+.qa-miniatura.tem-ocr { border-color: #6f42c1; box-shadow: 0 0 0 2px #6f42c1; }
 .qa-miniatura.tem-rt { border-color: #fd7e14; box-shadow: 0 0 0 2px #fd7e14; }
 .qa-miniatura.tem-is { border-color: var(--info); box-shadow: 0 0 0 2px var(--info); }
 .qa-miniatura.tem-ap { border-color: #9c27b0; box-shadow: 0 0 0 2px #9c27b0; }

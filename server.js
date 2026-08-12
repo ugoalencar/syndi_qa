@@ -376,6 +376,78 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    if (req.method === 'GET' && req.url.startsWith('/api/marcas-ocr')) {
+        const query = new URL(req.url, 'http://localhost').searchParams;
+        const os = query.get('os') || '';
+        const gtin = query.get('gtin') || '';
+        if (!isNomeSeguro(os) || !isNomeSeguro(gtin)) {
+            enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin invalidos' });
+            return;
+        }
+        const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+        if (!pastaOsNome) {
+            enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
+            return;
+        }
+        const pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome);
+        const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(pastaOsPath, gtin, /^(\d+)/);
+        if (!pastaGtinNome) {
+            enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
+            return;
+        }
+        const pastaGtinPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome, pastaGtinNome);
+        try {
+            const marcas = qaSyndi.obterMarcasOcr(pastaGtinPath);
+            enviarJson(res, 200, { ok: true, marcas });
+        } catch (err) {
+            enviarJson(res, 500, { ok: false, error: err.message });
+        }
+        return;
+    }
+
+    if (req.method === 'POST' && req.url === '/api/marcar-ocr') {
+        lerCorpo(req).then(corpo => {
+            let dados;
+            try {
+                dados = JSON.parse(corpo);
+            } catch (err) {
+                enviarJson(res, 400, { ok: false, error: 'JSON invalido' });
+                return;
+            }
+            const os = dados.os;
+            const gtin = dados.gtin;
+            const foto = dados.foto;
+            const marcado = dados.marcado;
+            if (!isNomeSeguro(os) || !isNomeSeguro(gtin) || !isNomeSeguro(foto)) {
+                enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin/foto invalidos' });
+                return;
+            }
+            if (typeof marcado !== 'boolean') {
+                enviarJson(res, 400, { ok: false, error: 'marcado deve ser true ou false' });
+                return;
+            }
+            const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+            if (!pastaOsNome) {
+                enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
+                return;
+            }
+            const pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome);
+            const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(pastaOsPath, gtin, /^(\d+)/);
+            if (!pastaGtinNome) {
+                enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
+                return;
+            }
+            const pastaGtinPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome, pastaGtinNome);
+            try {
+                qaSyndi.toggleMarcaOcr(pastaGtinPath, foto, marcado);
+                enviarJson(res, 200, { ok: true });
+            } catch (err) {
+                enviarJson(res, 500, { ok: false, error: err.message });
+            }
+        });
+        return;
+    }
+
     // Campos inferidos pro formulario de envio pra edicao (responsavel/quantidades) -
     // so leitura, nada e gravado nem movido aqui.
     if (req.method === 'GET' && req.url.startsWith('/api/aprovar/preparar')) {
