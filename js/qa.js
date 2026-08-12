@@ -6,6 +6,7 @@ createApp({
         const fila = ref([]);
         const carregandoFila = ref(false);
         const erroFila = ref('');
+        const contagemGtins = ref({});
 
         const selecionado = ref(null);
         const detalhe = ref(null);
@@ -153,12 +154,60 @@ createApp({
                 const dados = await resp.json();
                 if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
                 fila.value = dados.fila;
+                // Carrega contagem de GTINs apos fila ser carregada
+                try {
+                    const respCounts = await fetch(API + '/api/gtin-counts');
+                    const dataCounts = await respCounts.json();
+                    if (dataCounts.ok && dataCounts.counts) {
+                        contagemGtins.value = dataCounts.counts;
+                    }
+                } catch (err) {
+                    console.warn('Erro ao carregar contagem de GTINs:', err);
+                }
             } catch (err) {
                 erroFila.value = 'Erro ao carregar fila: ' + err.message + ' (server.js rodando?)';
             } finally {
                 carregandoFila.value = false;
             }
         }
+
+        // Obtem os dados de contagem para uma OS especifica (chegou/esperado/falta)
+        // Retorna { chegou, esperado, falta, temContagem }
+        function obterContagemOs(os) {
+            const osKey = 'OS_' + os;
+            const contas = contagemGtins.value[osKey];
+            if (!contas) return null;
+
+            let totalChegou = 0;
+            let totalEsperado = 0;
+
+            Object.values(contas).forEach(gtin => {
+                if (typeof gtin.esperado === 'number') totalEsperado += gtin.esperado;
+                if (typeof gtin.chegou === 'number') totalChegou += gtin.chegou;
+            });
+
+            return {
+                chegou: totalChegou,
+                esperado: totalEsperado,
+                falta: totalEsperado - totalChegou,
+                temContagem: totalEsperado > 0
+            };
+        }
+
+        // Computed property que retorna display text pro titulo da OS
+        // Exemplo: "OS 49800 (4 de 10)" ou "OS 49800 (4)" se sem dados do Redmine
+        const osComContas = computed(() => {
+            return fila.value.map(grupo => {
+                const contagem = obterContagemOs(grupo.os);
+                let displayText = 'OS ' + grupo.os;
+                if (contagem && contagem.temContagem) {
+                    displayText += ' (' + contagem.chegou + ' de ' + contagem.esperado + ')';
+                } else {
+                    displayText += ' (' + grupo.gtins.length + ')';
+                }
+                return displayText;
+            });
+        });
 
         async function carregarMotivosDisponiveis() {
             try {
@@ -911,7 +960,7 @@ createApp({
         carregarVersaoSistema();
 
         return {
-            fila, carregandoFila, erroFila,
+            fila, carregandoFila, erroFila, contagemGtins, osComContas, obterContagemOs,
             selecionado, detalhe, carregandoDetalhe, erroDetalhe,
             motivos, marcadas, fotoAtiva,
             aprovando, enviandoRetrabalho, mensagem, erro,
