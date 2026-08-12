@@ -79,6 +79,21 @@ function hojeISO() {
     return agora.getFullYear() + '-' + String(agora.getMonth() + 1).padStart(2, '0') + '-' + String(agora.getDate()).padStart(2, '0');
 }
 
+function obterPastaOsPath(osParam) {
+    if (osParam === 'OS_NONE') {
+        const pastaOsNone = path.join(qaSyndi.AGCONFERENCIA, 'OS_NONE');
+        if (!fs.existsSync(pastaOsNone)) {
+            return null;
+        }
+        return { pastaOsNome: 'OS_NONE', pastaOsPath: pastaOsNone };
+    }
+    const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, osParam, /^OS_(\d+)/);
+    if (!pastaOsNome) {
+        return null;
+    }
+    return { pastaOsNome, pastaOsPath: path.join(qaSyndi.AGCONFERENCIA, pastaOsNome) };
+}
+
 const server = http.createServer((req, res) => {
     console.log(`${req.method} ${req.url}`);
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -268,17 +283,17 @@ const server = http.createServer((req, res) => {
                 enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin/nome invalidos' });
                 return;
             }
-            const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
-            if (!pastaOsNome) {
+            const osInfo = obterPastaOsPath(os);
+            if (!osInfo) {
                 enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
                 return;
             }
-            const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(path.join(qaSyndi.AGCONFERENCIA, pastaOsNome), gtin, /^(\d+)/);
+            const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(osInfo.pastaOsPath, gtin, /^(\d+)/);
             if (!pastaGtinNome) {
                 enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
                 return;
             }
-            const pastaGtinPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome, pastaGtinNome);
+            const pastaGtinPath = path.join(osInfo.pastaOsPath, pastaGtinNome);
             try {
                 const resultado = qaSyndi.moverParaSubpastaSyndi(pastaGtinPath, nome, pasta);
                 enviarJson(res, 200, { ok: true, destino: resultado.destino });
