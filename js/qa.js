@@ -7,6 +7,11 @@ createApp({
         const carregandoFila = ref(false);
         const erroFila = ref('');
 
+        const mostrarOsNone = ref(false);
+        const osNone = ref([]);
+        const carregandoOsNone = ref(false);
+        const erroOsNone = ref('');
+
         const selecionado = ref(null);
         const detalhe = ref(null);
         const carregandoDetalhe = ref(false);
@@ -158,6 +163,21 @@ createApp({
                 erroFila.value = 'Erro ao carregar fila: ' + err.message + ' (server.js rodando?)';
             } finally {
                 carregandoFila.value = false;
+            }
+        }
+
+        async function carregarOsNone() {
+            carregandoOsNone.value = true;
+            erroOsNone.value = '';
+            try {
+                const resp = await fetch(API + '/api/os-none');
+                const dados = await resp.json();
+                if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
+                osNone.value = dados.gtins;
+            } catch (err) {
+                erroOsNone.value = 'Erro ao carregar OS_NONE: ' + err.message + ' (server.js rodando?)';
+            } finally {
+                carregandoOsNone.value = false;
             }
         }
 
@@ -951,6 +971,7 @@ createApp({
 
         return {
             fila, carregandoFila, erroFila,
+            mostrarOsNone, osNone, carregandoOsNone, erroOsNone, carregarOsNone,
             selecionado, detalhe, carregandoDetalhe, erroDetalhe,
             motivos, marcadas, marcadasOcr, fotoAtiva,
             aprovando, enviandoRetrabalho, mensagem, erro,

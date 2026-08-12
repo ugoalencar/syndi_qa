@@ -23,6 +23,10 @@
                     <button type="button" class="qa-top-tab-btn" :class="{ ativa: viewAtiva === 'agenda' }" @click="mudarParaAgenda">Agenda de Edição</button>
                 </div>
                 <div class="header-right">
+                    <label class="form-check form-check-inline me-3" v-show="viewAtiva === 'fila'">
+                        <input type="checkbox" class="form-check-input" v-model="mostrarOsNone" @change="mostrarOsNone ? carregarOsNone() : null">
+                        <span class="form-check-label">Mostrar OS_NONE</span>
+                    </label>
                     <button type="button" class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalIdentidade">
                         <i class="bi bi-gear"></i> {{ analistaNome || 'Configurar identidade' }}
                     </button>
@@ -138,6 +142,26 @@
                 <div v-else-if="erroFila" class="text-danger p-2">{{ erroFila }}</div>
                 <div v-else-if="fila.length === 0" class="qa-vazio">Nenhum GTIN aguardando conferência.</div>
                 <div v-else>
+                    <div v-if="mostrarOsNone && (carregandoOsNone || osNone.length > 0)">
+                        <div class="qa-os-grupo">
+                            <div class="qa-os-titulo"><span>OS_NONE ({{ osNone.reduce((sum, o) => sum + o.arquivos.length, 0) }} arquivos)</span></div>
+                            <div class="qa-os-none-aviso">
+                                <i class="bi bi-info-circle"></i>
+                                Organize fotos sem OS. Marque OCR e confirme para mover pra pasta correta.
+                            </div>
+                            <div v-if="carregandoOsNone" class="qa-vazio">Carregando OS_NONE...</div>
+                            <div v-else>
+                                <div v-for="item in osNone" :key="item.gtin" class="qa-os-none-gtin">
+                                    <div class="qa-os-none-gtin-titulo">GTIN {{ item.gtin }} ({{ item.arquivos.length }})</div>
+                                    <div class="qa-os-none-arquivos">
+                                        <div v-for="arq in item.arquivos" :key="arq.nome" class="qa-os-none-arquivo">
+                                            {{ arq.nome }} {{ arq.subpasta ? '(' + arq.subpasta + ')' : '' }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="qa-os-grupo" v-for="grupo in fila" :key="grupo.os">
                         <div class="qa-os-titulo"><span>OS {{ grupo.os }} ({{ grupo.gtins.length }})</span></div>
                         <div

@@ -115,6 +115,16 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    if (req.method === 'GET' && req.url === '/api/os-none') {
+        try {
+            const gtins = qaSyndi.listarOsNone(qaSyndi.AGCONFERENCIA);
+            enviarJson(res, 200, { ok: true, gtins });
+        } catch (err) {
+            enviarJson(res, 500, { ok: false, error: err.message });
+        }
+        return;
+    }
+
     if (req.method === 'GET' && req.url === '/api/diagnostico-fila') {
         try {
             enviarJson(res, 200, { ok: true, diagnostico: qaSyndi.diagnosticarFila(qaSyndi.AGCONFERENCIA) });
