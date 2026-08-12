@@ -142,14 +142,23 @@
                 <div v-else-if="erroFila" class="text-danger p-2">{{ erroFila }}</div>
                 <div v-else-if="fila.length === 0" class="qa-vazio">Nenhum GTIN aguardando conferência.</div>
                 <div v-else>
-                    <div v-if="mostrarOsNone && (carregandoOsNone || osNone.length > 0)">
-                        <div class="qa-os-grupo">
-                            <div class="qa-os-titulo"><span>OS_NONE ({{ osNone.reduce((sum, o) => sum + o.arquivos.length, 0) }} arquivos)</span></div>
-                            <div class="qa-os-none-aviso">
+                    <div v-if="mostrarOsNone && (carregandoOsNone || osNone.length > 0)" class="qa-os-grupo">
+                        <div class="qa-os-titulo">
+                            <span>OS_NONE ({{ osNone.length }} GTINs, {{ osNone.reduce((sum, o) => sum + o.arquivos.length, 0) }} imagens)</span>
+                        </div>
+                        <div v-if="carregandoOsNone" class="qa-vazio">Carregando OS_NONE...</div>
+                        <div v-else>
+                            <div v-for="item in osNone" :key="item.gtin"
+                                class="qa-gtin-item"
+                                :class="{ ativo: selecionado && selecionado.os === 'OS_NONE' && selecionado.gtin === item.gtin }"
+                                @click="selecionarGtin('OS_NONE', item.gtin)">
+                                <span>{{ item.gtin }} ({{ item.arquivos.length }} img)</span>
+                            </div>
+                            <div class="qa-os-none-aviso mt-3">
                                 <i class="bi bi-info-circle"></i>
                                 Organize fotos sem OS. Marque OCR e confirme para mover pra pasta correta.
                             </div>
-                            <button v-if="mostrarOsNone && !carregandoOsNone" type="button" class="btn btn-warning mt-2" @click="verificarOsNone" :disabled="verificandoOsNone">
+                            <button type="button" class="btn btn-warning mt-2" @click="verificarOsNone" :disabled="verificandoOsNone">
                                 <i v-if="verificandoOsNone" class="bi bi-hourglass-split qa-girando"></i>
                                 <i v-else class="bi bi-check-circle"></i>
                                 {{ verificandoOsNone ? 'Verificando...' : 'Verificar e Organizar' }}
