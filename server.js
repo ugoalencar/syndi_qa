@@ -221,17 +221,28 @@ const server = http.createServer((req, res) => {
         // montar o caminho. Sem esses parametros (uso direto da URL, por ex.), cai no
         // comportamento antigo.
         let pastaOsNome = null;
-        if (isNomeSeguro(pastaOsNomeParam) && qaSyndi.nomeDecoradoBate(pastaOsNomeParam, os, /^OS_(\d+)/) &&
-            fs.existsSync(path.join(qaSyndi.AGCONFERENCIA, pastaOsNomeParam))) {
-            pastaOsNome = pastaOsNomeParam;
+        let pastaOsPath = null;
+
+        if (os === 'OS_NONE') {
+            pastaOsNome = 'OS_NONE';
+            pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, 'OS_NONE');
+            if (!fs.existsSync(pastaOsPath)) {
+                enviarJson(res, 404, { ok: false, error: 'OS_NONE nao existe' });
+                return;
+            }
         } else {
-            pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+            if (isNomeSeguro(pastaOsNomeParam) && qaSyndi.nomeDecoradoBate(pastaOsNomeParam, os, /^OS_(\d+)/) &&
+                fs.existsSync(path.join(qaSyndi.AGCONFERENCIA, pastaOsNomeParam))) {
+                pastaOsNome = pastaOsNomeParam;
+            } else {
+                pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+            }
+            if (!pastaOsNome) {
+                enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
+                return;
+            }
+            pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome);
         }
-        if (!pastaOsNome) {
-            enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
-            return;
-        }
-        const pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome);
         let pastaGtinNome = null;
         if (isNomeSeguro(pastaGtinNomeParam) && qaSyndi.nomeDecoradoBate(pastaGtinNomeParam, gtin, /^(\d+)/) &&
             fs.existsSync(path.join(pastaOsPath, pastaGtinNomeParam))) {
@@ -320,17 +331,28 @@ const server = http.createServer((req, res) => {
                 enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin/nome invalidos' });
                 return;
             }
-            const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
-            if (!pastaOsNome) {
-                enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
-                return;
+            let pastaOsNome, pastaOsPath;
+            if (os === 'OS_NONE') {
+                pastaOsNome = 'OS_NONE';
+                pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, 'OS_NONE');
+                if (!fs.existsSync(pastaOsPath)) {
+                    enviarJson(res, 404, { ok: false, error: 'OS_NONE nao existe' });
+                    return;
+                }
+            } else {
+                pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+                if (!pastaOsNome) {
+                    enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
+                    return;
+                }
+                pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome);
             }
-            const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(path.join(qaSyndi.AGCONFERENCIA, pastaOsNome), gtin, /^(\d+)/);
+            const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(pastaOsPath, gtin, /^(\d+)/);
             if (!pastaGtinNome) {
                 enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
                 return;
             }
-            const pastaGtinPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome, pastaGtinNome);
+            const pastaGtinPath = path.join(pastaOsPath, pastaGtinNome);
             try {
                 qaSyndi.deletarFotoSyndi(pastaGtinPath, nome);
                 enviarJson(res, 200, { ok: true });
@@ -357,17 +379,28 @@ const server = http.createServer((req, res) => {
                 enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin/nome invalidos' });
                 return;
             }
-            const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
-            if (!pastaOsNome) {
-                enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
-                return;
+            let pastaOsNome, pastaOsPath;
+            if (os === 'OS_NONE') {
+                pastaOsNome = 'OS_NONE';
+                pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, 'OS_NONE');
+                if (!fs.existsSync(pastaOsPath)) {
+                    enviarJson(res, 404, { ok: false, error: 'OS_NONE nao existe' });
+                    return;
+                }
+            } else {
+                pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+                if (!pastaOsNome) {
+                    enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
+                    return;
+                }
+                pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome);
             }
-            const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(path.join(qaSyndi.AGCONFERENCIA, pastaOsNome), gtin, /^(\d+)/);
+            const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(pastaOsPath, gtin, /^(\d+)/);
             if (!pastaGtinNome) {
                 enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
                 return;
             }
-            const pastaGtinPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome, pastaGtinNome);
+            const pastaGtinPath = path.join(pastaOsPath, pastaGtinNome);
             try {
                 const resultado = qaSyndi.toggleCodingSyndi(pastaGtinPath, nome);
                 enviarJson(res, 200, { ok: true, novoNome: resultado.novoNome });
@@ -394,12 +427,22 @@ const server = http.createServer((req, res) => {
                 enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin invalidos' });
                 return;
             }
-            const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
-            if (!pastaOsNome) {
-                enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
-                return;
+            let pastaOsNome, pastaOsPath;
+            if (os === 'OS_NONE') {
+                pastaOsNome = 'OS_NONE';
+                pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, 'OS_NONE');
+                if (!fs.existsSync(pastaOsPath)) {
+                    enviarJson(res, 404, { ok: false, error: 'OS_NONE nao existe' });
+                    return;
+                }
+            } else {
+                pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+                if (!pastaOsNome) {
+                    enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
+                    return;
+                }
+                pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome);
             }
-            const pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome);
             const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(pastaOsPath, gtin, /^(\d+)/);
             if (!pastaGtinNome) {
                 enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
@@ -423,18 +466,28 @@ const server = http.createServer((req, res) => {
             enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin invalidos' });
             return;
         }
-        const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
-        if (!pastaOsNome) {
-            enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
-            return;
+        let pastaOsNome, pastaOsPath;
+        if (os === 'OS_NONE') {
+            pastaOsNome = 'OS_NONE';
+            pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, 'OS_NONE');
+            if (!fs.existsSync(pastaOsPath)) {
+                enviarJson(res, 404, { ok: false, error: 'OS_NONE nao existe' });
+                return;
+            }
+        } else {
+            pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+            if (!pastaOsNome) {
+                enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
+                return;
+            }
+            pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome);
         }
-        const pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome);
         const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(pastaOsPath, gtin, /^(\d+)/);
         if (!pastaGtinNome) {
             enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
             return;
         }
-        const pastaGtinPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome, pastaGtinNome);
+        const pastaGtinPath = path.join(pastaOsPath, pastaGtinNome);
         try {
             const marcas = qaSyndi.obterMarcasOcr(pastaGtinPath);
             enviarJson(res, 200, { ok: true, marcas });
@@ -465,18 +518,28 @@ const server = http.createServer((req, res) => {
                 enviarJson(res, 400, { ok: false, error: 'marcado deve ser true ou false' });
                 return;
             }
-            const pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
-            if (!pastaOsNome) {
-                enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
-                return;
+            let pastaOsNome, pastaOsPath;
+            if (os === 'OS_NONE') {
+                pastaOsNome = 'OS_NONE';
+                pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, 'OS_NONE');
+                if (!fs.existsSync(pastaOsPath)) {
+                    enviarJson(res, 404, { ok: false, error: 'OS_NONE nao existe' });
+                    return;
+                }
+            } else {
+                pastaOsNome = qaSyndi.localizarPastaDecoradaPorPrefixo(qaSyndi.AGCONFERENCIA, os, /^OS_(\d+)/);
+                if (!pastaOsNome) {
+                    enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
+                    return;
+                }
+                pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome);
             }
-            const pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome);
             const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(pastaOsPath, gtin, /^(\d+)/);
             if (!pastaGtinNome) {
                 enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
                 return;
             }
-            const pastaGtinPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome, pastaGtinNome);
+            const pastaGtinPath = path.join(pastaOsPath, pastaGtinNome);
             try {
                 qaSyndi.toggleMarcaOcr(pastaGtinPath, foto, marcado);
                 enviarJson(res, 200, { ok: true });
