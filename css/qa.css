@@ -112,33 +112,9 @@
     font-size: 0.8rem;
     letter-spacing: 0.4px;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 6px;
-}
-
-.qa-os-contagem {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-}
-
-.qa-contagem-item {
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-weight: 700;
-    font-size: 0.85rem;
-    color: #fff;
-    white-space: nowrap;
-}
-
-.qa-contagem-item.chegado {
-    background-color: #28a745;
-}
-
-.qa-contagem-item.falta {
-    background-color: #dc3545;
 }
 
 .qa-os-enviar-btn {

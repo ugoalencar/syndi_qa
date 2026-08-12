@@ -138,14 +138,8 @@
                 <div v-else-if="erroFila" class="text-danger p-2">{{ erroFila }}</div>
                 <div v-else-if="fila.length === 0" class="qa-vazio">Nenhum GTIN aguardando conferência.</div>
                 <div v-else>
-                    <div class="qa-os-grupo" v-for="(grupo, idx) in fila" :key="grupo.os">
-                        <div class="qa-os-titulo">
-                            <span>{{ osComContas[idx] }}</span>
-                            <div v-if="obterContagemOs(grupo.os)" class="qa-os-contagem">
-                                <span class="qa-contagem-item chegado">{{ obterContagemOs(grupo.os).chegou }}</span>
-                                <span class="qa-contagem-item falta">{{ obterContagemOs(grupo.os).falta }}</span>
-                            </div>
-                        </div>
+                    <div class="qa-os-grupo" v-for="grupo in fila" :key="grupo.os">
+                        <div class="qa-os-titulo"><span>OS {{ grupo.os }} ({{ grupo.gtins.length }})</span></div>
                         <div
                             class="qa-gtin-item"
                             v-for="item in grupo.gtins"
