@@ -25,6 +25,7 @@ createApp({
         const marcadas = reactive({});
         const marcadasOcr = reactive({});
         const fotoAtiva = ref(null);
+        const rotacoesLocais = reactive({});
 
         const aprovando = ref(false);
         const enviandoRetrabalho = ref(false);
@@ -478,6 +479,11 @@ createApp({
                 url += '&pastaOsNome=' + encodeURIComponent(detalhe.value.pastaOsNome) +
                     '&pastaGtinNome=' + encodeURIComponent(detalhe.value.pastaGtinNome);
             }
+            // Timestamp pra forcar reload da imagem quando rotacao mudar (cache miss)
+            const chaveRotacao = (selecionado.value.os + '|' + selecionado.value.gtin + '|' + nome);
+            if (rotacoesLocais[chaveRotacao]) {
+                url += '&t=' + rotacoesLocais[chaveRotacao];
+            }
             return url;
         }
 
@@ -746,6 +752,33 @@ createApp({
             resetarZoomImagem();
         }
 
+        async function rotarImagem(nomeComposto) {
+            if (!selecionado.value || !nomeComposto) return;
+            const os = selecionado.value.os;
+            const gtin = selecionado.value.gtin;
+            try {
+                const resp = await fetch(API + '/api/rotar-imagem', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ os, gtin, nome: nomeComposto })
+                });
+                const dados = await resp.json();
+                if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
+                // Atualiza estado local com a nova rotacao pra feedback visual imediato
+                const chaveRotacao = selecionado.value.os + '|' + selecionado.value.gtin + '|' + nomeComposto;
+                rotacoesLocais[chaveRotacao] = dados.rotacao;
+                // Força reload do GTIN pra pegar os dados atualizados do servidor
+                await recarregarDetalheAtual();
+            } catch (err) {
+                console.error('Erro ao rotar imagem:', err);
+            }
+        }
+
+        async function rotarImagemModal() {
+            if (!imagemAmpliada.value || !selecionado.value) return;
+            await rotarImagem(imagemAmpliada.value);
+        }
+
         async function abrirPainelEnvio() {
             if (!selecionado.value || temMarcacao() || preparandoEnvio.value) return;
             const os = selecionado.value.os;
@@ -1012,12 +1045,12 @@ createApp({
             analistaId, analistaNome, erroIdentidade, carregarArquivoIdentidade,
             atualizacaoInfo, verificandoAtualizacao, resultadoAtualizacao, aplicandoAtualizacao, versaoSistema,
             marcandoDestino, marcarDestinoManual, toggleCoding, toggleOcr, toggleSubpasta,
-            imagemAmpliada, listaAmpliada, ampliarImagem, navegarAmpliada,
+            imagemAmpliada, listaAmpliada, ampliarImagem, navegarAmpliada, rotarImagem, rotarImagemModal,
             zoomEscala, zoomOffsetX, zoomOffsetY, zoomArrastando,
             estiloImagemAmpliada, classeImagemAmpliada,
             resetarZoomImagem, alternarZoomImagem, ajustarZoomImagem,
             iniciarArrastoZoom, moverArrastoZoom, finalizarArrastoZoom,
-            carregarFila, selecionarGtin, urlImagem, selecionarFoto, togglarMotivoAtivo, temMarcacao, todasMarcacoesTemMotivo,
+            carregarFila, selecionarGtin, urlImagem, selecionarFoto, togglarMotivoAtivo, temMarcacao, todasMarcacoesTemMotivo, rotacoesLocais,
             aprovarGtin, confirmarRetrabalho, verificarAtualizacao, aplicarAtualizacao, deletarFoto,
             painelEnvio, preparandoEnvio, formEnvio, opcoesResponsavel, abrirPainelEnvio, fecharPainelEnvio,
             orientacoesMockup, orientacoesRecorte, catalogoMockups, mockupsFiltrados, togglarOrientacaoMockup, togglarOrientacaoRecorte,

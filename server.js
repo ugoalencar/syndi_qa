@@ -263,7 +263,9 @@ const server = http.createServer((req, res) => {
         }
         const tamanho = query.get('tamanho') || '';
         if (tamanho === 'mini' || tamanho === 'zoom') {
-            previewImagem.gerarPreview(caminhoImagem, tamanho)
+            const rotacoes = previewImagem.lerRotacoes(pastaGtinPath);
+            const rotacao = rotacoes[nome] || 0;
+            previewImagem.gerarPreview(caminhoImagem, tamanho, rotacao)
                 .then(caminhoPreview => enviarArquivoImagem(res, caminhoPreview))
                 .catch(err => {
                     // Preview quebrado nunca pode deixar a tela em branco - cai pro
@@ -308,6 +310,46 @@ const server = http.createServer((req, res) => {
             try {
                 const resultado = qaSyndi.moverParaSubpastaSyndi(pastaGtinPath, nome, pasta);
                 enviarJson(res, 200, { ok: true, destino: resultado.destino });
+            } catch (err) {
+                enviarJson(res, 400, { ok: false, error: err.message });
+            }
+        });
+        return;
+    }
+
+    if (req.method === 'POST' && req.url === '/api/rotar-imagem') {
+        lerCorpo(req).then(corpo => {
+            let dados;
+            try {
+                dados = JSON.parse(corpo);
+            } catch (err) {
+                enviarJson(res, 400, { ok: false, error: 'JSON invalido' });
+                return;
+            }
+            const os = dados.os;
+            const gtin = dados.gtin;
+            const nome = dados.nome;
+            if (!isNomeSeguro(os) || !isNomeSeguro(gtin) || !isNomeSeguro(nome)) {
+                enviarJson(res, 400, { ok: false, error: 'Parametros os/gtin/nome invalidos' });
+                return;
+            }
+            const osInfo = obterPastaOsPath(os);
+            if (!osInfo) {
+                enviarJson(res, 404, { ok: false, error: 'OS nao encontrada em AgConferencia' });
+                return;
+            }
+            const pastaGtinNome = qaSyndi.localizarPastaDecoradaPorPrefixo(osInfo.pastaOsPath, gtin, /^(\d+)/);
+            if (!pastaGtinNome) {
+                enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
+                return;
+            }
+            const pastaGtinPath = path.join(osInfo.pastaOsPath, pastaGtinNome);
+            try {
+                const rotacoes = previewImagem.lerRotacoes(pastaGtinPath);
+                const rotacaoAtual = rotacoes[nome] || 0;
+                const novaRotacao = (rotacaoAtual + 90) % 360;
+                previewImagem.salvarRotacao(pastaGtinPath, nome, novaRotacao);
+                enviarJson(res, 200, { ok: true, rotacao: novaRotacao });
             } catch (err) {
                 enviarJson(res, 400, { ok: false, error: err.message });
             }

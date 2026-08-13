@@ -248,6 +248,7 @@
                                         <button type="button" class="qa-acao-mini is" title="Mover para Insumos" @click="toggleSubpasta(img.nome, 'IS')">IS</button>
                                         <button type="button" class="qa-acao-mini ap" title="Mover para Apoio" @click="toggleSubpasta(img.nome, 'AP')">AP</button>
                                         <button type="button" class="qa-acao-mini apl" title="Mover para Aplicar" @click="toggleSubpasta(img.nome, 'Aplicar')">APL</button>
+                                        <button type="button" class="qa-acao-mini rotacao" title="Rotar 90°" @click="rotarImagem(img.nome)"><i class="bi bi-arrow-clockwise"></i></button>
                                         <button type="button" class="qa-acao-mini excluir" title="Deletar foto" @click="deletarFoto(img.nome)"><i class="bi bi-trash"></i></button>
                                         <button type="button" class="qa-acao-mini zoom" title="Ampliar" @click="ampliarImagem(img.nome, detalhe.imagens.raiz.map(i => i.nome))"><i class="bi bi-zoom-in"></i></button>
                                     </div>
@@ -271,6 +272,7 @@
                                                 <input type="checkbox" class="qa-checkbox-retrabalho" title="Selecionar para retrabalho" :checked="fotoAtiva === (tag + '/' + img.nome)" @change="selecionarFoto(tag + '/' + img.nome)">
                                                 <button type="button" class="qa-acao-mini ocr" :class="{ ativa: marcadasOcr[tag + '/' + img.nome] }" title="Marcar/desmarcar OCR" @click="toggleOcr(tag + '/' + img.nome)">OCR</button>
                                                 <button type="button" class="qa-acao-mini voltar" title="Tirar da subpasta" @click="toggleSubpasta(img.nome, tag)" style="flex: 1.5;">Voltar</button>
+                                                <button type="button" class="qa-acao-mini rotacao" title="Rotar 90°" @click="rotarImagem(tag + '/' + img.nome)"><i class="bi bi-arrow-clockwise"></i></button>
                                                 <button type="button" class="qa-acao-mini excluir" title="Deletar foto" @click="deletarFoto(tag + '/' + img.nome)"><i class="bi bi-trash"></i></button>
                                                 <button type="button" class="qa-acao-mini zoom" title="Ampliar" @click="ampliarImagem(tag + '/' + img.nome, detalhe.imagens.subpastas[tag].map(i => tag + '/' + i.nome))"><i class="bi bi-zoom-in"></i></button>
                                             </div>
@@ -526,6 +528,9 @@
                             <span class="separator">•</span>
                             <span>Zoom {{ Math.round(zoomEscala * 100) }}%</span>
                         </div>
+                        <button type="button" class="btn btn-outline-light btn-sm" @click="rotarImagemModal" title="Rotar 90°">
+                            <i class="bi bi-arrow-clockwise"></i> Rotar
+                        </button>
                         <button type="button" class="btn btn-outline-light btn-sm" :disabled="zoomEscala === 1" @click="resetarZoomImagem">
                             <i class="bi bi-arrow-counterclockwise"></i> Resetar zoom
                         </button>

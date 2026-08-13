@@ -367,6 +367,7 @@
 .qa-acao-mini.apl { border-color: #17a2b8; color: #17a2b8; }
 
 .qa-acao-mini.zoom { border-color: var(--primary); color: var(--primary); }
+.qa-acao-mini.rotacao { border-color: #20c997; color: #20c997; }
 .qa-acao-mini.excluir { border-color: var(--danger); color: var(--danger); }
 
 .qa-acao-mini.voltar {
