@@ -9,3 +9,7 @@ diagnostico.txt
 preview-cache/
 .env
 .superpowers/
+# Material de referencia do tema Syndigo (mockups de ~500KB cada). O tema ja
+# esta copiado em css/syndigo-tema.css e o simbolo esta inline no HTML, entao
+# nada disso precisa viajar para os terminais a cada clone.
+css/files/
