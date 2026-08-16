@@ -1,0 +1,135 @@
+/* ============================================================
+   SPhoto — tema Syndigo
+   Arquivo de sobreposicao. Nao substitui sphoto.css nem qa.css:
+   entra DEPOIS deles e so troca cor.
+
+   Como usar (nos 4 HTMLs: index, qa, monitor, teste-standalone),
+   logo abaixo do link do sphoto.css / qa.css:
+
+       <link rel="stylesheet" href="css/syndigo-tema.css">
+
+   Nada aqui depende de internet.
+   ============================================================ */
+
+:root{
+  /* --- superficies --- */
+  --bg-body:#05121E;        /* era #121212 */
+  --bg-card:#0A1B2A;        /* era #1e1e1e */
+  --bg-input:#0F2739;       /* era #2a2a2a */
+  --border:#1B3A52;         /* era #333    */
+  --text:#E8F0F7;           /* era #e0e0e0 */
+  --text-muted:#6E8799;     /* era #888    */
+
+  /* --- marca --- */
+  --primary:#0473EA;        /* era #1976d2 — azul Syndigo */
+  --success:#38D201;        /* era #28a745 — verde Syndigo */
+  --warning:#F5A524;
+  --danger:#E5484D;
+  --info:#22B8CF;
+
+  /* --- codigos de subpasta (mesma leitura que a equipe ja tem) --- */
+  --syn-rt:#FF7A1A;
+  --syn-is:#22B8CF;
+  --syn-ap:#A855F7;
+  --syn-coding:#F5A524;
+
+  --syn-blue-hi:#2E8FF5;
+  --syn-green-hi:#5BE62B;
+}
+
+/* ---- Bootstrap: os utilitarios que o projeto usa ---- */
+.btn-primary{--bs-btn-bg:#0473EA;--bs-btn-border-color:#0473EA;
+             --bs-btn-hover-bg:#2E8FF5;--bs-btn-hover-border-color:#2E8FF5;
+             --bs-btn-active-bg:#0361C6;--bs-btn-active-border-color:#0361C6}
+.btn-success{--bs-btn-bg:#38D201;--bs-btn-border-color:#38D201;--bs-btn-color:#052A00;
+             --bs-btn-hover-bg:#5BE62B;--bs-btn-hover-border-color:#5BE62B;--bs-btn-hover-color:#052A00;
+             --bs-btn-active-bg:#2FB101;--bs-btn-active-border-color:#2FB101;--bs-btn-active-color:#052A00}
+.btn-outline-danger{--bs-btn-color:#E5484D;--bs-btn-border-color:#3A2226;
+                    --bs-btn-hover-bg:#E5484D;--bs-btn-hover-border-color:#E5484D}
+.text-primary{color:#2E8FF5!important}
+.text-success{color:#5BE62B!important}
+.bg-dark{background-color:#0A1B2A!important}
+.table{--bs-table-color:var(--text);--bs-table-bg:transparent;
+       --bs-table-border-color:#12293C;--bs-table-hover-bg:rgba(4,115,234,.10)}
+.form-control,.form-select,.input-group-text{
+  background-color:var(--bg-input);border-color:var(--border);color:var(--text)}
+.form-control:focus,.form-select:focus{
+  background-color:var(--bg-input);border-color:#0473EA;color:var(--text);
+  box-shadow:0 0 0 .2rem rgba(4,115,234,.25)}
+.form-control::placeholder{color:var(--text-muted)}
+.form-check-input:checked{background-color:#38D201;border-color:#38D201}
+.modal-content{border:1px solid var(--border)}
+.alert-info{background-color:rgba(34,184,207,.10);border-color:rgba(34,184,207,.35);color:#8FE3EF}
+.alert-danger{background-color:rgba(229,72,77,.10);border-color:rgba(229,72,77,.35);color:#FF9A9D}
+
+/* ---- header ---- */
+.header{
+  background-color:#081726;
+  border-bottom:1px solid var(--border);
+  box-shadow:0 1px 0 rgba(4,115,234,.35);
+}
+.header-title{letter-spacing:-.005em}
+.header-versao{color:var(--text-muted)}
+
+/* GTIN, OS, nome de arquivo e porta: numero longo lido contra codigo de
+   barras nao pode dancar na tela — largura de digito fixa. */
+#inputGtin,#inputOs,#inputQtdeGtin,
+#infoNome,#infoResolucao,#infoTamanho,#infoData,
+.frame .cap .n{
+  font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.02em;
+}
+#inputGtin{font-size:16px}
+
+/* ---- codigos de subpasta ---- */
+.legenda-cores-cor.coding{background-color:var(--syn-coding)!important}
+.legenda-cores-cor.rt{background-color:var(--syn-rt)!important}
+.legenda-cores-cor.is{background-color:var(--syn-is)!important}
+.legenda-cores-cor.ap{background-color:var(--syn-ap)!important}
+.check-subpasta-wrapper.rt label{color:var(--syn-rt)}
+.check-subpasta-wrapper.is label{color:var(--syn-is)}
+.check-subpasta-wrapper.ap label{color:var(--syn-ap)}
+.subpasta-preview-item.rt img{border-color:var(--syn-rt);box-shadow:0 0 0 1px var(--syn-rt)}
+.subpasta-preview-item.is img{border-color:var(--syn-is);box-shadow:0 0 0 1px var(--syn-is)}
+.subpasta-preview-item.ap img{border-color:var(--syn-ap);box-shadow:0 0 0 1px var(--syn-ap)}
+.miniatura.tem-coding{border-color:var(--syn-coding)}
+
+/* ---- QA Hub ---- */
+.qa-top-tab-btn[aria-selected="true"],.qa-top-tab-btn.ativa{
+  background-color:rgba(4,115,234,.22)}
+.qa-gtin-item.ativa,.qa-gtin-item.selecionado{background-color:rgba(4,115,234,.14)}
+.qa-destino-eua{background-color:var(--syn-is)}
+.qa-destino-brasil{background-color:#38D201;color:#052A00}
+.qa-acao-mini.coding{border-color:var(--syn-coding);color:var(--syn-coding)}
+
+/* ---- foco visivel de teclado (a estacao e usada muito no tab) ---- */
+:focus-visible{outline:2px solid #2E8FF5;outline-offset:2px}
+
+/* ---- trilho: o simbolo da Syndigo como indicador de etapa ----
+   Capturada > Finalizada > QA > Enviada.
+   Marcacao sugerida, para a lista de GTINs:
+
+     <span class="syn-trilho">
+       <i class="feito"></i><i class="feito"></i><i></i><i></i>
+     </span>
+
+   Adicione a classe "feito" a cada etapa vencida; na quarta,
+   use "feito ultima" — o verde so aparece quando a foto saiu daqui. */
+.syn-trilho{display:inline-flex;flex-direction:column;gap:2px;width:26px;vertical-align:middle}
+.syn-trilho i{display:block;height:3px;border-radius:999px;background:#1E4363}
+.syn-trilho i:nth-child(1){width:16px}
+.syn-trilho i:nth-child(2){width:24px}
+.syn-trilho i:nth-child(3){width:11px}
+.syn-trilho i:nth-child(4){width:20px}
+.syn-trilho i.feito{background:#0473EA}
+.syn-trilho i.feito.ultima{background:#38D201}
+
+.syn-trilho.grande{width:82px;gap:5px}
+.syn-trilho.grande i{height:9px}
+.syn-trilho.grande i:nth-child(1){width:56px}
+.syn-trilho.grande i:nth-child(2){width:82px}
+.syn-trilho.grande i:nth-child(3){width:40px}
+.syn-trilho.grande i:nth-child(4){width:68px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
