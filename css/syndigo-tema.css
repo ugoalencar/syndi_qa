@@ -1,0 +1,246 @@
+/* ============================================================
+   SPhoto — tema Syndigo
+   Arquivo de sobreposicao. Nao substitui sphoto.css nem qa.css:
+   entra DEPOIS deles e so troca cor.
+
+   Como usar (nos 4 HTMLs: index, qa, monitor, teste-standalone),
+   logo abaixo do link do sphoto.css / qa.css:
+
+       <link rel="stylesheet" href="css/syndigo-tema.css">
+
+   Nada aqui depende de internet.
+   ============================================================ */
+
+:root{
+  /* --- superficies --- */
+  --bg-body:#05121E;        /* era #121212 */
+  --bg-card:#0A1B2A;        /* era #1e1e1e */
+  --bg-input:#0F2739;       /* era #2a2a2a */
+  --border:#1B3A52;         /* era #333    */
+  --text:#E8F0F7;           /* era #e0e0e0 */
+  --text-muted:#6E8799;     /* era #888    */
+
+  /* --- marca --- */
+  --primary:#0473EA;        /* era #1976d2 — azul Syndigo */
+  --success:#38D201;        /* era #28a745 — verde Syndigo */
+  --warning:#F5A524;
+  --danger:#E5484D;
+  --info:#22B8CF;
+
+  /* --- codigos de subpasta (mesma leitura que a equipe ja tem) --- */
+  --syn-rt:#FF7A1A;
+  --syn-is:#22B8CF;
+  --syn-ap:#A855F7;
+  --syn-coding:#F5A524;
+
+  --syn-blue-hi:#2E8FF5;
+  --syn-green-hi:#5BE62B;
+}
+
+/* ---- Bootstrap: os utilitarios que o projeto usa ---- */
+.btn-primary{--bs-btn-bg:#0473EA;--bs-btn-border-color:#0473EA;
+             --bs-btn-hover-bg:#2E8FF5;--bs-btn-hover-border-color:#2E8FF5;
+             --bs-btn-active-bg:#0361C6;--bs-btn-active-border-color:#0361C6}
+.btn-success{--bs-btn-bg:#38D201;--bs-btn-border-color:#38D201;--bs-btn-color:#052A00;
+             --bs-btn-hover-bg:#5BE62B;--bs-btn-hover-border-color:#5BE62B;--bs-btn-hover-color:#052A00;
+             --bs-btn-active-bg:#2FB101;--bs-btn-active-border-color:#2FB101;--bs-btn-active-color:#052A00}
+.btn-outline-danger{--bs-btn-color:#E5484D;--bs-btn-border-color:#3A2226;
+                    --bs-btn-hover-bg:#E5484D;--bs-btn-hover-border-color:#E5484D}
+.text-primary{color:#2E8FF5!important}
+.text-success{color:#5BE62B!important}
+.bg-dark{background-color:#0A1B2A!important}
+.table{--bs-table-color:var(--text);--bs-table-bg:transparent;
+       --bs-table-border-color:#12293C;--bs-table-hover-bg:rgba(4,115,234,.10)}
+.form-control,.form-select,.input-group-text{
+  background-color:var(--bg-input);border-color:var(--border);color:var(--text)}
+.form-control:focus,.form-select:focus{
+  background-color:var(--bg-input);border-color:#0473EA;color:var(--text);
+  box-shadow:0 0 0 .2rem rgba(4,115,234,.25)}
+.form-control::placeholder{color:var(--text-muted)}
+.form-check-input:checked{background-color:#38D201;border-color:#38D201}
+.modal-content{border:1px solid var(--border)}
+.alert-info{background-color:rgba(34,184,207,.10);border-color:rgba(34,184,207,.35);color:#8FE3EF}
+.alert-danger{background-color:rgba(229,72,77,.10);border-color:rgba(229,72,77,.35);color:#FF9A9D}
+
+/* ---- header ---- */
+.header{
+  background-color:#081726;
+  border-bottom:1px solid var(--border);
+  box-shadow:0 1px 0 rgba(4,115,234,.35);
+}
+.header-title{letter-spacing:-.005em}
+.header-versao{color:var(--text-muted)}
+
+/* GTIN, OS, nome de arquivo e porta: numero longo lido contra codigo de
+   barras nao pode dancar na tela — largura de digito fixa. */
+#inputGtin,#inputOs,#inputQtdeGtin,
+#infoNome,#infoResolucao,#infoTamanho,#infoData,
+.frame .cap .n{
+  font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.02em;
+}
+#inputGtin{font-size:16px}
+
+/* ---- codigos de subpasta ---- */
+.legenda-cores-cor.coding{background-color:var(--syn-coding)!important}
+.legenda-cores-cor.rt{background-color:var(--syn-rt)!important}
+.legenda-cores-cor.is{background-color:var(--syn-is)!important}
+.legenda-cores-cor.ap{background-color:var(--syn-ap)!important}
+.check-subpasta-wrapper.rt label{color:var(--syn-rt)}
+.check-subpasta-wrapper.is label{color:var(--syn-is)}
+.check-subpasta-wrapper.ap label{color:var(--syn-ap)}
+.subpasta-preview-item.rt img{border-color:var(--syn-rt);box-shadow:0 0 0 1px var(--syn-rt)}
+.subpasta-preview-item.is img{border-color:var(--syn-is);box-shadow:0 0 0 1px var(--syn-is)}
+.subpasta-preview-item.ap img{border-color:var(--syn-ap);box-shadow:0 0 0 1px var(--syn-ap)}
+.miniatura.tem-coding{border-color:var(--syn-coding)}
+
+/* ---- QA Hub ---- */
+.qa-top-tab-btn[aria-selected="true"],.qa-top-tab-btn.ativa{
+  background-color:rgba(4,115,234,.22)}
+.qa-gtin-item.ativo{background-color:rgba(4,115,234,.14)}
+.qa-destino-eua{background-color:var(--syn-is)}
+.qa-destino-brasil{background-color:#38D201;color:#052A00}
+.qa-acao-mini.coding{border-color:var(--syn-coding);color:var(--syn-coding)}
+/* --success novo (#38D201) com texto branco fica em 2.02:1, quase ilegivel.
+   Mesmo padrao de texto escuro que .btn-success e .qa-destino-brasil ja usam
+   em fundo verde. */
+.qa-destino-btn.recorte.ativa,
+.qa-destino-btn.mockup.ativa{color:#052A00}
+
+/* ---- foco visivel de teclado (a estacao e usada muito no tab) ---- */
+:focus-visible{outline:2px solid #2E8FF5;outline-offset:2px}
+
+/* ---- trilho: o simbolo da Syndigo como indicador de etapa ----
+   Capturada > Finalizada > QA > Enviada.
+   Marcacao sugerida, para a lista de GTINs:
+
+     <span class="syn-trilho">
+       <i class="feito"></i><i class="feito"></i><i></i><i></i>
+     </span>
+
+   Adicione a classe "feito" a cada etapa vencida; na quarta,
+   use "feito ultima" — o verde so aparece quando a foto saiu daqui. */
+.syn-trilho{display:inline-flex;flex-direction:column;gap:2px;width:26px;vertical-align:middle}
+.syn-trilho i{display:block;height:3px;border-radius:999px;background:#1E4363}
+.syn-trilho i:nth-child(1){width:16px}
+.syn-trilho i:nth-child(2){width:24px}
+.syn-trilho i:nth-child(3){width:11px}
+.syn-trilho i:nth-child(4){width:20px}
+.syn-trilho i.feito{background:#0473EA}
+.syn-trilho i.feito.ultima{background:#38D201}
+
+.syn-trilho.grande{width:82px;gap:5px}
+.syn-trilho.grande i{height:9px}
+.syn-trilho.grande i:nth-child(1){width:56px}
+.syn-trilho.grande i:nth-child(2){width:82px}
+.syn-trilho.grande i:nth-child(3){width:40px}
+.syn-trilho.grande i:nth-child(4){width:68px}
+
+/* Respeita "reduzir movimento", mas preserva .qa-girando: e o unico
+   indicador de requisicao em voo da tela. Congelado, o usuario nao
+   distingue "buscando" de "travado" e clica de novo. */
+@media (prefers-reduced-motion:reduce){
+  *:not(.qa-girando){transition:none!important;animation:none!important}
+}
+
+/* ============================================================
+   Residuos hardcoded do syndi_qa — grupo 1 e 2
+
+   O :root la em cima resolve tudo que USA variavel. Estes pontos
+   escrevem o hex direto no sphoto.css, entao a redefinicao nao os
+   alcanca e precisam de seletor proprio aqui.
+
+   Nao "arrume" isso editando o sphoto.css: ele e gemeo dos que rodam
+   em c:\sphoto e c:\sphoto-terminais, e editar aqui cria divergencia
+   silenciosa entre os tres pacotes.
+   ============================================================ */
+
+:root{
+  /* poco escuro: fundo do visualizador de imagem, mais fundo que o body.
+     A foto tem que ser a coisa mais clara da tela, senao a avaliacao de
+     cor do produto fica enviesada pelo entorno. */
+  --syn-poco:#04101A;
+}
+
+/* ---- grupo A: renderiza no syndi_qa.html ---- */
+
+.form-control::placeholder{color:var(--text-muted)}
+.form-text{color:var(--text-muted)}
+
+#modalImagem .modal-content{background-color:var(--syn-poco)}
+#modalImagem .modal-body{background-color:var(--syn-poco)}
+.qa-modal-zoom-area{background-color:var(--syn-poco)}
+
+.info-imagem .separator{color:var(--border)}
+
+::-webkit-scrollbar-thumb{background:var(--border)}
+::-webkit-scrollbar-thumb:hover{background:#2A5578}
+
+/* hover: sem isto o hover do CSS proprio diverge do hover que o overlay
+   ja define para os botoes Bootstrap la em cima */
+.btn-primary:hover{background-color:#0361C6;border-color:#0361C6}
+.btn-success:hover{background-color:#2FB101;border-color:#2FB101}
+
+/* ---- grupo B: nao renderiza no syndi_qa.html hoje ----
+   Entra por seguranca, caso alguem adicione a classe depois. NAO foi
+   verificado no navegador — nao da pra verificar o que nao aparece. */
+.table th{background-color:var(--bg-input)}
+.status-salvo{color:var(--syn-poco)}
+.status-retrabalho{background-color:var(--bg-card);border-color:var(--border)}
+.form-control:read-only{background-color:var(--bg-input)}
+.input-group-text{background-color:var(--bg-input)}
+.nav-tabs .nav-link:hover{border-bottom-color:var(--border)}
+.legenda-cores{background-color:var(--bg-input)}
+
+/* ============================================================
+   Codigos de subpasta — grupo 3
+
+   O overlay original so cobria .coding, porque foi escrito olhando a
+   tela de captura do sphoto. Aqui no QA as outras variantes tambem
+   renderizam.
+
+   Estas cores NAO sao decoracao: a equipe le a subpasta pela cor. Elas
+   tem que continuar mutuamente distinguiveis — se um dia alguem quiser
+   "harmonizar" a paleta, e aqui que se quebra a leitura da operacao.
+   ============================================================ */
+
+:root{
+  --syn-ocr:#7C5CFF;      /* era #6f42c1 */
+  --syn-rotacao:#2DD4A7;  /* era #20c997 */
+  --syn-apl:#EC4899;      /* era #17a2b8 — colidia com IS, ver abaixo */
+}
+
+/* ---- botoes de acao da miniatura ---- */
+.qa-acao-mini.rt{border-color:var(--syn-rt);color:var(--syn-rt)}
+.qa-acao-mini.is{border-color:var(--syn-is);color:var(--syn-is)}
+.qa-acao-mini.ap{border-color:var(--syn-ap);color:var(--syn-ap)}
+.qa-acao-mini.coding{border-color:var(--syn-coding);color:var(--syn-coding)}
+.qa-acao-mini.ocr{border-color:var(--syn-ocr);color:var(--syn-ocr)}
+.qa-acao-mini.rotacao{border-color:var(--syn-rotacao);color:var(--syn-rotacao)}
+
+/* COLISAO 1: .apl usava o literal #17a2b8, exatamente o mesmo valor que
+   var(--info) entrega para .is. Dois codigos diferentes, pixel identicos,
+   os dois em uso na tela. APL ganha tom proprio. */
+.qa-acao-mini.apl{border-color:var(--syn-apl);color:var(--syn-apl)}
+
+/* estado ativo: fundo na cor do codigo, texto escuro por cima */
+.qa-acao-mini.coding.ativa{background-color:var(--syn-coding);color:var(--syn-poco)}
+
+/* COLISAO 2: .ocr.ativa era #ffc107, o mesmo amarelo de .coding.ativa.
+   OCR ativo e coding ativo ficavam identicos. */
+.qa-acao-mini.ocr.ativa{background-color:var(--syn-ocr);color:#FFFFFF}
+
+/* ---- moldura da miniatura no QA ---- */
+.qa-miniatura.tem-rt{border-color:var(--syn-rt);box-shadow:0 0 0 2px var(--syn-rt)}
+.qa-miniatura.tem-ap{border-color:var(--syn-ap);box-shadow:0 0 0 2px var(--syn-ap)}
+.qa-miniatura.tem-ocr{border-color:var(--syn-ocr);box-shadow:0 0 0 2px var(--syn-ocr)}
+
+/* ---- legenda ---- */
+.qa-legenda-cor.rt{background-color:var(--syn-rt)}
+.qa-legenda-cor.ap{background-color:var(--syn-ap)}
+
+/* ---- miniatura herdada do sphoto.css (7 usos no syndi_qa.html) ---- */
+.miniatura.tem-rt{border-color:var(--syn-rt);box-shadow:0 0 0 2px var(--syn-rt)}
+.miniatura.tem-ap{border-color:var(--syn-ap);box-shadow:0 0 0 2px var(--syn-ap)}
+.miniatura.tem-coding{border-color:var(--syn-coding);box-shadow:0 0 0 2px var(--syn-coding)}
