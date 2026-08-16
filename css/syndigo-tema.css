@@ -182,3 +182,55 @@
 .input-group-text{background-color:var(--bg-input)}
 .nav-tabs .nav-link:hover{border-bottom-color:var(--border)}
 .legenda-cores{background-color:var(--bg-input)}
+
+/* ============================================================
+   Codigos de subpasta — grupo 3
+
+   O overlay original so cobria .coding, porque foi escrito olhando a
+   tela de captura do sphoto. Aqui no QA as outras variantes tambem
+   renderizam.
+
+   Estas cores NAO sao decoracao: a equipe le a subpasta pela cor. Elas
+   tem que continuar mutuamente distinguiveis — se um dia alguem quiser
+   "harmonizar" a paleta, e aqui que se quebra a leitura da operacao.
+   ============================================================ */
+
+:root{
+  --syn-ocr:#7C5CFF;      /* era #6f42c1 */
+  --syn-rotacao:#2DD4A7;  /* era #20c997 */
+  --syn-apl:#EC4899;      /* era #17a2b8 — colidia com IS, ver abaixo */
+}
+
+/* ---- botoes de acao da miniatura ---- */
+.qa-acao-mini.rt{border-color:var(--syn-rt);color:var(--syn-rt)}
+.qa-acao-mini.is{border-color:var(--syn-is);color:var(--syn-is)}
+.qa-acao-mini.ap{border-color:var(--syn-ap);color:var(--syn-ap)}
+.qa-acao-mini.coding{border-color:var(--syn-coding);color:var(--syn-coding)}
+.qa-acao-mini.ocr{border-color:var(--syn-ocr);color:var(--syn-ocr)}
+.qa-acao-mini.rotacao{border-color:var(--syn-rotacao);color:var(--syn-rotacao)}
+
+/* COLISAO 1: .apl usava o literal #17a2b8, exatamente o mesmo valor que
+   var(--info) entrega para .is. Dois codigos diferentes, pixel identicos,
+   os dois em uso na tela. APL ganha tom proprio. */
+.qa-acao-mini.apl{border-color:var(--syn-apl);color:var(--syn-apl)}
+
+/* estado ativo: fundo na cor do codigo, texto escuro por cima */
+.qa-acao-mini.coding.ativa{background-color:var(--syn-coding);color:var(--syn-poco)}
+
+/* COLISAO 2: .ocr.ativa era #ffc107, o mesmo amarelo de .coding.ativa.
+   OCR ativo e coding ativo ficavam identicos. */
+.qa-acao-mini.ocr.ativa{background-color:var(--syn-ocr);color:#FFFFFF}
+
+/* ---- moldura da miniatura no QA ---- */
+.qa-miniatura.tem-rt{border-color:var(--syn-rt);box-shadow:0 0 0 2px var(--syn-rt)}
+.qa-miniatura.tem-ap{border-color:var(--syn-ap);box-shadow:0 0 0 2px var(--syn-ap)}
+.qa-miniatura.tem-ocr{border-color:var(--syn-ocr);box-shadow:0 0 0 2px var(--syn-ocr)}
+
+/* ---- legenda ---- */
+.qa-legenda-cor.rt{background-color:var(--syn-rt)}
+.qa-legenda-cor.ap{background-color:var(--syn-ap)}
+
+/* ---- miniatura herdada do sphoto.css (7 usos no syndi_qa.html) ---- */
+.miniatura.tem-rt{border-color:var(--syn-rt);box-shadow:0 0 0 2px var(--syn-rt)}
+.miniatura.tem-ap{border-color:var(--syn-ap);box-shadow:0 0 0 2px var(--syn-ap)}
+.miniatura.tem-coding{border-color:var(--syn-coding);box-shadow:0 0 0 2px var(--syn-coding)}
