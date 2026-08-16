@@ -101,14 +101,19 @@ nao do implementador.
 ## Implementacao
 
 1. Copiar `css/files/syndigo-tema.css` → `css/syndigo-tema.css`
-2. Copiar `css/files/syndigo-simbolo.svg` → `img/syndigo-simbolo.svg`
+2. Criar a pasta `img/` (nao existe hoje) e copiar
+   `css/files/syndigo-simbolo.svg` → `img/syndigo-simbolo.svg`
 3. Acrescentar ao `syndigo-tema.css` um bloco delimitado e comentado
    (`/* ---- residuos hardcoded do syndi_qa ---- */`) com os 3 grupos acima
 4. `<link rel="stylesheet" href="css/syndigo-tema.css">` em `syndi_qa.html` e
    `monitor.html`, **depois** dos links de sphoto.css e qa.css
 5. `<img class="logo" src="img/syndigo-simbolo.svg" alt="Syndigo">` antes do
-   `.header-title`. O `.logo` ja existe (`height:32px`) e o `.header-left` ja e flex com
-   `gap:12px` — nada se desloca.
+   `.header-title`, **so no `syndi_qa.html`**. O `monitor.html` nao tem header: e um card
+   centralizado, sem `.header-title`. O `.logo` ja existe (`height:32px`) e o
+   `.header-left` ja e flex com `gap:12px` — nada se desloca.
+
+Nota sobre o `monitor.html`: o `<style>` inline dele usa exclusivamente `var(--…)`, sem
+nenhum hex. O overlay cobre aquela tela inteira sem precisar de regra adicional.
 
 ## Restricoes
 
@@ -121,8 +126,9 @@ nao do implementador.
 
 ## Verificacao
 
-Abrir `syndi_qa.html` e `monitor.html` no navegador em `http://localhost:3000` (nao
-`file://`) com Ctrl+Shift+R, e comparar com `css/files/syndi-qa-layout.html`.
+Abrir no navegador em `http://localhost:3001` (nao `file://` — o proprio `monitor.html`
+redireciona para a porta 3001) com Ctrl+Shift+R, e comparar com
+`css/files/syndi-qa-layout.html`.
 
 Conferir explicitamente:
 - nenhum residuo cinza-neutro contra o navy
