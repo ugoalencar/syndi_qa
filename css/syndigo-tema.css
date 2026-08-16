@@ -133,3 +133,52 @@
 .syn-trilho.grande i:nth-child(4){width:68px}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ============================================================
+   Residuos hardcoded do syndi_qa — grupo 1 e 2
+
+   O :root la em cima resolve tudo que USA variavel. Estes pontos
+   escrevem o hex direto no sphoto.css, entao a redefinicao nao os
+   alcanca e precisam de seletor proprio aqui.
+
+   Nao "arrume" isso editando o sphoto.css: ele e gemeo dos que rodam
+   em c:\sphoto e c:\sphoto-terminais, e editar aqui cria divergencia
+   silenciosa entre os tres pacotes.
+   ============================================================ */
+
+:root{
+  /* poco escuro: fundo do visualizador de imagem, mais fundo que o body.
+     A foto tem que ser a coisa mais clara da tela, senao a avaliacao de
+     cor do produto fica enviesada pelo entorno. */
+  --syn-poco:#04101A;
+}
+
+/* ---- grupo A: renderiza no syndi_qa.html ---- */
+
+.form-control::placeholder{color:var(--text-muted)}
+.form-text{color:var(--text-muted)}
+
+#modalImagem .modal-content{background-color:var(--syn-poco)}
+#modalImagem .modal-body{background-color:var(--syn-poco)}
+.qa-modal-zoom-area{background-color:var(--syn-poco)}
+
+.info-imagem .separator{color:var(--border)}
+
+::-webkit-scrollbar-thumb{background:var(--border)}
+::-webkit-scrollbar-thumb:hover{background:#2A5578}
+
+/* hover: sem isto o hover do CSS proprio diverge do hover que o overlay
+   ja define para os botoes Bootstrap la em cima */
+.btn-primary:hover{background-color:#0361C6;border-color:#0361C6}
+.btn-success:hover{background-color:#2FB101;border-color:#2FB101}
+
+/* ---- grupo B: nao renderiza no syndi_qa.html hoje ----
+   Entra por seguranca, caso alguem adicione a classe depois. NAO foi
+   verificado no navegador — nao da pra verificar o que nao aparece. */
+.table th{background-color:var(--bg-input)}
+.status-salvo{color:var(--syn-poco)}
+.status-retrabalho{background-color:var(--bg-card);border-color:var(--border)}
+.form-control:read-only{background-color:var(--bg-input)}
+.input-group-text{background-color:var(--bg-input)}
+.nav-tabs .nav-link:hover{border-bottom-color:var(--border)}
+.legenda-cores{background-color:var(--bg-input)}
