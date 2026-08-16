@@ -18,6 +18,7 @@
         <header class="header">
             <div class="header-inner">
                 <div class="header-left">
+                    <img class="logo" src="img/syndigo-simbolo.svg" alt="Syndigo">
                     <span class="header-title">Syndi_qa</span>
                     <span v-if="versaoSistema && versaoSistema.ok && versaoSistema.versao && versaoSistema.versao !== 'dev'" class="qa-versao-sistema" :title="(versaoSistema.nome || 'Syndi_qa') + ' ' + versaoSistema.versao + (versaoSistema.data ? ' (' + versaoSistema.data + ')' : '') + (versaoSistema.git ? ' · ' + versaoSistema.git : '')">v{{ versaoSistema.versao }}</span>
                 </div>
