@@ -244,3 +244,12 @@
 .miniatura.tem-rt{border-color:var(--syn-rt);box-shadow:0 0 0 2px var(--syn-rt)}
 .miniatura.tem-ap{border-color:var(--syn-ap);box-shadow:0 0 0 2px var(--syn-ap)}
 .miniatura.tem-coding{border-color:var(--syn-coding);box-shadow:0 0 0 2px var(--syn-coding)}
+
+/* O sphoto.css:412-416 redefine .btn-success com propriedade direta
+   (color:white), e nao pela API de variaveis do Bootstrap. Entao o
+   --bs-btn-color que este tema seta la em cima nunca e lido, e o branco
+   fica em cima do verde novo: 2.02:1, medido no navegador. Precisa ser
+   propriedade direta pra vencer. Vale pro botao Salvar, que e a acao
+   principal da tela de captura. */
+.btn-success{color:#052A00}
+.btn-success:hover{color:#052A00}
