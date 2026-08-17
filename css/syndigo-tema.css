@@ -253,3 +253,54 @@
    principal da tela de captura. */
 .btn-success{color:#052A00}
 .btn-success:hover{color:#052A00}
+
+/* ============================================================
+   Residuos hardcoded do syndi_qa — grupo 4 (fechamento)
+
+   sphoto.css e gemeo do que roda em c:\sphoto e c:\sphoto-terminais
+   (so muda o CRLF) — os 11 residuos abaixo sao os mesmos hex sem
+   variavel, confirmados por grep nas mesmas linhas antes de escrever.
+   ============================================================ */
+
+.btn-config:hover{background-color:rgba(4,115,234,.1)}
+.table td{border-bottom-color:var(--border)}
+.table tbody tr.table-active,
+.table tbody tr.ativo{background-color:rgba(4,115,234,.12)!important}
+/* borda do campo somente-leitura: grupo B ja cobria o fundo (linha 191),
+   faltava a borda (era #2a2a2a, mesmo papel de var(--border)). */
+.form-control:read-only{border-color:var(--border)}
+.check-coding-wrapper{background-color:var(--bg-input)}
+.check-ocr-wrapper{background-color:var(--bg-input)}
+.check-subpasta-wrapper{background-color:var(--bg-input)}
+.btn-outline-secondary:hover{background-color:var(--bg-input)}
+.miniatura .btn-deletar{background-color:rgba(229,72,77,.9)}
+/* legenda da miniatura: #aaa sobre navy do body da ~8.1:1. var(--text-muted)
+   cai pra ~4.65:1 (medido sobre --bg-card) — ainda acima do minimo 4.5:1,
+   e mantem a leitura "texto secundario" que o resto do tema ja usa. */
+.info-imagem{color:var(--text-muted)}
+/* spinner: a base usa "border: 3px solid #333" (atalho com LARGURA). So a
+   cor aqui — largura de borda e regra de layout, fora de escopo. */
+.loading-spinner{border-color:var(--bg-input);border-top-color:var(--primary)}
+
+/* ---- contrastes marginais ----
+   status-aberto (sphoto.css) e qa-destino-indefinido (qa.css) usam
+   color:#fff sobre var(--danger) #E5484D = 3.92:1, abaixo do minimo. Com
+   o vermelho antigo #dc3545 dava 4.53:1 — escurece so o FUNDO do badge e
+   mantem o texto branco (nao troca pra texto escuro, que ficaria estranho
+   num alerta vermelho). #B8323A com branco = 5.91:1. */
+.status-aberto{background-color:#B8323A}
+.qa-destino-indefinido{background-color:#B8323A}
+
+/* btn-outline-danger dentro de card/modal: texto var(--danger) #E5484D
+   sobre --bg-card #0A1B2A = 4.46:1, marginal. Texto sobre fundo escuro,
+   entao a saida e CLAREAR o vermelho do texto. #FF7A7E sobre --bg-card =
+   6.93:1. sphoto.css redefine .btn-outline-danger com propriedade direta
+   (nao usa --bs-btn-color), a sobreposicao tem que ser direta tambem. */
+.btn-outline-danger{color:#FF7A7E;border-color:#FF7A7E}
+.btn-outline-danger:hover{color:#fff}
+
+/* NAO MEXIDO DE PROPOSITO: form-check-input:checked usa o SVG branco de
+   check do Bootstrap por cima do preenchimento verde (~2:1). E um icone,
+   nao texto, e o preenchimento verde solido ja e o sinal principal de
+   "marcado" — o check e reforco redundante. Trocar o SVG exigiria
+   sobrescrever o data-uri do Bootstrap (fora do escopo "so cor"). */
