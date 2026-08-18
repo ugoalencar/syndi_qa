@@ -266,9 +266,17 @@ const server = http.createServer((req, res) => {
             return;
         }
         const tamanho = query.get('tamanho') || '';
+        const rotacoes = previewImagem.lerRotacoes(pastaGtinPath);
+        const rotacao = rotacoes[nome] || 0;
+        // Zoom sem rotacao pendente serve o arquivo original direto, sem passar pelo sharp -
+        // decisao consciente (ver docs/superpowers/specs), o QA precisa comparar fidelidade
+        // de cor/nitidez com o original, nao so composicao. So passa pelo sharp se tiver
+        // rotacao aplicada (inevitavel reencodar pra girar um JPEG).
+        if (tamanho === 'zoom' && rotacao === 0) {
+            enviarArquivoImagem(res, caminhoImagem);
+            return;
+        }
         if (tamanho === 'mini' || tamanho === 'zoom') {
-            const rotacoes = previewImagem.lerRotacoes(pastaGtinPath);
-            const rotacao = rotacoes[nome] || 0;
             previewImagem.gerarPreview(caminhoImagem, tamanho, rotacao)
                 .then(caminhoPreview => enviarArquivoImagem(res, caminhoPreview))
                 .catch(err => {
