@@ -196,7 +196,7 @@
                 <div v-else-if="erroFila" class="text-danger p-2">{{ erroFila }}</div>
                 <div v-else-if="fila.length === 0" class="qa-vazio">Nenhum GTIN aguardando conferência.</div>
                 <div v-else>
-                    <div v-if="mostrarOsNone && (carregandoOsNone || osNone.length > 0)" class="qa-os-grupo">
+                    <div v-if="mostrarOsNone" class="qa-os-grupo">
                         <div class="qa-os-titulo qa-os-titulo-destaque" @click="osExpandida = osExpandida === 'OS_NONE' ? null : 'OS_NONE'" style="cursor: pointer;">
                             <i :class="{ 'bi-chevron-down': osExpandida === 'OS_NONE', 'bi-chevron-right': osExpandida !== 'OS_NONE' }" class="bi me-2"></i>
                             <span class="qa-os-nome-grande">OS_NONE</span>
