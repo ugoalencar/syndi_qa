@@ -908,6 +908,46 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    // Devolve os caminhos configuraveis por maquina (caminhos-locais.json). Endpoint
+    // dedicado porque o arquivo esta em ARQUIVOS_BLOQUEADOS - nao pode ser lido pelo
+    // handler estatico.
+    if (req.method === 'GET' && req.url === '/api/settings/caminhos') {
+        enviarJson(res, 200, { ok: true, caminhos: qaSyndi.CAMINHOS_LOCAIS });
+        return;
+    }
+
+    // Grava caminhos-locais.json com os 4 campos e recarrega em memoria. Os campos de
+    // legado/OCR tem efeito imediato (recarregarCaminhosLocais); syncimgSendBase exige
+    // reiniciar o servidor pra AGCONFERENCIA/AGENVIO/RETRABALHO recalcularem.
+    if (req.method === 'POST' && req.url === '/api/settings/caminhos') {
+        lerCorpo(req).then(corpo => {
+            let dados;
+            try {
+                dados = JSON.parse(corpo);
+            } catch (err) {
+                enviarJson(res, 400, { ok: false, error: 'JSON invalido' });
+                return;
+            }
+            const campos = ['syncimgSendBase', 'legadoOrigemDir', 'legadoDestinoDir', 'cadastroOcrDir'];
+            const caminhos = {};
+            for (const campo of campos) {
+                if (typeof dados[campo] !== 'string') {
+                    enviarJson(res, 400, { ok: false, error: 'Campo "' + campo + '" deve ser texto' });
+                    return;
+                }
+                caminhos[campo] = dados[campo];
+            }
+            try {
+                fs.writeFileSync(qaSyndi.caminhoArquivoCaminhosLocais(), JSON.stringify(caminhos, null, 2) + '\n', 'utf8');
+                qaSyndi.recarregarCaminhosLocais(BASE_PATH);
+                enviarJson(res, 200, { ok: true, caminhos: qaSyndi.CAMINHOS_LOCAIS });
+            } catch (err) {
+                enviarJson(res, 500, { ok: false, error: err.message });
+            }
+        });
+        return;
+    }
+
     // Verificacao e reorganizacao de OS_NONE: varre fotos marcadas com OCR,
     // valida (minimo 2), localiza OS de destino, e copia arquivos pra C:\Cadastro\OCR.
     // Retorna { ok, movidos, avisos, erros } com detalhes completos.
