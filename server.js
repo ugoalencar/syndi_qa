@@ -959,7 +959,7 @@ const server = http.createServer((req, res) => {
     // valida (minimo 2), localiza OS de destino, e copia arquivos pra C:\Cadastro\OCR.
     // Retorna { ok, movidos, avisos, erros } com detalhes completos.
     if (req.method === 'POST' && req.url === '/api/verificar-os-none') {
-        qaSyndi.verificarEOrganizarOsNone(qaSyndi.AGCONFERENCIA, undefined, {
+        qaSyndi.verificarEOrganizarOsNone(qaSyndi.AGCONFERENCIA, qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir, qaSyndi.CAMINHOS_LOCAIS.cadastroOcrDir, {
             redmine: redmine,
             basePath: BASE_PATH
         }).then(resultado => {
