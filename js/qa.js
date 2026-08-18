@@ -225,6 +225,7 @@ createApp({
                 if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
                 Object.assign(settingsCaminhosForm, dados.caminhos);
                 settingsCaminhosSalvo.value = true;
+                carregarStatusLegado();
             } catch (err) {
                 erroSettingsCaminhos.value = 'Erro ao salvar: ' + err.message;
             } finally {

@@ -200,7 +200,7 @@
                         <div class="qa-os-titulo qa-os-titulo-destaque" @click="osExpandida = osExpandida === 'OS_NONE' ? null : 'OS_NONE'" style="cursor: pointer;">
                             <i :class="{ 'bi-chevron-down': osExpandida === 'OS_NONE', 'bi-chevron-right': osExpandida !== 'OS_NONE' }" class="bi me-2"></i>
                             <span class="qa-os-nome-grande">OS_NONE</span>
-                            <span class="qa-os-contador">({{ osNone.length }} GTINs)</span>
+                            <span class="qa-os-contador">({{ osNoneFiltrado.length }} GTINs)</span>
                         </div>
                         <div v-if="osExpandida === 'OS_NONE' && carregandoOsNone" class="qa-vazio">Carregando OS_NONE...</div>
                         <div v-if="osExpandida === 'OS_NONE' && !carregandoOsNone" class="qa-os-none-items">

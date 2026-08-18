@@ -132,6 +132,10 @@ const server = http.createServer((req, res) => {
 
     if (req.method === 'GET' && req.url === '/api/os-none') {
         try {
+            if (!qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir) {
+                enviarJson(res, 400, { ok: false, error: 'Configure o destino do legado em Settings > Caminhos' });
+                return;
+            }
             const gtins = qaSyndi.listarOsNone(qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir);
             enviarJson(res, 200, { ok: true, gtins });
         } catch (err) {
@@ -959,6 +963,10 @@ const server = http.createServer((req, res) => {
     // valida (minimo 2), localiza OS de destino, e copia arquivos pra C:\Cadastro\OCR.
     // Retorna { ok, movidos, avisos, erros } com detalhes completos.
     if (req.method === 'POST' && req.url === '/api/verificar-os-none') {
+        if (!qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir) {
+            enviarJson(res, 400, { ok: false, error: 'Configure o destino do legado em Settings > Caminhos' });
+            return;
+        }
         qaSyndi.verificarEOrganizarOsNone(qaSyndi.AGCONFERENCIA, qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir, qaSyndi.CAMINHOS_LOCAIS.cadastroOcrDir, {
             redmine: redmine,
             basePath: BASE_PATH
@@ -981,7 +989,11 @@ const server = http.createServer((req, res) => {
             return;
         }
         qaSyndi.pescarGtins(origem, destino).then(resultado => {
-            enviarJson(res, 200, Object.assign({ ok: resultado.erros.length === 0 }, resultado));
+            const payload = Object.assign({ ok: resultado.erros.length === 0 }, resultado);
+            if (resultado.erros.length > 0) {
+                payload.error = resultado.erros.join('; ');
+            }
+            enviarJson(res, 200, payload);
         }).catch(err => {
             enviarJson(res, 500, { ok: false, error: err.message });
         });
