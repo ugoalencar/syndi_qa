@@ -81,7 +81,7 @@ function hojeISO() {
 
 function obterPastaOsPath(osParam) {
     if (osParam === 'OS_NONE') {
-        const pastaOsNone = path.join(qaSyndi.AGCONFERENCIA, 'OS_NONE');
+        const pastaOsNone = qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir;
         if (!fs.existsSync(pastaOsNone)) {
             return null;
         }
@@ -132,7 +132,7 @@ const server = http.createServer((req, res) => {
 
     if (req.method === 'GET' && req.url === '/api/os-none') {
         try {
-            const gtins = qaSyndi.listarOsNone(qaSyndi.AGCONFERENCIA);
+            const gtins = qaSyndi.listarOsNone(qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir);
             enviarJson(res, 200, { ok: true, gtins });
         } catch (err) {
             enviarJson(res, 500, { ok: false, error: err.message });
@@ -176,7 +176,7 @@ const server = http.createServer((req, res) => {
         // Caso especial: OS_NONE
         if (os === 'OS_NONE') {
             pastaOsNome = 'OS_NONE';
-            pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, 'OS_NONE');
+            pastaOsPath = qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir;
             if (!fs.existsSync(pastaOsPath)) {
                 enviarJson(res, 404, { ok: false, error: 'OS_NONE nao existe' });
                 return;
@@ -225,7 +225,7 @@ const server = http.createServer((req, res) => {
 
         if (os === 'OS_NONE') {
             pastaOsNome = 'OS_NONE';
-            pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, 'OS_NONE');
+            pastaOsPath = qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir;
             if (!fs.existsSync(pastaOsPath)) {
                 enviarJson(res, 404, { ok: false, error: 'OS_NONE nao existe' });
                 return;
@@ -376,7 +376,7 @@ const server = http.createServer((req, res) => {
             let pastaOsNome, pastaOsPath;
             if (os === 'OS_NONE') {
                 pastaOsNome = 'OS_NONE';
-                pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, 'OS_NONE');
+                pastaOsPath = qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir;
                 if (!fs.existsSync(pastaOsPath)) {
                     enviarJson(res, 404, { ok: false, error: 'OS_NONE nao existe' });
                     return;
@@ -424,7 +424,7 @@ const server = http.createServer((req, res) => {
             let pastaOsNome, pastaOsPath;
             if (os === 'OS_NONE') {
                 pastaOsNome = 'OS_NONE';
-                pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, 'OS_NONE');
+                pastaOsPath = qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir;
                 if (!fs.existsSync(pastaOsPath)) {
                     enviarJson(res, 404, { ok: false, error: 'OS_NONE nao existe' });
                     return;
@@ -472,7 +472,7 @@ const server = http.createServer((req, res) => {
             let pastaOsNome, pastaOsPath;
             if (os === 'OS_NONE') {
                 pastaOsNome = 'OS_NONE';
-                pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, 'OS_NONE');
+                pastaOsPath = qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir;
                 if (!fs.existsSync(pastaOsPath)) {
                     enviarJson(res, 404, { ok: false, error: 'OS_NONE nao existe' });
                     return;
@@ -511,7 +511,7 @@ const server = http.createServer((req, res) => {
         let pastaOsNome, pastaOsPath;
         if (os === 'OS_NONE') {
             pastaOsNome = 'OS_NONE';
-            pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, 'OS_NONE');
+            pastaOsPath = qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir;
             if (!fs.existsSync(pastaOsPath)) {
                 enviarJson(res, 404, { ok: false, error: 'OS_NONE nao existe' });
                 return;
@@ -563,7 +563,7 @@ const server = http.createServer((req, res) => {
             let pastaOsNome, pastaOsPath;
             if (os === 'OS_NONE') {
                 pastaOsNome = 'OS_NONE';
-                pastaOsPath = path.join(qaSyndi.AGCONFERENCIA, 'OS_NONE');
+                pastaOsPath = qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir;
                 if (!fs.existsSync(pastaOsPath)) {
                     enviarJson(res, 404, { ok: false, error: 'OS_NONE nao existe' });
                     return;
