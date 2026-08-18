@@ -988,6 +988,34 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    // Scan inicial do legado: marca como "legado" todo GTIN que ja existe no destino e
+    // ainda nao tem entrada em controle-legado.json. So acao explicita do usuario -
+    // rodar de novo e seguro (nao sobrescreve entrada existente), mas o front-end so
+    // habilita o botao antes do primeiro scan (ver Task 8).
+    if (req.method === 'POST' && req.url === '/api/legado/scan') {
+        const destino = qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir;
+        if (!destino) {
+            enviarJson(res, 400, { ok: false, error: 'Configure o destino do legado em Settings > Caminhos antes de gerar o snapshot' });
+            return;
+        }
+        qaSyndi.gerarSnapshotLegado(destino).then(resultado => {
+            enviarJson(res, 200, resultado);
+        }).catch(err => {
+            enviarJson(res, 500, { ok: false, error: err.message });
+        });
+        return;
+    }
+
+    if (req.method === 'GET' && req.url === '/api/legado/status') {
+        const destino = qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir;
+        if (!destino) {
+            enviarJson(res, 200, { ok: true, existeSnapshot: false });
+            return;
+        }
+        enviarJson(res, 200, { ok: true, existeSnapshot: fs.existsSync(qaSyndi.caminhoControleLegado(destino)) });
+        return;
+    }
+
     // Handler estatico - serve syndi_qa.html, css, js e qualquer outro arquivo da raiz
     // do projeto, exceto os bloqueados.
     const urlSemQuery = req.url.split('?')[0];
