@@ -258,7 +258,7 @@ const server = http.createServer((req, res) => {
             enviarJson(res, 404, { ok: false, error: 'GTIN nao encontrado nesta OS' });
             return;
         }
-        const pastaGtinPath = path.join(qaSyndi.AGCONFERENCIA, pastaOsNome, pastaGtinNome);
+        const pastaGtinPath = path.join(pastaOsPath, pastaGtinNome);
         const caminhoImagem = qaSyndi.resolverImagemSegura(pastaGtinPath, nome);
         if (!caminhoImagem || !fs.existsSync(caminhoImagem)) {
             res.writeHead(404, { 'Content-Type': 'text/plain' });
