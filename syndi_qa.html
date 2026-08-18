@@ -45,6 +45,9 @@
                     <button type="button" class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalIdentidade">
                         <i class="bi bi-gear"></i> {{ analistaNome || 'Configurar identidade' }}
                     </button>
+                    <button type="button" class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#modalSettingsCaminhos" @click="carregarSettingsCaminhos">
+                        <i class="bi bi-hdd-network"></i> Caminhos
+                    </button>
                     <i v-if="atualizacaoInfo && atualizacaoInfo.ok && atualizacaoInfo.temAtualizacao"
                        class="bi bi-bell qa-sino-atualizacao" title="Ha uma atualizacao disponivel"></i>
                     <span v-if="atualizacaoInfo && !atualizacaoInfo.ok" class="qa-atualizacao-msg" :title="atualizacaoInfo.error">
@@ -95,6 +98,42 @@
                             <strong>Analista atual:</strong> {{ analistaNome || 'Nenhum configurado' }}
                         </div>
                         <div v-if="erroIdentidade" class="alert alert-danger mt-3 mb-0">{{ erroIdentidade }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalSettingsCaminhos" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content bg-dark">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="bi bi-hdd-network"></i> Caminhos de rede</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="inputLegadoOrigem" class="form-label">Origem do legado (drive externo, so leitura)</label>
+                            <input type="text" class="form-control" id="inputLegadoOrigem" v-model="settingsCaminhosForm.legadoOrigemDir" placeholder="\\servidor\fotos\Externo">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputLegadoDestino" class="form-label">Destino do legado (backup no drive, onde o QA acontece)</label>
+                            <input type="text" class="form-control" id="inputLegadoDestino" v-model="settingsCaminhosForm.legadoDestinoDir" placeholder="\\servidor\fotos\QA_Legado">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputCadastroOcr" class="form-label">Destino do OCR</label>
+                            <input type="text" class="form-control" id="inputCadastroOcr" v-model="settingsCaminhosForm.cadastroOcrDir" placeholder="C:\Cadastro\OCR">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputSyncimgSendBase" class="form-label">Pasta base do robo SyncIMGSend</label>
+                            <input type="text" class="form-control" id="inputSyncimgSendBase" v-model="settingsCaminhosForm.syncimgSendBase" placeholder="C:\Apps\SyncIMGSend">
+                        </div>
+                        <div v-if="erroSettingsCaminhos" class="alert alert-danger mb-0">{{ erroSettingsCaminhos }}</div>
+                        <div v-if="settingsCaminhosSalvo" class="alert alert-success mb-0">Salvo. Origem/destino do legado ja tem efeito; a pasta do robo exige reiniciar o servidor.</div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" @click="salvarSettingsCaminhos" :disabled="salvandoSettingsCaminhos">
+                            <i class="bi bi-check-circle"></i> Salvar
+                        </button>
                     </div>
                 </div>
             </div>

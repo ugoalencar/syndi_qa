@@ -41,6 +41,11 @@ createApp({
         const analistaNome = ref(localStorage.getItem('nome_usuario') || '');
         const erroIdentidade = ref('');
 
+        const settingsCaminhosForm = reactive({ syncimgSendBase: '', legadoOrigemDir: '', legadoDestinoDir: '', cadastroOcrDir: '' });
+        const erroSettingsCaminhos = ref('');
+        const settingsCaminhosSalvo = ref(false);
+        const salvandoSettingsCaminhos = ref(false);
+
         // Atualizacao via git (mesmo par verificar/aplicar do sphoto) - so aciona
         // sob demanda (botao), nunca sozinho no load: git fetch a cada abertura da
         // tela seria custo desnecessario pro uso normal do QA Hub.
@@ -183,6 +188,40 @@ createApp({
                 erroOsNone.value = 'Erro ao carregar OS_NONE: ' + err.message + ' (server.js rodando?)';
             } finally {
                 carregandoOsNone.value = false;
+            }
+        }
+
+        async function carregarSettingsCaminhos() {
+            erroSettingsCaminhos.value = '';
+            settingsCaminhosSalvo.value = false;
+            try {
+                const resp = await fetch(API + '/api/settings/caminhos');
+                const dados = await resp.json();
+                if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
+                Object.assign(settingsCaminhosForm, dados.caminhos);
+            } catch (err) {
+                erroSettingsCaminhos.value = 'Erro ao carregar caminhos: ' + err.message;
+            }
+        }
+
+        async function salvarSettingsCaminhos() {
+            salvandoSettingsCaminhos.value = true;
+            erroSettingsCaminhos.value = '';
+            settingsCaminhosSalvo.value = false;
+            try {
+                const resp = await fetch(API + '/api/settings/caminhos', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(settingsCaminhosForm)
+                });
+                const dados = await resp.json();
+                if (!dados.ok) throw new Error(dados.error || 'Erro desconhecido');
+                Object.assign(settingsCaminhosForm, dados.caminhos);
+                settingsCaminhosSalvo.value = true;
+            } catch (err) {
+                erroSettingsCaminhos.value = 'Erro ao salvar: ' + err.message;
+            } finally {
+                salvandoSettingsCaminhos.value = false;
             }
         }
 
@@ -1061,7 +1100,8 @@ createApp({
             abaDetalhe, camposEdicao, origemCampoEdicao, carregandoEdicao, erroEdicao, erroEnvioEdicao,
             mensagemEdicao, enviandoEdicao, semFichaEdicao, opcoesSituacao,
             opcoesResponsavelQaImagem, opcoesResponsavel3Check,
-            abrirAbaEdicao, marcarTocadoEdicao, confirmarEnvioEdicao
+            abrirAbaEdicao, marcarTocadoEdicao, confirmarEnvioEdicao,
+            settingsCaminhosForm, erroSettingsCaminhos, settingsCaminhosSalvo, salvandoSettingsCaminhos, carregarSettingsCaminhos, salvarSettingsCaminhos
         };
     }
 }).mount('#qaApp');
