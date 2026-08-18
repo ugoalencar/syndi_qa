@@ -928,6 +928,13 @@ const server = http.createServer((req, res) => {
                 enviarJson(res, 400, { ok: false, error: 'JSON invalido' });
                 return;
             }
+            // JSON.parse aceita "null"/numero/string sem lancar erro - sem essa checagem,
+            // dados[campo] mais abaixo quebra em objeto null/undefined e a requisicao
+            // fica pendurada sem resposta.
+            if (typeof dados !== 'object' || dados === null) {
+                enviarJson(res, 400, { ok: false, error: 'Corpo deve ser um objeto JSON' });
+                return;
+            }
             const campos = ['syncimgSendBase', 'legadoOrigemDir', 'legadoDestinoDir', 'cadastroOcrDir'];
             const caminhos = {};
             for (const campo of campos) {
