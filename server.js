@@ -970,6 +970,24 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    // Pescador de GTIN: copia da origem do legado (drive externo, so leitura) pro
+    // destino (backup no drive, onde o QA acontece) so os GTINs que ainda nao existem
+    // no destino. Requer os dois caminhos configurados em Settings.
+    if (req.method === 'POST' && req.url === '/api/pescador-gtin') {
+        const origem = qaSyndi.CAMINHOS_LOCAIS.legadoOrigemDir;
+        const destino = qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir;
+        if (!origem || !destino) {
+            enviarJson(res, 400, { ok: false, error: 'Configure origem e destino do legado em Settings > Caminhos antes de usar o Pescador de GTIN' });
+            return;
+        }
+        qaSyndi.pescarGtins(origem, destino).then(resultado => {
+            enviarJson(res, 200, Object.assign({ ok: resultado.erros.length === 0 }, resultado));
+        }).catch(err => {
+            enviarJson(res, 500, { ok: false, error: err.message });
+        });
+        return;
+    }
+
     // Handler estatico - serve syndi_qa.html, css, js e qualquer outro arquivo da raiz
     // do projeto, exceto os bloqueados.
     const urlSemQuery = req.url.split('?')[0];
