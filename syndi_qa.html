@@ -204,11 +204,35 @@
                         </div>
                         <div v-if="osExpandida === 'OS_NONE' && carregandoOsNone" class="qa-vazio">Carregando OS_NONE...</div>
                         <div v-if="osExpandida === 'OS_NONE' && !carregandoOsNone" class="qa-os-none-items">
-                            <div v-for="item in osNone" :key="item.gtin"
+                            <div class="qa-os-none-toolbar mb-2 d-flex gap-2 align-items-center flex-wrap">
+                                <select class="form-select form-select-sm w-auto" v-model="filtroLegado">
+                                    <option value="todos">Todos</option>
+                                    <option value="legado">Legado</option>
+                                    <option value="pendente">Pendente</option>
+                                </select>
+                                <button type="button" class="btn btn-sm btn-outline-light" @click="pescarGtinsAcao" :disabled="pescandoGtins">
+                                    <i v-if="pescandoGtins" class="bi bi-hourglass-split qa-girando"></i>
+                                    <i v-else class="bi bi-search"></i> Pescador de GTIN
+                                </button>
+                                <button v-if="!existeSnapshotLegado" type="button" class="btn btn-sm btn-outline-warning" @click="gerarSnapshotLegadoAcao" :disabled="gerandoSnapshotLegado">
+                                    <i v-if="gerandoSnapshotLegado" class="bi bi-hourglass-split qa-girando"></i>
+                                    <i v-else class="bi bi-camera"></i> Gerar snapshot do legado
+                                </button>
+                            </div>
+                            <div v-if="resultadoPescador" class="alert mb-2" :class="resultadoPescador.ok ? 'alert-success' : 'alert-danger'">
+                                <template v-if="resultadoPescador.ok">Pescador: {{ resultadoPescador.novos.length }} novo(s), {{ resultadoPescador.jaExistiam.length }} ja existiam.</template>
+                                <template v-else>{{ resultadoPescador.error }}</template>
+                            </div>
+                            <div v-if="resultadoSnapshotLegado" class="alert mb-2" :class="resultadoSnapshotLegado.ok ? 'alert-success' : 'alert-danger'">
+                                <template v-if="resultadoSnapshotLegado.ok">Snapshot: {{ resultadoSnapshotLegado.marcados.length }} marcado(s) como legado.</template>
+                                <template v-else>{{ resultadoSnapshotLegado.error }}</template>
+                            </div>
+                            <div v-for="item in osNoneFiltrado" :key="item.gtin"
                                 class="qa-gtin-item"
                                 :class="{ ativo: selecionado && selecionado.os === 'OS_NONE' && selecionado.gtin === item.gtin }"
                                 @click="selecionarGtin('OS_NONE', item.gtin)">
                                 <span>{{ item.gtin }}</span>
+                                <span class="badge ms-2" :class="item.status === 'legado' ? 'bg-secondary' : 'bg-warning text-dark'">{{ item.status }}</span>
                             </div>
                             <div class="qa-os-none-aviso mt-3">
                                 <i class="bi bi-info-circle"></i>

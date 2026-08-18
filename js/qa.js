@@ -46,6 +46,13 @@ createApp({
         const settingsCaminhosSalvo = ref(false);
         const salvandoSettingsCaminhos = ref(false);
 
+        const pescandoGtins = ref(false);
+        const resultadoPescador = ref(null);
+        const existeSnapshotLegado = ref(true); // otimista ate carregar - evita mostrar o botao piscando
+        const gerandoSnapshotLegado = ref(false);
+        const resultadoSnapshotLegado = ref(null);
+        const filtroLegado = ref('todos'); // 'todos' | 'legado' | 'pendente'
+
         // Atualizacao via git (mesmo par verificar/aplicar do sphoto) - so aciona
         // sob demanda (botao), nunca sozinho no load: git fetch a cada abertura da
         // tela seria custo desnecessario pro uso normal do QA Hub.
@@ -966,6 +973,56 @@ createApp({
             }
         }
 
+        async function pescarGtinsAcao() {
+            if (pescandoGtins.value) return;
+            pescandoGtins.value = true;
+            resultadoPescador.value = null;
+            try {
+                const resp = await fetch(API + '/api/pescador-gtin', { method: 'POST' });
+                const dados = await resp.json();
+                resultadoPescador.value = dados;
+                if (dados.ok) carregarOsNone();
+            } catch (err) {
+                resultadoPescador.value = { ok: false, error: 'Erro de conexao: ' + err.message };
+            } finally {
+                pescandoGtins.value = false;
+            }
+        }
+
+        async function carregarStatusLegado() {
+            try {
+                const resp = await fetch(API + '/api/legado/status');
+                const dados = await resp.json();
+                if (dados.ok) existeSnapshotLegado.value = dados.existeSnapshot;
+            } catch (err) {
+                console.error('Erro ao checar status do legado:', err);
+            }
+        }
+
+        async function gerarSnapshotLegadoAcao() {
+            if (gerandoSnapshotLegado.value) return;
+            gerandoSnapshotLegado.value = true;
+            resultadoSnapshotLegado.value = null;
+            try {
+                const resp = await fetch(API + '/api/legado/scan', { method: 'POST' });
+                const dados = await resp.json();
+                resultadoSnapshotLegado.value = dados;
+                if (dados.ok) {
+                    existeSnapshotLegado.value = true;
+                    carregarOsNone();
+                }
+            } catch (err) {
+                resultadoSnapshotLegado.value = { ok: false, error: 'Erro de conexao: ' + err.message };
+            } finally {
+                gerandoSnapshotLegado.value = false;
+            }
+        }
+
+        const osNoneFiltrado = computed(() => {
+            if (filtroLegado.value === 'todos') return osNone.value;
+            return osNone.value.filter(item => item.status === filtroLegado.value);
+        });
+
         // Le o arquivo JSON pessoal selecionado no modal da engrenagem, extrai userId/userName
         // e persiste em localStorage - mesmas chaves que o sphoto usa (regra/user_id/
         // nome_usuario), mesmo formato de arquivo (campos de roteamento de regra que o sphoto
@@ -1065,6 +1122,7 @@ createApp({
                 if (e.key === 'ArrowLeft') navegarAmpliada(-1);
                 if (e.key === 'ArrowRight') navegarAmpliada(1);
             });
+            carregarStatusLegado();
         });
 
         carregarFila();
@@ -1101,7 +1159,8 @@ createApp({
             mensagemEdicao, enviandoEdicao, semFichaEdicao, opcoesSituacao,
             opcoesResponsavelQaImagem, opcoesResponsavel3Check,
             abrirAbaEdicao, marcarTocadoEdicao, confirmarEnvioEdicao,
-            settingsCaminhosForm, erroSettingsCaminhos, settingsCaminhosSalvo, salvandoSettingsCaminhos, carregarSettingsCaminhos, salvarSettingsCaminhos
+            settingsCaminhosForm, erroSettingsCaminhos, settingsCaminhosSalvo, salvandoSettingsCaminhos, carregarSettingsCaminhos, salvarSettingsCaminhos,
+            pescandoGtins, resultadoPescador, pescarGtinsAcao, existeSnapshotLegado, gerandoSnapshotLegado, resultadoSnapshotLegado, gerarSnapshotLegadoAcao, filtroLegado, osNoneFiltrado
         };
     }
 }).mount('#qaApp');
