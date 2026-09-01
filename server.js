@@ -986,28 +986,6 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    // Pescador de GTIN: copia da origem do legado (drive externo, so leitura) pro
-    // destino (backup no drive, onde o QA acontece) so os GTINs que ainda nao existem
-    // no destino. Requer os dois caminhos configurados em Settings.
-    if (req.method === 'POST' && req.url === '/api/pescador-gtin') {
-        const origem = qaSyndi.CAMINHOS_LOCAIS.legadoOrigemDir;
-        const destino = qaSyndi.CAMINHOS_LOCAIS.legadoDestinoDir;
-        if (!origem || !destino) {
-            enviarJson(res, 400, { ok: false, error: 'Configure origem e destino do legado em Settings > Caminhos antes de usar o Pescador de GTIN' });
-            return;
-        }
-        qaSyndi.pescarGtins(origem, destino).then(resultado => {
-            const payload = Object.assign({ ok: resultado.erros.length === 0 }, resultado);
-            if (resultado.erros.length > 0) {
-                payload.error = resultado.erros.join('; ');
-            }
-            enviarJson(res, 200, payload);
-        }).catch(err => {
-            enviarJson(res, 500, { ok: false, error: err.message });
-        });
-        return;
-    }
-
     // Scan inicial do legado: marca como "legado" todo GTIN que ja existe no destino e
     // ainda nao tem entrada em controle-legado.json. So acao explicita do usuario -
     // rodar de novo e seguro (nao sobrescreve entrada existente), mas o front-end so

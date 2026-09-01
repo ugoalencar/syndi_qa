@@ -210,18 +210,14 @@
                                     <option value="legado">Legado</option>
                                     <option value="pendente">Pendente</option>
                                 </select>
-                                <button type="button" class="btn btn-sm btn-outline-light" @click="pescarGtinsAcao" :disabled="pescandoGtins">
-                                    <i v-if="pescandoGtins" class="bi bi-hourglass-split qa-girando"></i>
-                                    <i v-else class="bi bi-search"></i> Pescador de GTIN
+                                <button type="button" class="btn btn-sm btn-outline-light" @click="carregarOsNone" :disabled="carregandoOsNone">
+                                    <i v-if="carregandoOsNone" class="bi bi-hourglass-split qa-girando"></i>
+                                    <i v-else class="bi bi-arrow-clockwise"></i> Recarregar
                                 </button>
                                 <button v-if="!existeSnapshotLegado" type="button" class="btn btn-sm btn-outline-warning" @click="gerarSnapshotLegadoAcao" :disabled="gerandoSnapshotLegado">
                                     <i v-if="gerandoSnapshotLegado" class="bi bi-hourglass-split qa-girando"></i>
                                     <i v-else class="bi bi-camera"></i> Gerar snapshot do legado
                                 </button>
-                            </div>
-                            <div v-if="resultadoPescador" class="alert mb-2" :class="resultadoPescador.ok ? 'alert-success' : 'alert-danger'">
-                                <template v-if="resultadoPescador.ok">Pescador: {{ resultadoPescador.novos.length }} novo(s), {{ resultadoPescador.jaExistiam.length }} ja existiam.</template>
-                                <template v-else>{{ resultadoPescador.error }}</template>
                             </div>
                             <div v-if="resultadoSnapshotLegado" class="alert mb-2" :class="resultadoSnapshotLegado.ok ? 'alert-success' : 'alert-danger'">
                                 <template v-if="resultadoSnapshotLegado.ok">Snapshot: {{ resultadoSnapshotLegado.marcados.length }} marcado(s) como legado.</template>

@@ -46,8 +46,6 @@ createApp({
         const settingsCaminhosSalvo = ref(false);
         const salvandoSettingsCaminhos = ref(false);
 
-        const pescandoGtins = ref(false);
-        const resultadoPescador = ref(null);
         const existeSnapshotLegado = ref(true); // otimista ate carregar - evita mostrar o botao piscando
         const gerandoSnapshotLegado = ref(false);
         const resultadoSnapshotLegado = ref(null);
@@ -974,22 +972,6 @@ createApp({
             }
         }
 
-        async function pescarGtinsAcao() {
-            if (pescandoGtins.value) return;
-            pescandoGtins.value = true;
-            resultadoPescador.value = null;
-            try {
-                const resp = await fetch(API + '/api/pescador-gtin', { method: 'POST' });
-                const dados = await resp.json();
-                resultadoPescador.value = dados;
-                if (dados.ok) carregarOsNone();
-            } catch (err) {
-                resultadoPescador.value = { ok: false, error: 'Erro de conexao: ' + err.message };
-            } finally {
-                pescandoGtins.value = false;
-            }
-        }
-
         async function carregarStatusLegado() {
             try {
                 const resp = await fetch(API + '/api/legado/status');
@@ -1161,7 +1143,7 @@ createApp({
             opcoesResponsavelQaImagem, opcoesResponsavel3Check,
             abrirAbaEdicao, marcarTocadoEdicao, confirmarEnvioEdicao,
             settingsCaminhosForm, erroSettingsCaminhos, settingsCaminhosSalvo, salvandoSettingsCaminhos, carregarSettingsCaminhos, salvarSettingsCaminhos,
-            pescandoGtins, resultadoPescador, pescarGtinsAcao, existeSnapshotLegado, gerandoSnapshotLegado, resultadoSnapshotLegado, gerarSnapshotLegadoAcao, filtroLegado, osNoneFiltrado
+            existeSnapshotLegado, gerandoSnapshotLegado, resultadoSnapshotLegado, gerarSnapshotLegadoAcao, filtroLegado, osNoneFiltrado
         };
     }
 }).mount('#qaApp');
