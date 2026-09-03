@@ -214,6 +214,14 @@
                                     <i v-if="carregandoOsNone" class="bi bi-hourglass-split qa-girando"></i>
                                     <i v-else class="bi bi-arrow-clockwise"></i> Recarregar
                                 </button>
+                                <button type="button" class="btn btn-sm btn-info" @click="abrirPescadorGtin">
+                                    <i class="bi bi-search"></i> Pescador de GTIN
+                                </button>
+                                <button type="button" class="btn btn-sm btn-warning" @click="verificarOsNone" :disabled="verificandoOsNone">
+                                    <i v-if="verificandoOsNone" class="bi bi-hourglass-split qa-girando"></i>
+                                    <i v-else class="bi bi-check-circle"></i>
+                                    {{ verificandoOsNone ? 'Verificando...' : 'Verificar/Organizar' }}
+                                </button>
                                 <button v-if="!existeSnapshotLegado" type="button" class="btn btn-sm btn-outline-warning" @click="gerarSnapshotLegadoAcao" :disabled="gerandoSnapshotLegado">
                                     <i v-if="gerandoSnapshotLegado" class="bi bi-hourglass-split qa-girando"></i>
                                     <i v-else class="bi bi-camera"></i> Gerar snapshot do legado
@@ -229,16 +237,6 @@
                                 @click="selecionarGtin('OS_NONE', item.gtin)">
                                 <span>{{ item.gtin }}</span>
                                 <span class="badge ms-2" :class="item.status === 'legado' ? 'bg-secondary' : 'bg-warning text-dark'">{{ item.status }}</span>
-                            </div>
-                            <div class="qa-os-none-toolbar mt-3 d-flex gap-2 flex-wrap">
-                                <button type="button" class="btn btn-info" @click="abrirPescadorGtin">
-                                    <i class="bi bi-search"></i> Pescador de GTIN
-                                </button>
-                                <button type="button" class="btn btn-warning" @click="verificarOsNone" :disabled="verificandoOsNone">
-                                    <i v-if="verificandoOsNone" class="bi bi-hourglass-split qa-girando"></i>
-                                    <i v-else class="bi bi-check-circle"></i>
-                                    {{ verificandoOsNone ? 'Verificando...' : 'Verificar/Organizar' }}
-                                </button>
                             </div>
                             <div class="qa-os-none-aviso mt-2">
                                 <i class="bi bi-info-circle"></i>
