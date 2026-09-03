@@ -1,7 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execSync, spawn } = require('child_process');
 const qaSyndi = require('./lib/qaSyndi');
 const redmine = require('./lib/redmine');
 const previewImagem = require('./lib/previewImagem');
@@ -1011,6 +1011,27 @@ const server = http.createServer((req, res) => {
             return;
         }
         enviarJson(res, 200, { ok: true, existeSnapshot: fs.existsSync(qaSyndi.caminhoControleLegado(destino)) });
+        return;
+    }
+
+    // Abre o Pescador de GTIN (pescador-gtin.bat) em um novo terminal/processo
+    if (req.method === 'POST' && req.url === '/api/abrir-pescador-gtin') {
+        const caminhoScript = path.join(BASE_PATH, 'pescador-gtin.bat');
+        if (!fs.existsSync(caminhoScript)) {
+            enviarJson(res, 400, { ok: false, error: 'pescador-gtin.bat nao encontrado' });
+            return;
+        }
+        try {
+            // Abre em um novo cmd.exe detached (nao bloqueia o servidor)
+            spawn('cmd.exe', ['/c', 'start', caminhoScript], {
+                detached: true,
+                stdio: 'ignore',
+                shell: true
+            });
+            enviarJson(res, 200, { ok: true, mensagem: 'Pescador de GTIN aberto. Volte quando terminar.' });
+        } catch (err) {
+            enviarJson(res, 500, { ok: false, error: 'Erro ao abrir Pescador: ' + err.message });
+        }
         return;
     }
 

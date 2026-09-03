@@ -972,6 +972,15 @@ createApp({
             }
         }
 
+        function abrirPescadorGtin() {
+            try {
+                const resp = fetch(API + '/api/abrir-pescador-gtin', { method: 'POST' });
+                alert('Pescador de GTIN foi aberto.\nAnda te guarda e volta quando terminar.');
+            } catch (err) {
+                alert('Erro ao abrir Pescador: ' + err.message);
+            }
+        }
+
         async function carregarStatusLegado() {
             try {
                 const resp = await fetch(API + '/api/legado/status');
@@ -1118,7 +1127,7 @@ createApp({
 
         return {
             fila, carregandoFila, erroFila,
-            mostrarOsNone, osNone, carregandoOsNone, erroOsNone, carregarOsNone, verificandoOsNone, resultadoVerificacao, verificarOsNone,
+            mostrarOsNone, osNone, carregandoOsNone, erroOsNone, carregarOsNone, verificandoOsNone, resultadoVerificacao, verificarOsNone, abrirPescadorGtin,
             osExpandida, selecionado, fotografoSelecionado, detalhe, carregandoDetalhe, erroDetalhe,
             motivos, marcadas, marcadasOcr, fotoAtiva,
             aprovando, enviandoRetrabalho, mensagem, erro,

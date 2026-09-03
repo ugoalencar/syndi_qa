@@ -230,15 +230,20 @@
                                 <span>{{ item.gtin }}</span>
                                 <span class="badge ms-2" :class="item.status === 'legado' ? 'bg-secondary' : 'bg-warning text-dark'">{{ item.status }}</span>
                             </div>
-                            <div class="qa-os-none-aviso mt-3">
+                            <div class="qa-os-none-toolbar mt-3 d-flex gap-2 flex-wrap">
+                                <button type="button" class="btn btn-info" @click="abrirPescadorGtin">
+                                    <i class="bi bi-search"></i> Pescador de GTIN
+                                </button>
+                                <button type="button" class="btn btn-warning" @click="verificarOsNone" :disabled="verificandoOsNone">
+                                    <i v-if="verificandoOsNone" class="bi bi-hourglass-split qa-girando"></i>
+                                    <i v-else class="bi bi-check-circle"></i>
+                                    {{ verificandoOsNone ? 'Verificando...' : 'Verificar/Organizar' }}
+                                </button>
+                            </div>
+                            <div class="qa-os-none-aviso mt-2">
                                 <i class="bi bi-info-circle"></i>
                                 Organize fotos sem OS. Marque OCR e confirme para mover pra pasta correta.
                             </div>
-                            <button type="button" class="btn btn-warning mt-2" @click="verificarOsNone" :disabled="verificandoOsNone">
-                                <i v-if="verificandoOsNone" class="bi bi-hourglass-split qa-girando"></i>
-                                <i v-else class="bi bi-check-circle"></i>
-                                {{ verificandoOsNone ? 'Verificando...' : 'Verificar e Organizar' }}
-                            </button>
                             <div v-if="resultadoVerificacao" :class="{ 'alert alert-success': resultadoVerificacao.ok, 'alert alert-danger': !resultadoVerificacao.ok }" class="mt-2">
                                 <strong>Resultado da Verificacao:</strong>
                                 <ul v-if="resultadoVerificacao.movidos && resultadoVerificacao.movidos.length > 0" class="mb-2">
