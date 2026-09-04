@@ -50,7 +50,7 @@ createApp({
         const existeSnapshotLegado = ref(true); // otimista ate carregar - evita mostrar o botao piscando
         const gerandoSnapshotLegado = ref(false);
         const resultadoSnapshotLegado = ref(null);
-        const filtroLegado = ref('todos'); // 'todos' | 'legado' | 'pendente'
+        const filtroLegado = ref('todos'); // 'todos' | 'legado' | 'pendente' | 'finalizado'
 
         // Atualizacao via git (mesmo par verificar/aplicar do sphoto) - so aciona
         // sob demanda (botao), nunca sozinho no load: git fetch a cada abertura da
