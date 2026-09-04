@@ -967,6 +967,47 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    // Abre o seletor nativo de pastas do Windows usando VBScript
+    if (req.method === 'POST' && req.url === '/api/abrir-seletor-pastas') {
+        lerCorpo(req).then(corpo => {
+            let dados;
+            try {
+                dados = JSON.parse(corpo);
+            } catch (err) {
+                enviarJson(res, 400, { ok: false, error: 'JSON invalido' });
+                return;
+            }
+            try {
+                const { execSync } = require('child_process');
+                const nomeTemp = 'seletor_' + Date.now() + '.vbs';
+                const caminhoTemp = path.join(process.env.TEMP, nomeTemp);
+
+                const vbsScript = `Set objShell = CreateObject("Shell.Application")
+Set objFolder = objShell.BrowseForFolder(0, "Selecione uma pasta:", 0, 0)
+If Not (objFolder Is Nothing) Then
+    WScript.Echo objFolder.Self.Path
+End If`;
+
+                fs.writeFileSync(caminhoTemp, vbsScript, 'utf8');
+                const output = execSync(`cscript.exe //NoLogo "${caminhoTemp}"`, { encoding: 'utf8' }).trim();
+                fs.unlinkSync(caminhoTemp);
+
+                // Extrai apenas a última linha (que é o caminho)
+                const linhas = output.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+                const caminhoSelecionado = linhas[linhas.length - 1];
+
+                if (caminhoSelecionado && caminhoSelecionado.length > 0 && caminhoSelecionado.includes('\\')) {
+                    enviarJson(res, 200, { ok: true, caminhoSelecionado });
+                } else {
+                    enviarJson(res, 200, { ok: false, error: 'Nenhuma pasta selecionada' });
+                }
+            } catch (err) {
+                enviarJson(res, 200, { ok: false, error: 'Operacao cancelada ou erro: ' + err.message });
+            }
+        });
+        return;
+    }
+
     // Verificacao e reorganizacao de OS_NONE: varre fotos marcadas com OCR,
     // valida (minimo 2), localiza OS de destino, e copia arquivos pra C:\Cadastro\OCR.
     // Retorna { ok, movidos, avisos, erros } com detalhes completos.
@@ -1032,48 +1073,6 @@ const server = http.createServer((req, res) => {
         } catch (err) {
             enviarJson(res, 500, { ok: false, error: 'Erro ao abrir Pescador: ' + err.message });
         }
-        return;
-    }
-
-    // Abre o Windows Explorer em um caminho específico
-    if (req.method === 'POST' && req.url === '/api/abrir-explorer') {
-        lerCorpo(req).then(corpo => {
-            let dados;
-            try {
-                dados = JSON.parse(corpo);
-            } catch (err) {
-                enviarJson(res, 400, { ok: false, error: 'JSON inválido' });
-                return;
-            }
-
-            const caminho = dados.caminho || '';
-            if (!caminho) {
-                enviarJson(res, 400, { ok: false, error: 'Caminho não fornecido' });
-                return;
-            }
-
-            try {
-                // Abre o explorer no caminho especificado (ou abre explorer raiz se caminho invalido)
-                if (fs.existsSync(caminho)) {
-                    // explorer /select,<caminho> abre no caminho
-                    spawn('explorer.exe', [caminho], {
-                        detached: true,
-                        stdio: 'ignore',
-                        shell: true
-                    });
-                } else {
-                    // Se caminho nao existe, abre explorer raiz
-                    spawn('explorer.exe', [], {
-                        detached: true,
-                        stdio: 'ignore',
-                        shell: true
-                    });
-                }
-                enviarJson(res, 200, { ok: true, caminhoSelecionado: caminho });
-            } catch (err) {
-                enviarJson(res, 500, { ok: false, error: 'Erro ao abrir Explorer: ' + err.message });
-            }
-        });
         return;
     }
 

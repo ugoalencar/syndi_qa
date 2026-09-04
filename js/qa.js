@@ -46,6 +46,7 @@ createApp({
         const settingsCaminhosSalvo = ref(false);
         const salvandoSettingsCaminhos = ref(false);
 
+
         const existeSnapshotLegado = ref(true); // otimista ate carregar - evita mostrar o botao piscando
         const gerandoSnapshotLegado = ref(false);
         const resultadoSnapshotLegado = ref(null);
@@ -231,25 +232,19 @@ createApp({
             }
         }
 
-        async function abrirExplorerCaminho(tipo) {
+        async function abrirSeletorPastas(campo) {
             try {
-                const campo = tipo === 'origem' ? 'legadoOrigemDir'
-                            : tipo === 'destino' ? 'legadoDestinoDir'
-                            : tipo === 'ocr' ? 'cadastroOcrDir'
-                            : 'syncimgSendBase';
-
-                const caminhoAtual = settingsCaminhosForm[campo];
-                const resp = await fetch(API + '/api/abrir-explorer', {
+                const resp = await fetch(API + '/api/abrir-seletor-pastas', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ caminho: caminhoAtual })
+                    body: JSON.stringify({ caminho: settingsCaminhosForm[campo] || 'C:\\' })
                 });
                 const dados = await resp.json();
                 if (dados.ok && dados.caminhoSelecionado) {
                     settingsCaminhosForm[campo] = dados.caminhoSelecionado;
                 }
             } catch (err) {
-                console.error('Erro ao abrir explorer:', err);
+                console.error('Erro ao abrir seletor de pastas:', err);
             }
         }
 
@@ -1173,7 +1168,8 @@ createApp({
             mensagemEdicao, enviandoEdicao, semFichaEdicao, opcoesSituacao,
             opcoesResponsavelQaImagem, opcoesResponsavel3Check,
             abrirAbaEdicao, marcarTocadoEdicao, confirmarEnvioEdicao,
-            settingsCaminhosForm, erroSettingsCaminhos, settingsCaminhosSalvo, salvandoSettingsCaminhos, carregarSettingsCaminhos, salvarSettingsCaminhos, abrirExplorerCaminho,
+            settingsCaminhosForm, erroSettingsCaminhos, settingsCaminhosSalvo, salvandoSettingsCaminhos, carregarSettingsCaminhos, salvarSettingsCaminhos,
+            abrirSeletorPastas,
             existeSnapshotLegado, gerandoSnapshotLegado, resultadoSnapshotLegado, gerarSnapshotLegadoAcao, filtroLegado, osNoneFiltrado
         };
     }
