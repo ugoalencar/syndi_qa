@@ -1035,6 +1035,48 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    // Abre o Windows Explorer em um caminho específico
+    if (req.method === 'POST' && req.url === '/api/abrir-explorer') {
+        lerCorpo(req).then(corpo => {
+            let dados;
+            try {
+                dados = JSON.parse(corpo);
+            } catch (err) {
+                enviarJson(res, 400, { ok: false, error: 'JSON inválido' });
+                return;
+            }
+
+            const caminho = dados.caminho || '';
+            if (!caminho) {
+                enviarJson(res, 400, { ok: false, error: 'Caminho não fornecido' });
+                return;
+            }
+
+            try {
+                // Abre o explorer no caminho especificado (ou abre explorer raiz se caminho invalido)
+                if (fs.existsSync(caminho)) {
+                    // explorer /select,<caminho> abre no caminho
+                    spawn('explorer.exe', [caminho], {
+                        detached: true,
+                        stdio: 'ignore',
+                        shell: true
+                    });
+                } else {
+                    // Se caminho nao existe, abre explorer raiz
+                    spawn('explorer.exe', [], {
+                        detached: true,
+                        stdio: 'ignore',
+                        shell: true
+                    });
+                }
+                enviarJson(res, 200, { ok: true, caminhoSelecionado: caminho });
+            } catch (err) {
+                enviarJson(res, 500, { ok: false, error: 'Erro ao abrir Explorer: ' + err.message });
+            }
+        });
+        return;
+    }
+
     // Handler estatico - serve syndi_qa.html, css, js e qualquer outro arquivo da raiz
     // do projeto, exceto os bloqueados.
     const urlSemQuery = req.url.split('?')[0];

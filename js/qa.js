@@ -231,6 +231,28 @@ createApp({
             }
         }
 
+        async function abrirExplorerCaminho(tipo) {
+            try {
+                const campo = tipo === 'origem' ? 'legadoOrigemDir'
+                            : tipo === 'destino' ? 'legadoDestinoDir'
+                            : tipo === 'ocr' ? 'cadastroOcrDir'
+                            : 'syncimgSendBase';
+
+                const caminhoAtual = settingsCaminhosForm[campo];
+                const resp = await fetch(API + '/api/abrir-explorer', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ caminho: caminhoAtual })
+                });
+                const dados = await resp.json();
+                if (dados.ok && dados.caminhoSelecionado) {
+                    settingsCaminhosForm[campo] = dados.caminhoSelecionado;
+                }
+            } catch (err) {
+                console.error('Erro ao abrir explorer:', err);
+            }
+        }
+
         async function carregarMotivosDisponiveis() {
             try {
                 const resp = await fetch(API + '/api/motivos');
@@ -1151,7 +1173,7 @@ createApp({
             mensagemEdicao, enviandoEdicao, semFichaEdicao, opcoesSituacao,
             opcoesResponsavelQaImagem, opcoesResponsavel3Check,
             abrirAbaEdicao, marcarTocadoEdicao, confirmarEnvioEdicao,
-            settingsCaminhosForm, erroSettingsCaminhos, settingsCaminhosSalvo, salvandoSettingsCaminhos, carregarSettingsCaminhos, salvarSettingsCaminhos,
+            settingsCaminhosForm, erroSettingsCaminhos, settingsCaminhosSalvo, salvandoSettingsCaminhos, carregarSettingsCaminhos, salvarSettingsCaminhos, abrirExplorerCaminho,
             existeSnapshotLegado, gerandoSnapshotLegado, resultadoSnapshotLegado, gerarSnapshotLegadoAcao, filtroLegado, osNoneFiltrado
         };
     }

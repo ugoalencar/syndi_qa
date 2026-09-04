@@ -113,19 +113,39 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="inputLegadoOrigem" class="form-label">Origem do legado (drive externo, so leitura)</label>
-                            <input type="text" class="form-control" id="inputLegadoOrigem" v-model="settingsCaminhosForm.legadoOrigemDir" placeholder="\\servidor\fotos\Externo">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inputLegadoOrigem" v-model="settingsCaminhosForm.legadoOrigemDir" placeholder="\\servidor\fotos\Externo">
+                                <button class="btn btn-outline-secondary" type="button" @click="abrirExplorerCaminho('origem')">
+                                    <i class="bi bi-folder"></i> Procurar
+                                </button>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="inputLegadoDestino" class="form-label">Destino do legado (backup no drive, onde o QA acontece)</label>
-                            <input type="text" class="form-control" id="inputLegadoDestino" v-model="settingsCaminhosForm.legadoDestinoDir" placeholder="\\servidor\fotos\QA_Legado">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inputLegadoDestino" v-model="settingsCaminhosForm.legadoDestinoDir" placeholder="\\servidor\fotos\QA_Legado">
+                                <button class="btn btn-outline-secondary" type="button" @click="abrirExplorerCaminho('destino')">
+                                    <i class="bi bi-folder"></i> Procurar
+                                </button>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="inputCadastroOcr" class="form-label">Destino do OCR</label>
-                            <input type="text" class="form-control" id="inputCadastroOcr" v-model="settingsCaminhosForm.cadastroOcrDir" placeholder="C:\Cadastro\OCR">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inputCadastroOcr" v-model="settingsCaminhosForm.cadastroOcrDir" placeholder="C:\Cadastro\OCR">
+                                <button class="btn btn-outline-secondary" type="button" @click="abrirExplorerCaminho('ocr')">
+                                    <i class="bi bi-folder"></i> Procurar
+                                </button>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="inputSyncimgSendBase" class="form-label">Pasta base do robo SyncIMGSend</label>
-                            <input type="text" class="form-control" id="inputSyncimgSendBase" v-model="settingsCaminhosForm.syncimgSendBase" placeholder="C:\Apps\SyncIMGSend">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inputSyncimgSendBase" v-model="settingsCaminhosForm.syncimgSendBase" placeholder="C:\Apps\SyncIMGSend">
+                                <button class="btn btn-outline-secondary" type="button" @click="abrirExplorerCaminho('syncimg')">
+                                    <i class="bi bi-folder"></i> Procurar
+                                </button>
+                            </div>
                         </div>
                         <div v-if="erroSettingsCaminhos" class="alert alert-danger mb-0">{{ erroSettingsCaminhos }}</div>
                         <div v-if="settingsCaminhosSalvo" class="alert alert-success mb-0">Salvo. Origem/destino do legado ja tem efeito; a pasta do robo exige reiniciar o servidor.</div>
